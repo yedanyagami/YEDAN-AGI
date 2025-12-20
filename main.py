@@ -51,7 +51,7 @@ def generate_report():
     """
 
     # 寫入檔案
-    with open("public/index.html", "w", encoding='utf-8') as f:
+    with open("index.html", "w", encoding='utf-8') as f:
         f.write(html_content)
     
     print(f"✅ 戰報已生成: {time_now}")
