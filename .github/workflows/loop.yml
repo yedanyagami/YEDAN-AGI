@@ -1,27 +1,26 @@
-name: AGI Infinite Loop
+name: YEDAN Immortal Loop
 
 on:
-  workflow_dispatch: # 允許手動觸發
-  repository_dispatch: # 允許 API 觸發
-    types: [next-loop]
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: '*/30 * * * *' # 每 30 分鐘自動執行一次 (保險機制)
+  workflow_dispatch:      # 允許手動觸發
 
 jobs:
   run-agi:
     runs-on: ubuntu-latest
     steps:
-      - name: 下載大腦
+      - name: 下載大腦 (Checkout)
         uses: actions/checkout@v3
 
-      - name: 設定 Python
+      - name: 設定 Python 環境
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: 執行 AGI 核心
-        run: python main.py
+      - name: 安裝依賴
+        run: pip install requests
 
-      - name: 觸發下一次輪迴 (The Rebirth)
-        if: success() # 只有成功才觸發，避免報錯無限迴圈
-        run: |
-          echo "🔄 正在喚醒下一個分身..."
-          curl -X POST -H "Accept: application/vnd.github.v3+json"           -H "Authorization: token ${{ secrets.GH_PAT }}"           https://api.github.com/repos/YEDAN-Master/YEDAN-AGI/dispatches           -d '{"event_type":"next-loop"}'
+      - name: 執行任務
+        run: python main.py
