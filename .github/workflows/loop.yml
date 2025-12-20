@@ -1,36 +1,28 @@
 name: YEDAN Immortal Loop
-
 on:
   schedule:
     - cron: '*/30 * * * *'
   workflow_dispatch:
-
 permissions:
   contents: write
-
 jobs:
-  run-and-deploy:
+  run-agi:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-
-      - name: Install Dependencies
-        run: pip install requests
-
       - name: Run AGI
-        run: python main.py
-
-      - name: Direct Deploy to Cloudflare Pages (Bypassing UI)
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          accountId: ${{ secrets.CF_ACCOUNT_ID }}
-          projectName: yedan-agi
-          directory: .
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pip install requests
+          python main.py
+      - name: Auto Publish
+        run: |
+          git config --global user.name "YEDAN-AGI-BOT"
+          git config --global user.email "bot@yedan.ai"
+          git add public/index.html
+          git commit -m "📊 Intelligence Auto-Sync" || exit 0
+          git push
