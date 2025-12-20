@@ -1,35 +1,60 @@
 import datetime
 import requests
-import json
 import os
 
-def run_mission():
-    # 獲取現在時間 (UTC)
-    time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    print(f"🔥 [YEDAN-AGI] 正在執行雲端巡邏... 時間: {time_now}")
+def generate_report():
+    time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")
     
-    # 任務 A: 檢查加密貨幣市場 (使用免費 API)
+    # 獲取數據
+    btc_price = "Loading..."
+    sol_price = "Loading..."
     try:
-        print("📊 正在掃描市場數據...")
-        url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,solana,ethereum&vs_currencies=usd"
-        headers = {'User-Agent': 'Mozilla/5.0'}
-        response = requests.get(url, headers=headers)
-        if response.status_code == 200:
-            data = response.json()
-            btc = data.get('bitcoin', {}).get('usd', 'N/A')
-            sol = data.get('solana', {}).get('usd', 'N/A')
-            eth = data.get('ethereum', {}).get('usd', 'N/A')
-            print(f"💰 [市場情報] BTC: ${btc} | SOL: ${sol} | ETH: ${eth}")
-        else:
-            print(f"⚠️ 市場數據獲取失敗: {response.status_code}")
-    except Exception as e:
-        print(f"❌ 市場掃描錯誤: {e}")
+        url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,solana&vs_currencies=usd"
+        data = requests.get(url, timeout=10).json()
+        btc_price = f"${data['bitcoin']['usd']:,}"
+        sol_price = f"${data['solana']['usd']:,}"
+    except:
+        pass
 
-    # 任務 B: 模擬思考與決策 (這裡未來可接 Cloudflare 或您的 Redis)
-    print("🧠 正在分析數據趨勢... (模擬運算)")
+    # 生成 HTML (這就是 Cloudflare 要顯示的內容)
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>YEDAN AGI INTELLIGENCE</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="refresh" content="1800"> <style>
+            body {{ background-color: #000; color: #0f0; font-family: monospace; padding: 20px; }}
+            h1 {{ border-bottom: 2px solid #0f0; padding-bottom: 10px; }}
+            .card {{ border: 1px solid #0f0; padding: 15px; margin: 10px 0; }}
+            .time {{ color: #888; font-size: 0.8em; }}
+        </style>
+    </head>
+    <body>
+        <h1>👁️ YEDAN AGI 監控中心</h1>
+        <div class="time">最後更新: {time_now}</div>
+        
+        <div class="card">
+            <h3>💰 市場資產監控</h3>
+            <p>Bitcoin (BTC): <strong>{btc_price}</strong></p>
+            <p>Solana (SOL): <strong>{sol_price}</strong></p>
+        </div>
+
+        <div class="card">
+            <h3>🤖 系統狀態</h3>
+            <p>狀態: <span style="color: #0f0;">ONLINE</span></p>
+            <p>託管: GitHub Actions + Cloudflare</p>
+        </div>
+    </body>
+    </html>
+    """
+
+    # 寫入檔案
+    with open("index.html", "w", encoding='utf-8') as f:
+        f.write(html_content)
     
-    # 任務結束
-    print(f"✅ 任務完成。準備休眠等待下一次喚醒。")
+    print(f"✅ 戰報已生成: {time_now}")
 
 if __name__ == "__main__":
-    run_mission()
+    generate_report()

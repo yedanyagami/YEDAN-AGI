@@ -1,26 +1,36 @@
 name: YEDAN Immortal Loop
 
 on:
-  push:
-    branches: [ main ]
   schedule:
-    - cron: '*/30 * * * *' # 每 30 分鐘自動執行一次 (保險機制)
-  workflow_dispatch:      # 允許手動觸發
+    - cron: '*/30 * * * *' # 每 30 分鐘
+  workflow_dispatch:
+
+permissions:
+  contents: write # 給予寫入權限
 
 jobs:
-  run-agi:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: 下載大腦 (Checkout)
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: 設定 Python 環境
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.9'
 
-      - name: 安裝依賴
+      - name: Install Dependencies
         run: pip install requests
 
-      - name: 執行任務
+      - name: Run AGI & Generate Report
         run: python main.py
+
+      - name: Publish Report (Push to Repo)
+        run: |
+          git config --global user.name "YEDAN-AGI-BOT"
+          git config --global user.email "bot@yedan.ai"
+          git add index.html
+          # 只有當有變更時才提交
+          git commit -m "�� Auto-update Intelligence Report" || exit 0
+          git push
