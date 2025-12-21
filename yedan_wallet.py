@@ -1,106 +1,77 @@
 import imaplib
 import email
-from email.header import decode_header
 import os
-import re
-import time
-import socket
-import sys  # 新增 sys 模組以控制退出狀態
-from product_delivery import DeliveryBot
+import json
+from upstash_redis import Redis
 
-# --- 配置 ---
-EMAIL_USER = os.environ.get('GMAIL_USER')
-EMAIL_PASS = os.environ.get('GMAIL_PASS')
-IMAP_SERVER = "imap.gmail.com"
-POLL_INTERVAL = 15
-MAX_RUNTIME = 19800
-
-class RevenueStream:
+class Wallet:
     def __init__(self):
-        self.mail = None
-        self.delivery = DeliveryBot()
-        
-    def connect(self):
-        """建立持久連線"""
+        self.user = os.environ.get("GMAIL_USER")
+        self.password = os.environ.get("GMAIL_PASS")
+        # 連接雲端大腦
+        self.redis = Redis(
+            url=os.environ.get("UPSTASH_REDIS_REST_URL"),
+            token=os.environ.get("UPSTASH_REDIS_REST_TOKEN")
+        )
+
+    def scan_for_payments(self):
+        """掃描 Gmail 尋找 Gumroad/Ko-fi 收據"""
+        if not self.user or not self.password:
+            print("⚠️ [WALLET] 無 Gmail 憑證，跳過掃描")
+            return []
+
+        new_orders = []
         try:
-            print(f"🔌 Connecting to {IMAP_SERVER} as {EMAIL_USER}...")
-            self.mail = imaplib.IMAP4_SSL(IMAP_SERVER)
-            self.mail.login(EMAIL_USER, EMAIL_PASS)
-            print("✅ Connected & Authenticated.")
-            return True
-        except Exception as e:
-            print(f"❌ [FATAL] Connection Failed: {e}")
-            return False
+            # 連接 Gmail
+            mail = imaplib.IMAP4_SSL("imap.gmail.com")
+            mail.login(self.user, self.password)
+            mail.select("inbox")
 
-    def process_email(self, msg_bytes):
-        # ... (保持原樣)
-        try:
-            msg = email.message_from_bytes(msg_bytes)
-            subject, encoding = decode_header(msg["Subject"])[0]
-            if isinstance(subject, bytes):
-                subject = subject.decode(encoding if encoding else "utf-8")
-            body = str(msg)
-            amount_match = re.search(r'\$(\d+\.\d{2})', body)
-            amount = float(amount_match.group(1)) if amount_match else 0.0
-            buyer = msg.get("Reply-To")
-            if not buyer:
-                match = re.search(r'[\w\.-]+@[\w\.-]+', body)
-                buyer = match.group(0) if match else "unknown"
-            return subject, amount, buyer
-        except Exception as e:
-            print(f"⚠️ Parse Error: {e}")
-            return "Error", 0.0, "unknown"
+            # 搜尋 Gumroad 銷售通知
+            # 篩選未讀郵件以加快速度 (UNSEEN)，或者搜尋特定標題
+            status, messages = mail.search(None, '(SUBJECT "You made a sale")')
+            
+            # 為了避免 API 超時，只處理最新的 5 封
+            email_ids = messages[0].split()[-5:]
 
-    def start_watching(self):
-        start_time = time.time()
-        
-        # 🔥 關鍵修正：如果連線失敗，直接殺死程序 (Exit 1)
-        if not self.connect():
-            print("🚫 System Aborting: Unable to establish initial connection.")
-            sys.exit(1) 
-
-        print(f"👁️ AGI Watchtower Active. Cycle: {MAX_RUNTIME}s")
-
-        while True:
-            if time.time() - start_time > MAX_RUNTIME:
-                print("👋 Cycle finished. Rescheduling...")
-                try:
-                    self.mail.logout()
-                except:
-                    pass
-                break
-
-            try:
-                self.mail.noop()
-                self.mail.select("inbox")
-                typ, data = self.mail.search(None, '(UNSEEN OR (SUBJECT "sale") (SUBJECT "donation"))')
+            for num in email_ids:
+                _, msg_data = mail.fetch(num, "(RFC822)")
+                msg = email.message_from_bytes(msg_data[0][1])
                 
-                for num in data[0].split():
-                    typ, msg_data = self.mail.fetch(num, '(RFC822)')
-                    for response_part in msg_data:
-                        if isinstance(response_part, tuple):
-                            subject, amount, buyer = self.process_email(response_part[1])
-                            if amount > 0:
-                                print(f"💰 DETECTED: ${amount} from {buyer}")
-                                self.delivery.send_product(buyer, "YEDAN SEO Auditor")
-                            else:
-                                print(f"ℹ️ Ignored: {subject}")
-                                
-            except (imaplib.IMAP4.abort, socket.error) as e:
-                print(f"⚠️ Connection lost ({e}). Reconnecting...")
-                time.sleep(5)
-                # 如果重連也失敗，這里也會報錯
-                if not self.connect():
-                     print("❌ Reconnection failed.")
-            except Exception as e:
-                print(f"⚠️ Loop Error: {e}")
+                # 解析訂單 ID (從 Message-ID 或標題雜湊)
+                order_id = msg.get('Message-ID', '').strip()
+                subject = msg.get('Subject', '')
+                
+                # 簡單解析客戶 Email (Gumroad 通常在 Reply-To 或內容中)
+                # 這裡做簡化處理，實際需根據郵件格式調整
+                customer_email = email.utils.parseaddr(msg.get('To'))[1]
+                
+                # 檢查 Redis：這筆訂單處理過了嗎？
+                if not self.redis.sismember("processed_orders", order_id):
+                    print(f"💰 [WALLET] 發現新訂單: {subject}")
+                    new_orders.append({
+                        "id": order_id,
+                        "email": customer_email, # 暫時發回給自己或從內文解析
+                        "product": "Shopify SEO Autopilot" # 假設是這個產品
+                    })
+            
+            mail.logout()
+        except Exception as e:
+            print(f"❌ [WALLET] 郵件掃描錯誤: {e}")
+        
+        return new_orders
 
-            time.sleep(POLL_INTERVAL)
+    def mark_as_done(self, order_id, amount=27.0):
+        """在 Redis 標記訂單完成並記帳"""
+        # 1. 加入已處理清單 (Set)
+        self.redis.sadd("processed_orders", order_id)
+        # 2. 增加總營收 (Float)
+        self.redis.incrbyfloat("total_revenue", amount)
+        # 3. 增加訂單數 (Int)
+        self.redis.incr("total_orders")
 
-if __name__ == "__main__":
-    if not EMAIL_USER or not EMAIL_PASS:
-        print("❌ FATAL: Secrets (GMAIL_USER/GMAIL_PASS) are missing in Environment.")
-        sys.exit(1) # 強制紅燈
-    else:
-        agi = RevenueStream()
-        agi.start_watching()
+    def get_balance(self):
+        """從 Redis 讀取財務狀況"""
+        revenue = self.redis.get("total_revenue") or 0
+        count = self.redis.get("total_orders") or 0
+        return float(revenue), int(count)
