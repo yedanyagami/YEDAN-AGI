@@ -46,3 +46,29 @@ def fetch_market_data():
         print(f"❌ [EYE] 請求失敗 (Status: {getattr(resp, 'status_code', 'Unknown')})")
         
     return data_map
+
+# === GEMINI 神經連結 ===
+def ask_gemini(prompt):
+    """
+    AGI 向 Gemini 尋求建議的通道
+    """
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        return "⚠️ [BRAIN] 未連接 Gemini API (無 Token)"
+    
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
+    headers = {"Content-Type": "application/json"}
+    data = {
+        "contents": [{
+            "parts": [{"text": prompt}]
+        }]
+    }
+    
+    try:
+        response = requests.post(url, headers=headers, json=data, timeout=10)
+        if response.status_code == 200:
+            return response.json()['candidates'][0]['content']['parts'][0]['text']
+        else:
+            return f"❌ [BRAIN] 思考失敗: {response.text}"
+    except Exception as e:
+        return f"❌ [BRAIN] 連線錯誤: {str(e)}"
