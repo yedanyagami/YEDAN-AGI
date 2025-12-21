@@ -1,0 +1,44 @@
+name: YEDAN-GENESIS Evolution
+
+on:
+  workflow_dispatch:      # 允許手動觸發
+  schedule:
+    - cron: '0 */6 * * *' # 每 6 小時自我反思一次
+
+permissions:
+  contents: write         # 允許修改代碼
+  pull-requests: write
+  issues: write
+
+jobs:
+  genesis-mutation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          pip install requests google-generativeai
+
+      - name: Run Self-Reflection (The Prefrontal Cortex)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          # 執行 Python 大腦進行反思
+          python self_reflection.py
+
+      - name: Commit Evolution
+        run: |
+          git config --global user.name "YEDAN-GENESIS"
+          git config --global user.email "genesis@yedan.ai"
+          git add .
+          # 如果有變更才提交，避免空提交導致報錯
+          git diff --quiet && git diff --staged --quiet || (git commit -m "AGI Self-Evolution: Metacognition Update" && git push)
