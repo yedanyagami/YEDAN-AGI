@@ -19,9 +19,7 @@ class KeepAliveHandler(BaseHTTPRequestHandler):
         self.send_response(200)
         self.end_headers()
         self.wfile.write(b"YEDAN-AGI: SYSTEM ONLINE. OMEGA STABLE.")
-
-    def log_message(self, format, *args):
-        return # 靜音心跳日誌，保持整潔
+    def log_message(self, format, *args): return
 
 def start_heartbeat():
     port = int(os.getenv("PORT", 8080))
@@ -29,26 +27,23 @@ def start_heartbeat():
     logger.info(f"❤️ Heartbeat System active on port {port}.")
     server.serve_forever()
 
-# --- 2. 創世紀進化 (Genesis) ---
-def genesis_evolution():
-    logger.info("🧠 Genesis Cortex: Analyzing system performance...")
-    # 這裡未來會對接 self_reflection.py
-    # 目前僅做佔位，防止報錯
-    pass
-
-# --- 3. 大腦主迴圈 (Brain Loop) ---
+# --- 2. 大腦主迴圈 ---
 def activate_brain():
     while True:
         try:
-            logger.info("👁️ Nexus Eye: Scanning environment...")
+            logger.info("👁️ Nexus Eye: Activating Wallet Module...")
+            
+            # === 這裡執行剛寫好的錢包腳本 ===
+            subprocess.run(["python", "yedan_wallet.py"], check=False)
             
             # 嘗試執行邏輯核心 (如果有)
             if os.path.exists("logic_core.py"):
                 subprocess.run(["python", "logic_core.py"], check=False)
             
-            # 執行進化檢查
-            genesis_evolution()
-            
+            # 自我反思
+            if os.path.exists("self_reflection.py"):
+                subprocess.run(["python", "self_reflection.py"], check=False)
+
             logger.info("💤 Brain entering sleep cycle (60s)...")
             time.sleep(60)
             
