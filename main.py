@@ -1,98 +1,63 @@
-import datetime
 import os
-import logic_core
-from yedan_guardian import Guardian
-from yedan_wallet import Wallet
-from product_delivery import DigitalDelivery
+import time
+import threading
+import subprocess
+import logging
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
-def run_agi_system():
-    time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")
-    
-    # 初始化
-    brain = Guardian()
-    wallet = Wallet()
-    logistics = DigitalDelivery()
-    
-    print(f"🤖 [AGI OMEGA] 啟動神經網路... {time_now}")
+# --- 配置區 ---
+REDIS_URL = os.getenv("REDIS_URL")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GITHUB_TOKEN = os.getenv("GH_PAT")
 
-    # --- PHASE 1: 自我診斷與修正 (Ask Gemini) ---
-    # 如果系統有之前的錯誤紀錄，詢問 Gemini 如何修正
-    allow, guard_msg = brain.check_error_history("SYSTEM_HEALTH")
-    ai_advice = "系統運轉正常，無需修正。"
-    
-    if "BLOCK" in guard_msg or "WARN" in guard_msg:
-        print("⚠️ 偵測到系統異常，正在諮詢 Gemini...")
-        prompt = f"我的 Python 自動化系統遇到這個錯誤: '{guard_msg}'。請用一句話告訴我如何修正或優化它。"
-        ai_advice = logic_core.ask_gemini(prompt)
-        print(f"💡 Gemini 建議: {ai_advice}")
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - [YEDAN-AGI] - %(message)s')
+logger = logging.getLogger()
 
-    # --- PHASE 2: 執行業務 (Money Logic) ---
-    try:
-        new_orders = wallet.scan_for_payments()
-        for order in new_orders:
-            success, msg = logistics.deliver_product(order['email'], order['product'])
-            if success:
-                wallet.mark_as_done(order['id'])
-                # 賺到錢了，讓 Gemini 寫一句慶祝詞
-                celebration = logic_core.ask_gemini(f"我剛剛自動賺了 $27，寫一句簡短霸氣的慶祝語，要在戰報上顯示。")
-                print(f"🎉 {celebration}")
-    except Exception as e:
-        print(f"❌ 業務執行錯誤: {e}")
-        brain.log_error("RUNTIME_ERROR")
+# --- 1. 心跳系統 (Heartbeat) ---
+class KeepAliveHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"YEDAN-AGI: SYSTEM ONLINE. OMEGA STABLE.")
 
-    # --- PHASE 3: 市場戰略分析 (Strategic Thinking) ---
-    market_data = logic_core.fetch_market_data()
-    # 讓 Gemini 分析當前價格並給出建議
-    market_prompt = f"現在 BTC 價格是 {market_data.get('BTC')}，SOL 價格是 {market_data.get('SOL')}。請給出一句簡短的市場趨勢判斷（看漲/看跌/觀望）。"
-    market_analysis = logic_core.ask_gemini(market_prompt)
+    def log_message(self, format, *args):
+        return # 靜音心跳日誌，保持整潔
 
-    # --- PHASE 4: 獲取財務狀態 ---
-    revenue, count = wallet.get_balance()
+def start_heartbeat():
+    port = int(os.getenv("PORT", 8080))
+    server = HTTPServer(("0.0.0.0", port), KeepAliveHandler)
+    logger.info(f"❤️ Heartbeat System active on port {port}.")
+    server.serve_forever()
 
-    # --- PHASE 5: 生成全知戰報 (包含 Gemini 的建議) ---
-    html_content = f"""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>YEDAN AGI: NEURAL LINK</title>
-        <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="900">
-        <style>
-            body {{ background-color: #000; color: #0f0; font-family: monospace; padding: 20px; }}
-            .box {{ border: 1px solid #333; padding: 15px; margin-bottom: 10px; background: #111; }}
-            h1 {{ color: #fff; border-bottom: 1px solid #0f0; }}
-            .ai-msg {{ color: #00ffff; font-style: italic; }}
-            .money {{ color: gold; font-size: 1.5em; }}
-        </style>
-    </head>
-    <body>
-        <h1>🧠 YEDAN AGI: NEURAL LINK ACTIVE</h1>
-        <p>Sync: {time_now}</p>
+# --- 2. 創世紀進化 (Genesis) ---
+def genesis_evolution():
+    logger.info("🧠 Genesis Cortex: Analyzing system performance...")
+    # 這裡未來會對接 self_reflection.py
+    # 目前僅做佔位，防止報錯
+    pass
 
-        <div class="box">
-            <h3>💡 Gemini 戰略顧問 (AI Brain)</h3>
-            <p>系統診斷: <span class="ai-msg">{ai_advice}</span></p>
-            <p>市場分析: <span class="ai-msg">{market_analysis}</span></p>
-        </div>
-
-        <div class="box">
-            <h3>💰 財務中樞 (Wallet)</h3>
-            <p>總營收: <span class="money">${revenue}</span></p>
-            <p>處理訂單: {count}</p>
-        </div>
-
-        <div class="box">
-            <h3>📈 市場數據 (Eyes)</h3>
-            <p>BTC: {market_data.get('BTC')}</p>
-            <p>SOL: {market_data.get('SOL')}</p>
-        </div>
-    </body>
-    </html>
-    """
-    
-    with open("index.html", "w", encoding='utf-8') as f:
-        f.write(html_content)
-    print("✅ 戰報更新完畢")
+# --- 3. 大腦主迴圈 (Brain Loop) ---
+def activate_brain():
+    while True:
+        try:
+            logger.info("👁️ Nexus Eye: Scanning environment...")
+            
+            # 嘗試執行邏輯核心 (如果有)
+            if os.path.exists("logic_core.py"):
+                subprocess.run(["python", "logic_core.py"], check=False)
+            
+            # 執行進化檢查
+            genesis_evolution()
+            
+            logger.info("💤 Brain entering sleep cycle (60s)...")
+            time.sleep(60)
+            
+        except Exception as e:
+            logger.error(f"Brain Seizure: {e}")
+            time.sleep(10)
 
 if __name__ == "__main__":
-    run_agi_system()
+    logger.info("🚀 INITIALIZING YEDAN-AGI OMEGA...")
+    t_heartbeat = threading.Thread(target=start_heartbeat, daemon=True)
+    t_heartbeat.start()
+    activate_brain()
