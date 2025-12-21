@@ -39,8 +39,6 @@ jobs:
         REDIS_URL: ${{ secrets.REDIS_URL }}
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         GH_PAT: ${{ secrets.GH_PAT }}
-        # === 這裡就是之前缺失的關鍵連結 ===
-        # 請確保您的 Secret 名稱分別為 GMAIL_USERNAME 和 GMAIL_PASSWORD
         GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
       run: |
