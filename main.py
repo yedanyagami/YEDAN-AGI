@@ -16,7 +16,7 @@ def generate_report():
     except:
         pass
 
-    # 生成 HTML (這就是 Cloudflare 要顯示的內容)
+    # 生成純淨 HTML (移除綠色 BAR 樣式與 div)
     html_content = f"""
     <!DOCTYPE html>
     <html>
@@ -24,7 +24,8 @@ def generate_report():
         <title>YEDAN AGI INTELLIGENCE</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="refresh" content="1800"> <style>
+        <meta http-equiv="refresh" content="1800">
+        <style>
             body {{ background-color: #000; color: #0f0; font-family: monospace; padding: 20px; }}
             h1 {{ border-bottom: 2px solid #0f0; padding-bottom: 10px; }}
             .card {{ border: 1px solid #0f0; padding: 15px; margin: 10px 0; }}
@@ -44,17 +45,17 @@ def generate_report():
         <div class="card">
             <h3>🤖 系統狀態</h3>
             <p>狀態: <span style="color: #0f0;">ONLINE</span></p>
-            <p>託管: GitHub Actions + Cloudflare</p>
+            <p>工作流: GitHub Actions 原生部署</p>
         </div>
     </body>
     </html>
     """
 
-    # 寫入檔案
+    # 寫入檔案至根目錄 (GitHub Pages 讀取點)
     with open("index.html", "w", encoding='utf-8') as f:
         f.write(html_content)
     
-    print(f"✅ 戰報已生成: {time_now}")
+    print(f"✅ 戰報已更新 (已移除 BAR): {time_now}")
 
 if __name__ == "__main__":
     generate_report()
