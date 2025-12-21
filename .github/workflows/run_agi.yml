@@ -1,25 +1,29 @@
-name: YEDAN AGI Revenue Loop
-
+name: YEDAN Immortal Loop
 on:
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
-
+permissions:
+  contents: write
 jobs:
-  revenue_check:
+  run-agi:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.9'
-
-      - name: Run Wallet Processor
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with: { python-version: '3.9' }
+      - run: pip install requests upstash-redis
+      - name: Run AGI Core
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+        run: python main.py
+      - name: Auto Publish
         run: |
-          python yedan_wallet.py
+          git config --global user.name "YEDAN-BOT"
+          git config --global user.email "bot@yedan.ai"
+          git add .
+          git commit -m "AGI Auto-Sync" || exit 0
+          git push

@@ -1,92 +1,94 @@
-import datetime
+import imaplib
+import email
 import os
-import logic_core
-from yedan_guardian import Guardian
-from yedan_wallet import Wallet
-from product_delivery import DigitalDelivery
+import datetime
+import requests
+import json
+from upstash_redis import Redis
 
-def run_agi_system():
-    time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")
+# 初始化連線
+REDIS_URL = os.environ.get("UPSTASH_REDIS_REST_URL")
+REDIS_TOKEN = os.environ.get("UPSTASH_REDIS_REST_TOKEN")
+redis = Redis(url=REDIS_URL, token=REDIS_TOKEN)
+
+GMAIL_USER = os.environ.get("GMAIL_USER")
+GMAIL_PASS = os.environ.get("GMAIL_PASS")
+
+def log(msg):
+    print(msg)
+    # 同步寫入 Redis 日誌
+    try:
+        redis.lpush("system_logs", f"{datetime.datetime.now()}: {msg}")
+    except: pass
+
+def scan_gmail():
+    if not GMAIL_USER or not GMAIL_PASS:
+        log("⚠️ Gmail 憑證未設定，跳過掃描")
+        return 0
     
-    # 1. 初始化 (全部連接 Redis)
     try:
-        brain = Guardian()
-        wallet = Wallet()
-        logistics = DigitalDelivery()
-        print(f"🤖 [AGI OMEGA] 雲端喚醒... {time_now}")
-    except Exception as e:
-        print(f"❌ 初始化失敗 (檢查 Redis 連線): {e}")
-        return
-
-    # 2. 自我診斷
-    allow, guard_msg = brain.check_error_history("SYSTEM_CRASH")
-    if not allow:
-        print(guard_msg)
-        return # 停止執行以保護系統
-
-    # 3. 執行金流掃描 (Active Polling)
-    try:
-        print("🔍 [WALLET] 正在掃描 Gmail...")
-        new_orders = wallet.scan_for_payments()
+        mail = imaplib.IMAP4_SSL("imap.gmail.com")
+        mail.login(GMAIL_USER, GMAIL_PASS)
+        mail.select("inbox")
         
-        for order in new_orders:
-            # 執行發貨
-            success, msg = logistics.deliver_product(order['email'], order['product'])
-            if success:
-                print(f"✅ [FULFILL] 訂單 {order['id']} 發貨成功")
-                wallet.mark_as_done(order['id'])
-            else:
-                print(f"❌ [FAIL] 發貨失敗: {msg}")
-                brain.log_error("DELIVERY_FAIL")
+        # 搜尋 Gumroad 銷售通知
+        status, messages = mail.search(None, '(SUBJECT "You made a sale")')
+        email_ids = messages[0].split()[-5:]
+        
+        count = 0
+        for num in email_ids:
+            _, msg_data = mail.fetch(num, "(RFC822)")
+            msg = email.message_from_bytes(msg_data[0][1])
+            order_id = msg.get('Message-ID', '').strip()
+            
+            # 檢查是否已處理 (Redis 記憶)
+            if not redis.sismember("processed_orders", order_id):
+                log(f"💰 發現新訂單: {order_id}")
+                redis.sadd("processed_orders", order_id)
+                redis.incrbyfloat("total_revenue", 27.0) # 假設單價
+                count += 1
+                
+        mail.logout()
+        return count
     except Exception as e:
-        print(f"⚠️ 金流掃描異常: {e}")
-        brain.log_error("GMAIL_SCAN_FAIL")
+        log(f"❌ Gmail 掃描失敗: {e}")
+        return 0
 
-    # 4. 獲取狀態 (從 Redis)
-    revenue, count = wallet.get_balance()
-    market_data = logic_core.fetch_market_data()
+def fetch_market():
+    try:
+        url = "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,solana&vs_currencies=usd"
+        data = requests.get(url, timeout=10).json()
+        return data['bitcoin']['usd'], data['solana']['usd']
+    except:
+        return 0, 0
 
-    # 5. 生成戰報 (這是唯一需要 Git Push 的東西)
-    html_content = f"""
+def generate_report():
+    btc, sol = fetch_market()
+    new_orders = scan_gmail()
+    
+    revenue = redis.get("total_revenue") or 0
+    
+    html = f"""
     <!DOCTYPE html>
     <html>
-    <head>
-        <title>YEDAN AGI: REDIS CORE</title>
-        <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="900">
-        <style>
-            body {{ background-color: #000; color: #0f0; font-family: monospace; padding: 20px; }}
-            .card {{ border: 1px solid #333; padding: 15px; margin: 10px 0; background: #111; }}
-            h1 {{ border-bottom: 2px solid #0f0; }}
-            .money {{ color: gold; font-size: 1.5em; }}
-        </style>
-    </head>
-    <body>
-        <h1>👁️ YEDAN AGI (Serverless)</h1>
-        <p>Sync: {time_now}</p>
-        
-        <div class="card">
-            <h3>💰 財務中樞 (Redis)</h3>
-            <p>總營收: <span class="money">${revenue}</span></p>
-            <p>處理訂單: {count}</p>
-        </div>
-
-        <div class="card">
-            <h3>📈 市場視角</h3>
-            <p>BTC: {market_data.get('BTC')} | SOL: {market_data.get('SOL')}</p>
-        </div>
-
-        <div class="card">
-            <h3>🧠 系統狀態</h3>
-            <p>{guard_msg}</p>
-        </div>
+    <head><meta charset="UTF-8"><meta http-equiv="refresh" content="900"></head>
+    <body style="background:#000;color:#0f0;font-family:monospace;padding:20px;">
+        <h1>👁️ YEDAN AGI OMEGA</h1>
+        <p>狀態: ONLINE (GitHub Actions Hosted)</p>
+        <hr>
+        <h3>💰 財務中樞</h3>
+        <p>總營收: <span style="color:gold;font-size:1.5em">${revenue}</span></p>
+        <p>本次掃描新單: {new_orders}</p>
+        <hr>
+        <h3>📈 市場監控</h3>
+        <p>BTC: ${btc}</p>
+        <p>SOL: ${sol}</p>
     </body>
     </html>
     """
     
-    with open("index.html", "w", encoding='utf-8') as f:
-        f.write(html_content)
-    print("✅ 戰報更新完畢")
+    with open("index.html", "w", encoding="utf-8") as f:
+        f.write(html)
 
 if __name__ == "__main__":
-    run_agi_system()
+    generate_report()
