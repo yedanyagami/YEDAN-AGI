@@ -11,3 +11,15 @@ def get_asset_status():
 
 if __name__ == "__main__":
     get_asset_status()
+import requests
+
+def fetch_core_logic(filename):
+    # 直接從 yedan-core 抓取您六個月的精華代碼
+    url = f"https://raw.githubusercontent.com/yedanyagami/yedan-core/main/{filename}"
+    try:
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            return response.text
+        return "File not found"
+    except Exception as e:
+        return str(e)
