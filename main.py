@@ -2,76 +2,82 @@ import datetime
 import logic_core
 from yedan_guardian import Guardian
 from yedan_wallet import Wallet
+from product_delivery import DigitalDelivery
 
 def run_agi_system():
-    # 1. 初始化系統
     time_now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S UTC")
+    
+    # 初始化模組
     brain = Guardian()
     wallet = Wallet()
+    logistics = DigitalDelivery()
     
-    print(f"🤖 [AGI] 正在喚醒... 時間: {time_now}")
+    print(f"🤖 [AGI OMEGA] 系統啟動... {time_now}")
 
-    # 2. 大腦檢查 (Guardian)
-    # 模擬檢查一個錯誤代碼，確保大腦在運作
-    allow_run, guard_msg = brain.check_error_history("SYSTEM_STARTUP")
+    # 1. 檢查系統安全
+    allow, guard_msg = brain.check_error_history("SYSTEM_STARTUP")
     print(f"🧠 [BRAIN] {guard_msg}")
-    
-    # 3. 錢包檢查 (Wallet)
-    revenue, order_count = wallet.check_balance()
-    print(f"💰 [WALLET] 當前營收: ${revenue} (訂單: {order_count})")
 
-    # 4. 視覺掃描 (Eyes)
+    # 2. 處理未完成訂單 (模擬邏輯：這裡我們假設每次啟動都檢查最新的一筆模擬訂單)
+    # 在真實資料庫中，我們會加上 'fulfilled' 欄位來判斷
+    print("🚚 [LOGISTICS] 正在掃描待出貨訂單...")
+    
+    # 模擬從錢包抓取一筆最新交易
+    last_order = {
+        "email": "customer_vip@gmail.com", 
+        "product": "Shopify SEO Autopilot", 
+        "price": 27.0
+    }
+    
+    # 執行發貨
+    success, delivery_msg = logistics.deliver_product(last_order['email'], last_order['product'])
+    
+    # 3. 獲取財務報表
+    revenue, order_count = wallet.check_balance()
+
+    # 4. 掃描市場
     market_data = logic_core.fetch_market_data()
 
-    # 5. 生成全知戰報 (HTML)
+    # 5. 生成最終戰報
     html_content = f"""
     <!DOCTYPE html>
     <html>
     <head>
-        <title>YEDAN AGI: OMEGA</title>
+        <title>YEDAN AGI: OMEGA COMPLETE</title>
         <meta charset="UTF-8">
-        <meta http-equiv="refresh" content="300">
         <style>
-            body {{ background-color: #000; color: #0f0; font-family: 'Courier New', monospace; padding: 20px; }}
-            .container {{ max-width: 800px; margin: 0 auto; }}
-            .card {{ border: 1px solid #333; padding: 15px; margin-bottom: 15px; background: #0a0a0a; }}
-            h1 {{ border-bottom: 2px solid #0f0; padding-bottom: 10px; }}
-            h3 {{ margin-top: 0; color: #fff; }}
-            .highlight {{ color: #0ff; font-weight: bold; }}
-            .warn {{ color: #ff0; }}
-            .money {{ color: #ffd700; font-size: 1.2em; }}
+            body {{ background-color: #050505; color: #00ff00; font-family: monospace; padding: 20px; }}
+            .box {{ border: 1px solid #333; padding: 15px; margin-bottom: 10px; background: #111; }}
+            h1 {{ color: #fff; border-bottom: 1px solid #333; }}
+            .stat {{ font-size: 1.5em; color: #fff; }}
+            .success {{ color: #0f0; }}
         </style>
     </head>
     <body>
-        <div class="container">
-            <h1>👁️ YEDAN AGI: OMEGA</h1>
-            <p>最後同步: {time_now}</p>
+        <h1>👁️ YEDAN AGI: OMEGA (Live)</h1>
+        <p>Sync Time: {time_now}</p>
 
-            <div class="card">
-                <h3>💰 現金流 (Wallet)</h3>
-                <p>總營收: <span class="money">${revenue}</span></p>
-                <p>總訂單: {order_count} 筆</p>
-                <small>來源: Gumroad, Ko-fi Webhooks</small>
-            </div>
+        <div class="box">
+            <h3>📦 自動履約 (Fulfillment)</h3>
+            <p>最新訂單: {last_order['product']} (${last_order['price']})</p>
+            <p>客戶: {last_order['email']}</p>
+            <p>狀態: <span class="success">{delivery_msg}</span></p>
+        </div>
 
-            <div class="card">
-                <h3>🧠 元認知 (Guardian)</h3>
-                <p>系統狀態: <span class="highlight">{guard_msg}</span></p>
-                <p>學習模式: <span class="warn">Active (Error Prevention Protocol)</span></p>
-            </div>
+        <div class="box">
+            <h3>💰 財務狀況 (Wallet)</h3>
+            <p>總營收: <span class="stat">${revenue}</span></p>
+            <p>總訂單數: {order_count}</p>
+        </div>
 
-            <div class="card">
-                <h3>📈 市場洞察 (Nexus Eyes)</h3>
-                <p>Bitcoin: <span class="highlight">{market_data['BTC']}</span></p>
-                <p>Solana: <span class="highlight">{market_data['SOL']}</span></p>
-                <small>數據源: CoinGecko (via Proxy)</small>
-            </div>
-            
-            <div class="card">
-                <h3>⚙️ 系統架構</h3>
-                <p>Core: Python 3.9 (Logic + SQLite)</p>
-                <p>Deploy: GitHub Actions (Serverless)</p>
-            </div>
+        <div class="box">
+            <h3>📈 市場監控 (Eyes)</h3>
+            <p>BTC: {market_data['BTC']} | SOL: {market_data['SOL']}</p>
+        </div>
+        
+        <div class="box">
+            <h3>🧠 元認知 (Guardian)</h3>
+            <p>{guard_msg}</p>
         </div>
     </body>
     </html>
@@ -79,7 +85,7 @@ def run_agi_system():
 
     with open("index.html", "w", encoding='utf-8') as f:
         f.write(html_content)
-    print("✅ 全知戰報生成完畢")
+    print("✅ 全知戰報生成完畢 (index.html)")
 
 if __name__ == "__main__":
     run_agi_system()
