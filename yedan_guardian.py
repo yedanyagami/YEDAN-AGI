@@ -1,57 +1,52 @@
-import sqlite3
-import uuid
-import time
+import os
+import sys
+import ast
 
-DB_NAME = "yedan_memory.db"
-
-class Guardian:
+class DeepAuditor:
     def __init__(self):
-        self.conn = sqlite3.connect(DB_NAME)
-        self.cursor = self.conn.cursor()
+        self.target = "yedan_wallet.py"
 
-    def check_error_history(self, error_code):
-        """檢查某個錯誤是否已經犯過太多次"""
-        self.cursor.execute("SELECT occurrence_count, solution FROM error_learning WHERE error_code = ?", (error_code,))
-        row = self.cursor.fetchone()
+    def analyze(self):
+        print(f"🔬 DEEP SCANNING: {self.target} ...")
         
-        if row:
-            count, solution = row
-            if count >= 2:
-                return False, f"⛔ [BLOCK] 此錯誤已發生 {count} 次! 系統拒絕執行以防止崩潰。解決方案: {solution}"
-            else:
-                return True, f"⚠️ [WARN] 此錯誤曾發生過 {count} 次。請小心。"
-        return True, "✅ [SAFE] 無相關錯誤記錄。"
+        if not os.path.exists(self.target):
+            print("❌ File Missing!")
+            sys.exit(1)
 
-    def log_new_error(self, error_type, error_code, cause):
-        """學習新錯誤"""
-        error_id = f"err_{int(time.time())}"
-        print(f"📝 [LEARN] 正在記錄新錯誤: {error_code}")
-        
-        # 嘗試更新現有錯誤
-        self.cursor.execute("UPDATE error_learning SET occurrence_count = occurrence_count + 1, last_occurred_at = ? WHERE error_code = ?", (int(time.time()), error_code))
-        
-        if self.cursor.rowcount == 0:
-            # 如果是新錯誤，插入
-            self.cursor.execute("INSERT INTO error_learning (error_id, error_type, error_code, root_cause, occurrence_count, last_occurred_at) VALUES (?, ?, ?, ?, 1, ?)", 
-                                (error_id, error_type, error_code, cause, int(time.time())))
-        
-        self.conn.commit()
+        with open(self.target, "r") as f:
+            source = f.read()
+            tree = ast.parse(source)
 
-# 測試守護者
+        # 1. 檢查進口藥水 (Imports)
+        imports = [n.names[0].name for n in ast.walk(tree) if isinstance(n, ast.Import)]
+        print(f"   - Imports Detected: {imports}")
+        if "imaplib" not in imports or "time" not in imports:
+             print("❌ CRITICAL: Missing conscious modules (imaplib/time).")
+             sys.exit(1)
+
+        # 2. 檢查大腦迴路 (Infinite Loop)
+        loops = [n for n in ast.walk(tree) if isinstance(n, ast.While)]
+        has_infinite = False
+        for loop in loops:
+            # 檢查是否為 while True
+            if isinstance(loop.test, ast.Constant) and loop.test.value is True:
+                has_infinite = True
+                print(f"   - Infinite Consciousness Loop: FOUND (Line {loop.lineno})")
+
+        if not has_infinite:
+            print("❌ CRITICAL: No 'while True' loop found. AGI will die after one run.")
+            sys.exit(1)
+
+        # 3. 檢查環境變數讀取
+        secrets_check = "os.environ.get" in source
+        if secrets_check:
+             print("   - Security Protocol: ACTIVE (Reading Env Vars)")
+        else:
+             print("❌ CRITICAL: Hardcoded credentials or missing secrets logic.")
+             sys.exit(1)
+
+        print("\n✅ AUDIT PASSED: Code structure is IMMORTAL.")
+        sys.exit(0)
+
 if __name__ == "__main__":
-    g = Guardian()
-    
-    # 測試 1: 模擬一個已知的高風險操作
-    print("--- 測試 1: 執行 PowerShell 替換 ---")
-    allow, msg = g.check_error_history("FILE_CORRUPTION")
-    print(msg)
-    
-    # 測試 2: 模擬一個新錯誤
-    print("\n--- 測試 2: 發生 API 超時 ---")
-    g.log_new_error("runtime", "API_TIMEOUT", "Network latency > 5000ms")
-    
-    # 測試 3: 再次發生同樣錯誤 (模擬學習)
-    g.log_new_error("runtime", "API_TIMEOUT", "Network latency again")
-    allow, msg = g.check_error_history("API_TIMEOUT")
-    print(f"檢查結果: {msg}")
-
+    DeepAuditor().analyze()
