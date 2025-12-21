@@ -1,41 +1,25 @@
-name: YEDAN AGI Autopilot (Independent Runtime)
+name: YEDAN AGI Revenue Loop
 
 on:
-  # 1. 定時執行：每 6 小時一次 (UTC 時間)
   schedule:
-    - cron: '0 */6 * * *'
-  # 2. 手動執行：可以在 GitHub 網頁上點擊 "Run workflow"
+    - cron: '*/15 * * * *'
   workflow_dispatch:
 
 jobs:
-  run-agi-omega:
+  revenue_check:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout Memory & Code
-      uses: actions/checkout@v3
-      
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.9'
-        
-    - name: Install Dependencies
-      run: |
-        pip install requests
-        
-    - name: 🧠 Wake Up AGI (Execute Main Logic)
-      env:
-        # 這裡注入環境變數，讓它能真的做事
-        GMAIL_USER: ${{ secrets.GMAIL_USER }}
-        GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
-      run: |
-        python3 main.py
-        
-    - name: 💾 Commit Memory (Save State)
-      # 只有當資料庫或 html 變更時才 commit
-      run: |
-        git config --global user.name "YEDAN AGI Bot"
-        git config --global user.email "bot@yesinyagami.com"
-        git add .
-        git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 AGI Auto-Sync: Memory & Revenue Update" && git push)
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Run Wallet Processor
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_PASS: ${{ secrets.GMAIL_PASS }}
+        run: |
+          python yedan_wallet.py
