@@ -21,6 +21,7 @@ load_dotenv()
 from agi_memory import AGIMemory
 from agi_actions import AGIActions
 from agi_sensors import AGISensors
+from agi_research import AGIResearch
 
 # AI Clients
 try:
@@ -46,6 +47,7 @@ class YedanAGI:
         self.memory = AGIMemory()
         self.actions = AGIActions()
         self.sensors = AGISensors()
+        self.researcher = AGIResearch()
         
         # AI Models (with fallback)
         self.ai_clients = self._init_ai()
@@ -82,13 +84,14 @@ class YedanAGI:
             except Exception as e:
                 print(f"[AI] Perplexity: Failed - {e}")
         
-        # Gemini (fallback)
+        # Gemini (Ultra-Class Power)
         gemini_key = os.getenv("GEMINI_API_KEY")
         if gemini_key and GEMINI_AVAILABLE:
             try:
                 genai.configure(api_key=gemini_key)
-                clients['gemini'] = genai.GenerativeModel('gemini-2.0-flash')
-                print("[AI] Gemini: Ready")
+                # Upgrading to 1.5 Pro for maximum reasoning ("Ultra" power)
+                clients['gemini'] = genai.GenerativeModel('gemini-1.5-pro')
+                print("[AI] Gemini Ultra (1.5 Pro): Ready")
             except Exception as e:
                 print(f"[AI] Gemini: Failed - {e}")
         
@@ -116,9 +119,10 @@ CURRENT OBSERVATIONS:
 {json.dumps(observations, indent=2, default=str)[:2000]}
 
 AVAILABLE ACTIONS:
-1. broadcast_intel - Create and publish an intelligence report
-2. send_telegram - Send a message to the operator
-3. wait - Take no action this cycle
+1. broadcast_intel - Create and publish a simple market update
+2. generate_deep_dive - EXPERIMENTAL: Generate a high-value Deep Dive Report ($19.99)
+3. send_telegram - Send a message to the operator
+4. wait - Take no action this cycle
 
 Based on the observations and your goals, decide what action to take.
 Respond in JSON format:
@@ -213,6 +217,42 @@ Top Coins by Market Cap:
             result = self.actions.telegram_send(message)
             self.memory.log_action("send_telegram", message, str(result), result.get("success", False))
             return result
+
+        elif action == "generate_deep_dive":
+            # Get trending target
+            trending = self.sensors.scan_trending()
+            if trending.get("success") and trending.get("trending"):
+                target = trending["trending"][0]["name"]
+            else:
+                target = "Bitcoin"
+            
+            print(f"[EXECUTE] Deep Dive Research on: {target}")
+            
+            # Generate Report via Gemini Ultra
+            report_content = self.researcher.generate_report(target)
+            
+            if report_content:
+                # Create PDF & Payment Link ($19.99 for Deep Dive)
+                pdf_res = self.actions.generate_pdf(f"YEDAN_DeepDive_{target}.pdf", f"DEEP DIVE: {target}", report_content)
+                pay_res = self.actions.create_payment(f"YEDAN Deep Dive: {target}", "19.99")
+                
+                # Broadcast Teaser
+                teaser = f"""<b>🔍 YEDAN DEEP DIVE: {target}</b>
+                
+Gemini Ultra has generated a comprehensive institutional analysis on {target}.
+
+<b>Contents:</b>
+• Technical Setup & Key Levels
+• Fundamental Catalysts
+• Institutional Entry Zones
+
+<a href='{pay_res.get('url')}'><b>🔓 UNLOCK FULL REPORT ($19.99)</b></a>"""
+                
+                result = self.actions.telegram_send(teaser)
+                self.memory.log_action("generate_deep_dive", f"Target: {target}", str(result), result.get("success", False))
+                return result
+            else:
+                return {"success": False, "error": "Research generation failed"}
         
         else:  # wait
             self.memory.log_action("wait", decision.get("reasoning", "Waiting"), "No action taken", True)

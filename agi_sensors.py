@@ -6,6 +6,7 @@ import os
 import requests
 from datetime import datetime
 from dotenv import load_dotenv
+from playwright.sync_api import sync_playwright
 
 load_dotenv()
 
@@ -97,13 +98,46 @@ class AGISensors:
             return {"success": False, "error": f"Status {resp.status_code}"}
         except Exception as e:
             return {"success": False, "error": str(e)}
+
+    def visual_scan(self, url="https://www.coingecko.com/en/watchlists/trending-crypto"):
+        """Perform a visual scan using Computer Use (Playwright)"""
+        print(f"[EYE] Scanning {url}...")
+        try:
+            with sync_playwright() as p:
+                browser = p.chromium.launch(headless=True)
+                page = browser.new_page()
+                page.goto(url, timeout=30000)
+                page.wait_for_load_state("networkidle")
+                
+                # Extract text content from top trending list (CoinGecko specific)
+                # This selector targets the coin names in the trending list
+                coins = page.locator("span.font-bold").all_inner_texts()
+                
+                # Take evidence screenshot
+                screenshot_path = f"visual_evidence_{int(datetime.now().timestamp())}.png"
+                page.screenshot(path=screenshot_path)
+                
+                browser.close()
+                
+                # Filter valid text (simple heuristic)
+                valid_coins = [c for c in coins[:10] if len(c) > 1]
+                
+                return {
+                    "success": True,
+                    "visual_data": valid_coins,
+                    "evidence": screenshot_path,
+                    "timestamp": datetime.now().isoformat()
+                }
+        except Exception as e:
+            return {"success": False, "error": f"Visual scan failed: {str(e)}"}
     
     def gather_all(self):
-        """Gather all sensor data"""
+        """Gather all sensor data including visual"""
         return {
             "market": self.scan_market(),
             "trending": self.scan_trending(),
             "telegram": self.get_telegram_messages(),
+            "visual": self.visual_scan(),  # New Computer Use Capability
             "timestamp": datetime.now().isoformat()
         }
 
