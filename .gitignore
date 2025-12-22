@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.env
+.DS_Store
+yedan_agi.db
+visual_evidence_*.png
+*.pdf
+node_modules/
+dist/
+.wrangler/

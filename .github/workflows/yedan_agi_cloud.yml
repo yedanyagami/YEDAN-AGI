@@ -1,0 +1,37 @@
+name: YEDAN AGI Cloud Loop
+
+on:
+  schedule:
+    # Run every 15 minutes
+    - cron: "*/15 * * * *"
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  agi-cycle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install google-generativeai openai requests python-dotenv paypalrestsdk reportlab
+
+      - name: Run AGI Single Cycle
+        env:
+          GROK_API_KEY: ${{ secrets.GROK_API_KEY }}
+          PPLX_API_KEY: ${{ secrets.PPLX_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PAYPAL_MODE: ${{ secrets.PAYPAL_MODE }}
+          PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
+          PAYPAL_CLIENT_SECRET: ${{ secrets.PAYPAL_CLIENT_SECRET }}
+        run: |
+          python yedan_agi.py --once
