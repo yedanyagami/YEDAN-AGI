@@ -22,6 +22,9 @@ from agi_memory import AGIMemory
 from agi_actions import AGIActions
 from agi_sensors import AGISensors
 from agi_research import AGIResearch
+from agi_evolution import AGIEvolution
+from agi_gems import GemRegistry
+import random
 
 # AI Clients
 try:
@@ -48,6 +51,8 @@ class YedanAGI:
         self.actions = AGIActions()
         self.sensors = AGISensors()
         self.researcher = AGIResearch()
+        self.evolution = AGIEvolution()
+        self.gem_registry = GemRegistry()
         
         # AI Models (with fallback)
         self.ai_clients = self._init_ai()
@@ -226,34 +231,50 @@ Top Coins by Market Cap:
             else:
                 target = "Bitcoin"
             
-            print(f"[EXECUTE] Deep Dive Research on: {target}")
+            # Select a Gem (for now random, later can be reasoned)
+            # Default to YEDAN_PRIME (Hedge Fund Analyst) but mix it up
+            gems = self.gem_registry.list_gems()
+            selected_gem = random.choice(gems)
             
-            # Generate Report via Gemini Ultra
-            report_content = self.researcher.generate_report(target)
+            print(f"[EXECUTE] Deep Dive Research on: {target} using Gem: {selected_gem}")
+            
+            # Generate Report via Gemini Ultra + Gem
+            report_content = self.researcher.generate_report(target, gem_name=selected_gem)
             
             if report_content:
                 # Create PDF & Payment Link ($19.99 for Deep Dive)
-                pdf_res = self.actions.generate_pdf(f"YEDAN_DeepDive_{target}.pdf", f"DEEP DIVE: {target}", report_content)
+                pdf_res = self.actions.generate_pdf(f"YEDAN_DeepDive_{target}_{selected_gem}.pdf", f"DEEP DIVE ({selected_gem}): {target}", report_content)
                 pay_res = self.actions.create_payment(f"YEDAN Deep Dive: {target}", "19.99")
                 
                 # Broadcast Teaser
-                teaser = f"""<b>🔍 YEDAN DEEP DIVE: {target}</b>
+                teaser = f"""<b>💎 YEDAN GEM ACTIVATED: {selected_gem}</b>
                 
-Gemini Ultra has generated a comprehensive institutional analysis on {target}.
+Gemini Ultra has generated a Deep Dive on {target}.
 
-<b>Contents:</b>
-• Technical Setup & Key Levels
-• Fundamental Catalysts
-• Institutional Entry Zones
+<b>Persona Insight:</b>
+{report_content[:200]}...
 
-<a href='{pay_res.get('url')}'><b>🔓 UNLOCK FULL REPORT ($19.99)</b></a>"""
+<a href='{pay_res.get('url')}'><b>🔓 UNLOCK {selected_gem}'s REPORT ($19.99)</b></a>"""
                 
                 result = self.actions.telegram_send(teaser)
-                self.memory.log_action("generate_deep_dive", f"Target: {target}", str(result), result.get("success", False))
+                self.memory.log_action("generate_deep_dive", f"Target: {target} | Gem: {selected_gem}", str(result), result.get("success", False))
                 return result
             else:
                 return {"success": False, "error": "Research generation failed"}
         
+            else:
+                return {"success": False, "error": "Research generation failed"}
+        
+        elif action == "evolve_system":
+            print("[EXECUTE] Running System Evolution...")
+            patch_note = self.evolution.evolve()
+            if patch_note:
+                # Notify operator of evolution
+                msg = f"🧬 **YEDAN EVOLUTION**\n\nSystem has optimized its own logic.\n\n{patch_note[:500]}..."
+                self.actions.telegram_send(msg)
+                return {"success": True, "patch_note": patch_note}
+            return {"success": False}
+
         else:  # wait
             self.memory.log_action("wait", decision.get("reasoning", "Waiting"), "No action taken", True)
             return {"action": "wait"}
