@@ -7,6 +7,7 @@ import json
 import google.generativeai as genai
 from datetime import datetime
 from dotenv import load_dotenv
+from agi_browser_gemini import BrowserGemini
 
 load_dotenv()
 
@@ -19,10 +20,13 @@ class ContentFactory:
                 self.model = genai.GenerativeModel('gemini-2.0-flash-001')
                 print("[FACTORY] Gemini Ultra Content Matrix: Online")
             except Exception as e:
-                print(f"[FACTORY] Init Failed: {e}")
+                print(f"[FACTORY] API Init Failed: {e}")
                 self.model = None
         else:
             self.model = None
+        
+        # Browser fallback (always available)
+        self.browser_gemini = BrowserGemini(headless=True)
 
     def generate_matrix(self, target, deep_dive_report):
         """
@@ -77,9 +81,9 @@ class ContentFactory:
             response = self.model.generate_content(prompt, generation_config={"response_mime_type": "application/json"})
             return json.loads(response.text)
         except Exception as e:
-            print(f"[FACTORY] Matrix Generation Failed: {e}")
-            # Fallback for non-JSON response (rare with Ultra)
-            return None
+            print(f"[FACTORY] API Failed: {e}. Falling back to BROWSER...")
+            # FALLBACK: Use Browser Gemini (Perpetual Engine)
+            return self.browser_gemini.generate_content_matrix(target, deep_dive_report[:500])
 
 if __name__ == "__main__":
     # Test
