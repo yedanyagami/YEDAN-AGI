@@ -2,7 +2,7 @@ name: YEDAN-LEVIATHAN Expansion
 
 on:
   schedule:
-    - cron: '*/20 * * * *'
+    - cron: "*/20 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -19,22 +19,22 @@ jobs:
         task: [btc_scan, sol_scan, eth_scan, wallet_guard, genesis_mind]
 
     steps:
-    - name: 📥 下載大腦
+    - name: Clone Repo
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GH_PAT }}
 
-    - name: 🐍 注入神經
+    - name: Setup Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: "3.10"
 
-    - name: 📦 武裝設備
+    - name: Install Deps
       run: |
         pip install requests redis google-generativeai imap-tools playwright
         playwright install chromium
 
-    - name: ⚔️ 執行任務: ${{ matrix.task }}
+    - name: Execute Mission
       env:
         REDIS_URL: ${{ secrets.REDIS_URL }}
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -42,12 +42,12 @@ jobs:
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
         TARGET_TASK: ${{ matrix.task }}
       run: |
-        echo "🚀 Unit ${{ matrix.task }} 啟動..."
-        
+        echo "🚀 Unit ${{ matrix.task }} Launching..."
+        # 根據任務類型選擇武器，若腳本不存在則跳過
         if [ "$TARGET_TASK" == "wallet_guard" ]; then
-            python yedan_wallet.py
+            if [ -f yedan_wallet.py ]; then python yedan_wallet.py; else echo "Wallet script missing"; fi
         elif [ "$TARGET_TASK" == "genesis_mind" ]; then
-            python main.py || echo "Main brain updating..."
+            if [ -f main.py ]; then python main.py || true; else echo "Main brain missing"; fi
         else
-            python antigravity_browser.py
+            if [ -f antigravity_browser.py ]; then python antigravity_browser.py; else echo "Browser script missing"; fi
         fi
