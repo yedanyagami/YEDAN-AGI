@@ -1,0 +1,40 @@
+name: Leviathan Sentry (Cloud Loop)
+
+# 觸發條件：
+# 1. schedule: 每 15 分鐘自動執行 (Cron 表達式)
+# 2. workflow_dispatch: 允許您在網頁上手動按按鈕測試
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+jobs:
+  sentry-mission:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 下載您的代碼庫
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. 安裝 Python 3.12 穩定版
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 3. 安裝軍火庫 (依賴庫)
+      - name: Install Arsenal
+        run: |
+          pip install google-generativeai playwright requests python-dotenv
+          playwright install chromium
+
+      # 4. 執行哨兵任務
+      - name: Run Sentry Agent
+        env:
+          # 從 GitHub Secrets 注入鑰匙到環境變數
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python leviathan_sentry.py
