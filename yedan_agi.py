@@ -97,7 +97,7 @@ class YedanAGI:
             try:
                 genai.configure(api_key=gemini_key)
                 # Upgrading to 1.5 Pro for maximum reasoning ("Ultra" power)
-                clients['gemini'] = genai.GenerativeModel('gemini-1.5-pro')
+                clients['gemini'] = genai.GenerativeModel('gemini-2.0-flash-001')
                 print("[AI] Gemini Ultra (1.5 Pro): Ready")
             except Exception as e:
                 print(f"[AI] Gemini: Failed - {e}")

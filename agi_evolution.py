@@ -20,7 +20,7 @@ class AGIEvolution:
             try:
                 genai.configure(api_key=self.api_key)
                 # Using 1.5 Pro for massive context window (History Analysis)
-                self.model = genai.GenerativeModel('gemini-1.5-pro')
+                self.model = genai.GenerativeModel('gemini-2.0-flash-001')
                 print("[EVOLUTION] Gemini Ultra Mirror: Online")
             except Exception as e:
                 print(f"[EVOLUTION] Init Failed: {e}")

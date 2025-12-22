@@ -17,7 +17,7 @@ class AGIResearch:
             try:
                 genai.configure(api_key=self.api_key)
                 # Use 1.5 Pro for deep research
-                self.model = genai.GenerativeModel('gemini-1.5-pro')
+                self.model = genai.GenerativeModel('gemini-2.0-flash-001')
                 self.gems = GemRegistry()
                 print("[RESEARCH] Gemini Ultra Core: Online")
             except Exception as e:
