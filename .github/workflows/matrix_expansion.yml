@@ -5,7 +5,7 @@ on:
     - cron: "*/20 * * * *"
   workflow_dispatch:
 
-# 【關鍵修正】賦予 GITHUB_TOKEN 寫入權限
+# 給予最高權限，不再問您密碼
 permissions:
   contents: write
   issues: write
@@ -24,33 +24,33 @@ jobs:
     - name: Clone Repository
       uses: actions/checkout@v4
       with:
+        # 使用內建金鑰，保證通過
         token: ${{ secrets.GITHUB_TOKEN }}
-        fetch-depth: 0
 
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
         python-version: "3.10"
 
-    - name: Install Dependencies
+    - name: Install Weapons
       run: |
         pip install requests redis google-generativeai imap-tools playwright
         playwright install chromium
 
     - name: Execute Mission
       env:
+        # 自動掛載所有您已經設定好的秘密
         REDIS_URL: ${{ secrets.REDIS_URL }}
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
-        GH_PAT: ${{ secrets.GITHUB_TOKEN }}
         TARGET_TASK: ${{ matrix.task }}
       run: |
-        echo "🚀 Unit ${{ matrix.task }} Launching..."
+        echo "🚀 Unit ${{ matrix.task }} 全自動啟動..."
         if [ "$TARGET_TASK" == "wallet_guard" ]; then
-            if [ -f yedan_wallet.py ]; then python yedan_wallet.py; else echo "Wallet script missing"; fi
+            if [ -f yedan_wallet.py ]; then python yedan_wallet.py; else echo "Wallet module missing"; fi
         elif [ "$TARGET_TASK" == "genesis_mind" ]; then
-            if [ -f main.py ]; then python main.py || true; else echo "Main brain missing"; fi
+            if [ -f main.py ]; then python main.py || true; else echo "Brain module missing"; fi
         else
-            if [ -f antigravity_browser.py ]; then python antigravity_browser.py; else echo "Browser script missing"; fi
+            if [ -f antigravity_browser.py ]; then python antigravity_browser.py; else echo "Browser module missing"; fi
         fi

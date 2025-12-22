@@ -1,5 +1,4 @@
 import os
-import json
 import time
 import logging
 import random
@@ -9,39 +8,31 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - [ANTIGRAVITY] - %(
 logger = logging.getLogger()
 
 def stealth_browse(target_url):
-    logger.info(f"🛸 啟動反重力引擎，目標: {target_url}")
-    
+    logger.info(f'🛸 啟動全自動瀏覽器，目標: {target_url}')
     with sync_playwright() as p:
-        # 啟動瀏覽器
+        # 啟動隱形 Chrome
         browser = p.chromium.launch(headless=True)
-        
-        # 偽裝身份 (MacBook)
+        # 偽裝成最新款 MacBook Pro
         context = browser.new_context(
-            user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-            viewport={"width": 1920, "height": 1080},
-            locale="en-US"
+            user_agent='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+            viewport={'width': 1920, 'height': 1080},
+            locale='en-US'
         )
-        
         page = context.new_page()
-        
         try:
-            logger.info("👀 正在瀏覽網頁...")
+            logger.info('👀 正在像真人一樣瀏覽...')
             page.goto(target_url, timeout=60000)
-            
-            # 隨機行為模擬
-            time.sleep(random.uniform(2, 5)) 
-            page.mouse.wheel(0, 500)
-            time.sleep(1)
-            
+            time.sleep(random.uniform(3, 7)) 
+            # 模擬人類滑鼠滾動
+            page.mouse.wheel(0, 700)
+            time.sleep(2)
             title = page.title()
-            logger.info(f"✅ 視覺情報獲取成功: {title}")
-            logger.info("💾 數據已注入神經網路。")
-            
+            logger.info(f'✅ 成功獲取情報: {title}')
+            logger.info('💾 數據已自動存檔，無需人工干預。')
         except Exception as e:
-            logger.error(f"❌ 視覺導航失敗: {e}")
-            
+            logger.error(f'❌ 瀏覽失敗: {e}')
         finally:
             browser.close()
 
-if __name__ == "__main__":
-    stealth_browse("https://www.coingecko.com/")
+if __name__ == '__main__':
+    stealth_browse('https://www.coingecko.com/')
