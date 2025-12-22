@@ -5,47 +5,34 @@ on:
     branches: [ main ]
   schedule:
     - cron: '*/15 * * * *'
-  repository_dispatch:
-    types: [ouroboros-loop]
   workflow_dispatch:
 
 permissions:
   contents: write
   issues: write
-  pull-requests: write
 
 jobs:
   run-agi:
     runs-on: ubuntu-latest
     timeout-minutes: 350
-
     steps:
-    - name: 📥 Clone Digital Body
+    - name: 📥 Clone Repository
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GH_PAT }}
 
-    - name: 🐍 Inject Python Neuro-System
+    - name: 🐍 Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
 
-    - name: 📦 Install Organs
-      run: |
-        pip install requests redis google-generativeai imap-tools
+    - name: 📦 Install Dependencies
+      run: pip install requests redis google-generativeai imap-tools
 
-    - name: 🧠 Ignite AGI Core
+    - name: 🧠 Ignite Core
       env:
         REDIS_URL: ${{ secrets.REDIS_URL }}
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        GH_PAT: ${{ secrets.GH_PAT }}
         GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
-      run: |
-        timeout 340m python main.py || true
-
-    - name: ♾️ Ouroboros Rebirth
-      if: always()
-      run: |
-        echo "♻️ Triggering reincarnation..."
-        curl -X POST -H "Authorization: token ${{ secrets.GH_PAT }}"         -H "Accept: application/vnd.github.v3+json"         https://api.github.com/repos/${{ github.repository }}/dispatches         -d '{"event_type":"ouroboros-loop"}'
+      run: timeout 300m python main.py || echo "Brain restart required"
