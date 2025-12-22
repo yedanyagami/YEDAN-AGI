@@ -2,8 +2,8 @@ name: YEDAN-LEVIATHAN Expansion
 
 on:
   schedule:
-    - cron: '*/20 * * * *'
-  workflow_dispatch:
+    - cron: '*/20 * * * *' # 每 20 分鐘發動一次
+  workflow_dispatch:       # 允許手動觸發
 
 permissions:
   contents: write
@@ -16,6 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # 定義 5 個分身任務
         task: [btc_scan, sol_scan, eth_scan, wallet_guard, genesis_mind]
 
     steps:
@@ -43,10 +44,12 @@ jobs:
         TARGET_TASK: ${{ matrix.task }}
       run: |
         echo "🚀 Unit ${{ matrix.task }} 啟動 Computer Use..."
+        
         if [ "$TARGET_TASK" == "wallet_guard" ]; then
             python yedan_wallet.py
         elif [ "$TARGET_TASK" == "genesis_mind" ]; then
             python main.py
         else
+            # 掃描任務
             python antigravity_browser.py
         fi
