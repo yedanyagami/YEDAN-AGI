@@ -24,6 +24,7 @@ from agi_sensors import AGISensors
 from agi_research import AGIResearch
 from agi_evolution import AGIEvolution
 from agi_gems import GemRegistry
+from agi_factory import ContentFactory
 import random
 
 # AI Clients
@@ -53,6 +54,7 @@ class YedanAGI:
         self.researcher = AGIResearch()
         self.evolution = AGIEvolution()
         self.gem_registry = GemRegistry()
+        self.factory = ContentFactory()
         
         # AI Models (with fallback)
         self.ai_clients = self._init_ai()
@@ -126,8 +128,10 @@ CURRENT OBSERVATIONS:
 AVAILABLE ACTIONS:
 1. broadcast_intel - Create and publish a simple market update
 2. generate_deep_dive - EXPERIMENTAL: Generate a high-value Deep Dive Report ($19.99)
-3. send_telegram - Send a message to the operator
-4. wait - Take no action this cycle
+3. evolve_system - Run self-diagnostics and optimization
+4. generate_content_matrix - MAXIMALISM: Create multi-channel content from intel
+5. send_telegram - Send a message to the operator
+6. wait - Take no action this cycle
 
 Based on the observations and your goals, decide what action to take.
 Respond in JSON format:
@@ -274,6 +278,35 @@ Gemini Ultra has generated a Deep Dive on {target}.
                 self.actions.telegram_send(msg)
                 return {"success": True, "patch_note": patch_note}
             return {"success": False}
+
+                self.actions.telegram_send(msg)
+                return {"success": True, "patch_note": patch_note}
+            return {"success": False}
+        
+        elif action == "generate_content_matrix":
+            # 1. Generate Deep Dive First (Source Material)
+            trending = self.sensors.scan_trending()
+            target = trending["trending"][0]["name"] if trending.get("success") and trending.get("trending") else "Bitcoin"
+            
+            # Use 'GROWTH_HACKER' Gem for maximum virality in the factory source
+            report = self.researcher.generate_report(target, gem_name="GROWTH_HACKER")
+            
+            if report:
+                # 2. Squeeze Ultra (Factory)
+                matrix = self.factory.generate_matrix(target, report)
+                
+                # 3. Deliver (Simulated Multi-Channel)
+                if matrix:
+                    # Send the Telegram portion real-time
+                    self.actions.telegram_send(f"🏭 **CONTENT FACTORY OUTPUT**\n\n{matrix.get('telegram')}")
+                    
+                    # Save the rest to a file (Simulating scheduling)
+                    fname = f"content_matrix_{target}_{int(datetime.now().timestamp())}.json"
+                    with open(fname, "w", encoding='utf-8') as f:
+                        json.dump(matrix, f, indent=2)
+                        
+                    return {"success": True, "matrix_file": fname}
+            return {"success": False, "error": "Factory Failed"}
 
         else:  # wait
             self.memory.log_action("wait", decision.get("reasoning", "Waiting"), "No action taken", True)
