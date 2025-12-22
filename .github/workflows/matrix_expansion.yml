@@ -22,7 +22,7 @@ jobs:
     - name: Clone Repo
       uses: actions/checkout@v4
       with:
-        token: ${{ secrets.GH_PAT }}
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Setup Python
       uses: actions/setup-python@v5
@@ -40,10 +40,10 @@ jobs:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        GH_PAT: ${{ secrets.GITHUB_TOKEN }}
         TARGET_TASK: ${{ matrix.task }}
       run: |
         echo "🚀 Unit ${{ matrix.task }} Launching..."
-        # 根據任務類型選擇武器，若腳本不存在則跳過
         if [ "$TARGET_TASK" == "wallet_guard" ]; then
             if [ -f yedan_wallet.py ]; then python yedan_wallet.py; else echo "Wallet script missing"; fi
         elif [ "$TARGET_TASK" == "genesis_mind" ]; then
