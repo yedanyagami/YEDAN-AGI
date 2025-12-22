@@ -19,7 +19,7 @@ jobs:
         task: [btc_scan, sol_scan, eth_scan, wallet_guard, genesis_mind]
 
     steps:
-    - name: Clone Repo
+    - name: Clone Repository
       uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
@@ -29,7 +29,7 @@ jobs:
       with:
         python-version: "3.10"
 
-    - name: Install Deps
+    - name: Install Dependencies
       run: |
         pip install requests redis google-generativeai imap-tools playwright
         playwright install chromium
