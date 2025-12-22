@@ -1,0 +1,52 @@
+name: YEDAN-LEVIATHAN Expansion
+
+on:
+  schedule:
+    - cron: '*/20 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  legion-attack:
+    name: Legion Unit
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [btc_scan, sol_scan, eth_scan, wallet_guard, genesis_mind]
+
+    steps:
+    - name: 📥 下載大腦
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GH_PAT }}
+
+    - name: 🐍 注入神經
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: 📦 武裝設備
+      run: |
+        pip install requests redis google-generativeai imap-tools playwright
+        playwright install chromium
+
+    - name: ⚔️ 執行任務: ${{ matrix.task }}
+      env:
+        REDIS_URL: ${{ secrets.REDIS_URL }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+        GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        TARGET_TASK: ${{ matrix.task }}
+      run: |
+        echo "🚀 Unit ${{ matrix.task }} 啟動 Computer Use..."
+        if [ "$TARGET_TASK" == "wallet_guard" ]; then
+            python yedan_wallet.py
+        elif [ "$TARGET_TASK" == "genesis_mind" ]; then
+            python main.py
+        else
+            python antigravity_browser.py
+        fi
