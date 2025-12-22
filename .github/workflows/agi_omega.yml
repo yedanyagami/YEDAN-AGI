@@ -19,6 +19,7 @@ jobs:
     - name: Clone Repo
       uses: actions/checkout@v4
       with:
+        # 【修正 1】使用內建 Token，解決 'Input required' 錯誤
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Setup Python
@@ -27,6 +28,7 @@ jobs:
         python-version: "3.10"
 
     - name: Install Deps
+      # 【修正 2】補上 google-generativeai，解決 'No module named google'
       run: pip install requests redis google-generativeai imap-tools playwright
 
     - name: Ignite Core
@@ -35,6 +37,7 @@ jobs:
         GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
         GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        # 這裡也同步換成 GITHUB_TOKEN
         GH_PAT: ${{ secrets.GITHUB_TOKEN }}
       run: |
         timeout 300m python main.py || echo "Brain loop ended naturally"
