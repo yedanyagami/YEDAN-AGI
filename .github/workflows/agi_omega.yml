@@ -1,40 +1,44 @@
 name: YEDAN-AGI OMEGA Protocol
 
-on: 
+on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
+# 【關鍵修正】賦予 GITHUB_TOKEN 寫入權限
 permissions:
   contents: write
   issues: write
+  pull-requests: write
 
 jobs:
   run-agi:
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
-    - name: Clone Repo
+    - name: Clone Repository
       uses: actions/checkout@v4
       with:
-        token: ${secrets.GITHUB_TOKEN}}
+        # 使用 GITHUB_TOKEN 並設定 fetch-depth: 0 以確保完整歷史
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
 
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: "3.10"
 
-    - name: Install Deps
+    - name: Install Dependencies
       run: pip install requests redis google-generativeai imap-tools playwright
 
     - name: Ignite Core
       env:
-        REDIS_URL: ${secrets.REDIS_URL}}
-        GEMINI_API_KEY: ${secrets.GEMINI_API_KEY}}
-        GMAIL_USERNAME: ${secrets.GMAIL_USERNAME}}
-        GMAIL_PASSWORD: ${secrets.GMAIL_PASSWORD}}
-        GH_PAT: ${secrets.GITHuB_TOKEN}}
+        REDIS_URL: ${{ secrets.REDIS_URL }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+        GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        GH_PAT: ${{ secrets.GITHUB_TOKEN }}
       run: |
         timeout 300m python main.py || echo "Brain loop ended naturally"

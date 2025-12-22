@@ -2,12 +2,14 @@ name: YEDAN-LEVIATHAN Expansion
 
 on:
   schedule:
-    - cron: #*/20 * * * *'
-  worhflow_dispatch:
+    - cron: "*/20 * * * *"
+  workflow_dispatch:
 
+# 【關鍵修正】賦予 GITHUB_TOKEN 寫入權限
 permissions:
   contents: write
   issues: write
+  pull-requests: write
 
 jobs:
   legion-attack:
@@ -19,31 +21,32 @@ jobs:
         task: [btc_scan, sol_scan, eth_scan, wallet_guard, genesis_mind]
 
     steps:
-    - name: Clone Repo
+    - name: Clone Repository
       uses: actions/checkout@v4
       with:
-        token: ${secrets.GITHUB_TOKEN}}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
 
     - name: Setup Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: "3.10"
 
-    - name: Install Deps
+    - name: Install Dependencies
       run: |
         pip install requests redis google-generativeai imap-tools playwright
         playwright install chromium
 
     - name: Execute Mission
       env:
-        REDIS_URL: ${secrets.REDIS_URL}}
-        GEMINI_API_KEY: ${secrets.GEMINI_API_KEY}}
-        GMAIL_USERNAME: ${secrets.GMAIL_USERNAME}}
-        GMAIL_PASSWORD: ${secrets.GMAIL_PASSWORD}}
-        GH_PAT: ${secrets.GITHuB_TOKEN}}
-        TARGET_TASK: ${matrix.task}}
+        REDIS_URL: ${{ secrets.REDIS_URL }}
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        GMAIL_USERNAME: ${{ secrets.GMAIL_USERNAME }}
+        GMAIL_PASSWORD: ${{ secrets.GMAIL_PASSWORD }}
+        GH_PAT: ${{ secrets.GITHUB_TOKEN }}
+        TARGET_TASK: ${{ matrix.task }}
       run: |
-        echo "\ud83d\ude80 Unit ${matrix.task}} Launching..."
+        echo "🚀 Unit ${{ matrix.task }} Launching..."
         if [ "$TARGET_TASK" == "wallet_guard" ]; then
             if [ -f yedan_wallet.py ]; then python yedan_wallet.py; else echo "Wallet script missing"; fi
         elif [ "$TARGET_TASK" == "genesis_mind" ]; then
