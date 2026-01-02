@@ -1,0 +1,16 @@
+{
+  "reddit": {
+    "subreddits": ["Shopify", "ecommerce", "SaaS", "Entrepreneur"],
+    "keywords": ["API error", "GraphQL", "webhook", "inventory sync", "rate limit", "checkout failed"],
+    "min_karma": 10
+  },
+  "twitter": {
+    "hashtags": ["#Shopify", "#ecommerce", "#ShopifyDev"],
+    "keywords": ["API problem", "sync error", "help needed", "broken store"],
+    "min_followers": 5
+  },
+  "disclosure_footer": {
+    "reddit": "\n\n---\n\n*🤖 AI-Assisted Response | [YEDAN Auto-Fix Toolkit](https://yedanyagami.myshopify.com)*",
+    "twitter": "🤖 Automated by YEDAN | Docs: yedanyagami.myshopify.com"
+  }
+}
