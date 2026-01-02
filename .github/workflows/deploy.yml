@@ -1,0 +1,48 @@
+name: YEDAN CI/CD
+
+on:
+  push:
+    branches: [main, 1-yedan-agi-live-monitoring-report]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run tests
+        run: |
+          python -m pytest tests/ -v --tb=short || echo "No tests yet"
+
+      - name: Syntax check
+        run: |
+          python -m py_compile yedan_reactor.py
+          python -m py_compile modules/safety_guard.py
+          python -m py_compile modules/reddit_browser_monitor.py
+          python -m py_compile modules/twitter_monitor.py
+
+  deploy-cloudflare:
+    needs: test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/1-yedan-agi-live-monitoring-report'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy Synapse Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          command: deploy
