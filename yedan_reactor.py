@@ -5,7 +5,8 @@ import json
 import schedule
 from dotenv import load_dotenv
 
-from modules.reddit_monitor import RedditMonitor
+# V1500: Browser-Use based monitors (no API required)
+from modules.reddit_browser_monitor import RedditBrowserMonitor
 from modules.twitter_monitor import TwitterMonitor
 from modules.r1_reasoner import DeepSeekReasoner
 from modules.safety_guard import SafetyGuard
@@ -46,17 +47,40 @@ def main():
     from modules.hive_mind import HiveMind
     hive = HiveMind(reasoner)
     
-    # 2. Initialize Monitors (SIMULATION MODE ENABLED)
-    logger.info("🔧 Running in SIMULATION MODE (No API Keys required)")
+    # 2. Determine Operation Mode (SMART DETECTION)
+    import os
+    
+    # Check if we have real API keys
+    deepseek_key = os.getenv("DEEPSEEK_API_KEY", "")
+    reddit_id = os.getenv("REDDIT_CLIENT_ID", "")
+    twitter_token = os.getenv("TWITTER_BEARER_TOKEN", "")
+    
+    deepseek_live = deepseek_key and "your_" not in deepseek_key and len(deepseek_key) > 20
+    reddit_live = reddit_id and "your_" not in reddit_id
+    twitter_live = twitter_token and "your_" not in twitter_token
+    
+    if deepseek_live:
+        logger.info("🧠 DeepSeek R1: LIVE MODE (Real reasoning enabled)")
+    else:
+        logger.info("🔧 DeepSeek R1: SIMULATION MODE (Mock responses)")
+        
+    if reddit_live:
+        logger.info("🔴 Reddit: LIVE MODE (Real API)")
+    else:
+        logger.info("🔮 Reddit: SIMULATION MODE (Mock data)")
+        
+    if twitter_live:
+        logger.info("🐦 Twitter: LIVE MODE (Real API)")
+    else:
+        logger.info("🔮 Twitter: SIMULATION MODE (Mock data)")
     
     # Pass 'hive' instead of 'reasoner' or alongside it. 
-    # We will inject it into the monitors.
-    reddit_bot = RedditMonitor(reasoner, guard, config)
-    reddit_bot.simulation_mode = True 
-    reddit_bot.hive = hive # Injection
+    # V1500: Reddit uses Browser-Use (no API required)
+    reddit_bot = RedditBrowserMonitor(hive, guard, config)
+    # simulation_mode is auto-detected in RedditBrowserMonitor
     
     twitter_bot = TwitterMonitor(reasoner, guard, config)
-    twitter_bot.simulation_mode = True
+    twitter_bot.simulation_mode = not twitter_live
     twitter_bot.hive = hive # Injection
 
     # 3. Schedule Daily Analytics
@@ -79,7 +103,10 @@ def main():
     
     logger.info("✅ All systems online. Monitoring active.")
 
-    # 5. Main Keep-Alive Loop
+    # 5. Main Keep-Alive Loop (V1700 Self-Healing)
+    restart_counts = {"reddit": 0, "twitter": 0}
+    max_restarts = 5
+    
     try:
         while True:
             if check_pause_flag():
@@ -89,13 +116,24 @@ def main():
             schedule.run_pending()
             time.sleep(60)
             
-            # Watchdog: Check if threads are alive?
+            # V1700 Watchdog with Auto-Restart
             if not t_reddit.is_alive():
-                logger.error("Reddit thread died!")
-                # Optional: Restart functionality
+                restart_counts["reddit"] += 1
+                if restart_counts["reddit"] <= max_restarts:
+                    logger.warning(f"🔄 Reddit thread died - Restarting ({restart_counts['reddit']}/{max_restarts})...")
+                    t_reddit = threading.Thread(target=reddit_bot.start_stream, name="RedditThread", daemon=True)
+                    t_reddit.start()
+                else:
+                    logger.error("❌ Reddit exceeded max restarts. Stopping.")
             
             if not t_twitter.is_alive():
-                logger.error("Twitter thread died!")
+                restart_counts["twitter"] += 1
+                if restart_counts["twitter"] <= max_restarts:
+                    logger.warning(f"🔄 Twitter thread died - Restarting ({restart_counts['twitter']}/{max_restarts})...")
+                    t_twitter = threading.Thread(target=twitter_bot.start_stream, name="TwitterThread", daemon=True)
+                    t_twitter.start()
+                else:
+                    logger.error("❌ Twitter exceeded max restarts. Stopping.")
 
     except KeyboardInterrupt:
         logger.info("Manual shutdown requested.")
