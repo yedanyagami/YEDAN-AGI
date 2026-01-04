@@ -1,0 +1,137 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "commander": "Boris Cherny",
+    "last_updated": "2026-01-04T20:36:40+08:00",
+    "authority_level": 2
+  },
+  
+  "cloud_resources": {
+    "cloudflare_worker": {
+      "name": "synapse",
+      "url": "https://synapse.yagami8095.workers.dev",
+      "kv_id": "e3808706961e4d1c890ef2e212b52270",
+      "status": "ACTIVE",
+      "cost": "$0/month (free tier)"
+    },
+    "browserless": {
+      "token": "2TirLf5whJ8Nr2Wcddb75990452bb8c23137e70ceea022496",
+      "status": "READY",
+      "cost": "Usage-based"
+    }
+  },
+  
+  "llm_apis": {
+    "deepseek_r1": {
+      "model": "deepseek-reasoner",
+      "status": "ACTIVE",
+      "cost_per_1m_tokens": "$0.14",
+      "priority": 1,
+      "use_for": ["reasoning", "strategy", "decision"]
+    },
+    "grok": {
+      "status": "ACTIVE",
+      "cost_per_1m_tokens": "$2.00",
+      "priority": 3,
+      "use_for": ["twitter_analysis"]
+    },
+    "monica": {
+      "status": "ACTIVE",
+      "priority": 2,
+      "use_for": ["fallback"]
+    }
+  },
+  
+  "commerce_apis": {
+    "shopify": {
+      "store": "yedanyagami-io-2.myshopify.com",
+      "status": "ACTIVE",
+      "fee": "2.9% + $0.30",
+      "monthly": "$29"
+    },
+    "payhip": {
+      "status": "ACTIVE",
+      "fee": "5%"
+    },
+    "kofi": {
+      "page_id": "X8X31L95NG",
+      "status": "ACTIVE"
+    }
+  },
+  
+  "social_apis": {
+    "twitter": {
+      "account": "yedanyagamiio",
+      "status": "ACTIVE",
+      "mode": "OAuth 2.0"
+    },
+    "reddit": {
+      "account": "yedanapi",
+      "status": "BROWSER_USE",
+      "note": "No API needed, uses login"
+    },
+    "telegram": {
+      "chat_id": "7848052227",
+      "status": "ACTIVE"
+    },
+    "meta": {
+      "status": "ACTIVE",
+      "note": "User + App tokens available"
+    }
+  },
+  
+  "defi_ready": {
+    "uniswap_v3": {
+      "module": "_archive/v1300/agi_liquidity.py",
+      "status": "DORMANT",
+      "chains": ["ethereum", "arbitrum", "polygon", "base"],
+      "note": "Needs RPC_URL and PRIVATE_KEY to activate"
+    }
+  },
+
+  "agent_team": {
+    "ORACLE": {
+      "role": "Strategy & Research",
+      "llm": "deepseek_r1",
+      "active": true
+    },
+    "FORGE": {
+      "role": "Code Generation",
+      "llm": "antigravity",
+      "active": true
+    },
+    "SENTINEL": {
+      "role": "Testing & Monitoring",
+      "llm": "deepseek_r1",
+      "active": true
+    },
+    "MERCHANT": {
+      "role": "Revenue Ops",
+      "apis": ["shopify", "payhip", "kofi"],
+      "active": true
+    },
+    "HERALD": {
+      "role": "Social & Traffic",
+      "apis": ["twitter", "reddit", "telegram"],
+      "active": true
+    }
+  },
+
+  "token_optimization": {
+    "context_pruning_enabled": true,
+    "ignore_patterns": [
+      "node_modules/**",
+      "_archive/**",
+      "evolution_backups/**",
+      "__pycache__/**"
+    ],
+    "priority_files": [
+      "core/*.py",
+      "modules/*.py",
+      "modules_ecom/*.py",
+      ".env.reactor",
+      "config/*.json",
+      "data/*.csv"
+    ]
+  }
+}
