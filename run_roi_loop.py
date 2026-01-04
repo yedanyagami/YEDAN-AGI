@@ -3,6 +3,13 @@ ROI Loop Coordinator (The Master Cycle)
 Connects: Miner -> Writer -> Shopify -> Traffic (Sim/Real) -> Profit.
 Executes the full business cycle.
 """
+import sys
+import io
+
+# Fix Windows console encoding for emojis
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 import time
 import random
 from modules.content_miner import OpenContentMiner
@@ -54,11 +61,12 @@ class ROILoop:
         print("   -> Drafting high-value response...")
         
         simulated_input = f"User is asking: {lead['title']}. Body: {lead['body']}"
-        reply = self.writer.generate_reply(simulated_input, platform="reddit")
+        reply_data = self.writer.generate_reply(simulated_input, platform="reddit")
+        reply_text = reply_data.get("reply_content", "") if isinstance(reply_data, dict) else str(reply_data)
         
         # Inject our Product Link
-        product_link = "https://yedanyagami-io-2.myshopify.com/products/ai-insider-report-2026-01-02"
-        pitch = reply.replace("[Link]", product_link) + f"\n\nP.S. I generated this advice using the strategies in my daily report: {product_link}"
+        product_link = "https://yedanyagami-io-2.myshopify.com/products/ai-insider-report-2026-01-04"
+        pitch = reply_text + f"\n\nP.S. I generated this advice using the strategies in my daily report: {product_link}"
         
         print("\n" + "-"*40)
         print("[AI AUTO-REPLY]:")
