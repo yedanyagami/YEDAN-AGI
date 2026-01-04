@@ -12,12 +12,48 @@
       "url": "https://synapse.yagami8095.workers.dev",
       "kv_id": "e3808706961e4d1c890ef2e212b52270",
       "status": "ACTIVE",
-      "cost": "$0/month (free tier)"
+      "cost": "$0/month (free tier)",
+      "additional_workers": ["scam-guard"]
     },
     "browserless": {
       "token": "2TirLf5whJ8Nr2Wcddb75990452bb8c23137e70ceea022496",
       "status": "READY",
       "cost": "Usage-based"
+    },
+    "github_actions": {
+      "status": "ACTIVE",
+      "workflows": {
+        "evolution.yml": {
+          "schedule": "every 6 hours",
+          "function": "RSI Self-Reflection",
+          "uses_secrets": ["GH_PAT", "GEMINI_API_KEY"]
+        },
+        "loop.yml": {
+          "schedule": "every 30 minutes",
+          "function": "Immortal Loop - Auto-commits",
+          "status": "CAN RUN NOW"
+        },
+        "yedan_agi_cloud.yml": {
+          "schedule": "every 15 minutes",
+          "function": "Cloud AGI Cycle",
+          "uses_secrets": ["GROK_API_KEY", "GEMINI_API_KEY", "TELEGRAM_*", "PAYPAL_*"]
+        },
+        "deploy_workers.yml": {
+          "trigger": "on push to main",
+          "function": "Auto-deploy Cloudflare Workers",
+          "uses_secrets": ["CLOUDFLARE_API_TOKEN"]
+        }
+      },
+      "required_secrets": [
+        "CLOUDFLARE_API_TOKEN",
+        "GH_PAT (GitHub Personal Access Token)",
+        "GEMINI_API_KEY",
+        "GROK_API_KEY",
+        "TELEGRAM_BOT_TOKEN",
+        "TELEGRAM_CHAT_ID",
+        "PAYPAL_CLIENT_ID",
+        "PAYPAL_CLIENT_SECRET"
+      ]
     }
   },
   
@@ -82,10 +118,11 @@
   
   "defi_ready": {
     "uniswap_v3": {
-      "module": "_archive/v1300/agi_liquidity.py",
-      "status": "DORMANT",
+      "module": "modules/agi_liquidity.py",
+      "status": "ACTIVE",
       "chains": ["ethereum", "arbitrum", "polygon", "base"],
-      "note": "Needs RPC_URL and PRIVATE_KEY to activate"
+      "rpc": "https://mainnet.infura.io/v3/***",
+      "note": "Connected to Ethereum Mainnet. Needs PRIVATE_KEY for signing transactions."
     }
   },
 

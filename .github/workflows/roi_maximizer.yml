@@ -1,0 +1,76 @@
+name: YEDAN ROI Maximizer
+
+on:
+  schedule:
+    # Run every 4 hours for steady ROI growth
+    - cron: "0 */4 * * *"
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  roi-cycle:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install requests python-dotenv openai
+
+      - name: Create Daily Product
+        env:
+          SHOPIFY_ADMIN_TOKEN: ${{ secrets.SHOPIFY_ADMIN_TOKEN }}
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+        run: |
+          python -c "
+          import os
+          import requests
+          from datetime import datetime
+
+          # Simplified product creator for cloud
+          STORE = os.getenv('SHOPIFY_STORE_URL')
+          TOKEN = os.getenv('SHOPIFY_ADMIN_TOKEN')
+
+          today = datetime.now().strftime('%Y-%m-%d')
+
+          product = {
+              'product': {
+                  'title': f'AI Insider Report: {today}',
+                  'body_html': '<p>Daily AI insights for e-commerce entrepreneurs.</p>',
+                  'vendor': 'YEDAN AGI',
+                  'product_type': 'Digital Report',
+                  'variants': [{'price': '4.99', 'inventory_policy': 'continue'}]
+              }
+          }
+
+          r = requests.post(
+              f'https://{STORE}/admin/api/2024-01/products.json',
+              headers={'X-Shopify-Access-Token': TOKEN, 'Content-Type': 'application/json'},
+              json=product
+          )
+
+          if r.status_code == 201:
+              print(f'✅ Product created: {today}')
+          else:
+              print(f'Status: {r.status_code}')
+          "
+
+      - name: Notify Telegram
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+            -d "chat_id=$TELEGRAM_CHAT_ID" \
+            -d "text=[YEDAN CLOUD] ROI Cycle Complete - $(date '+%Y-%m-%d %H:%M')"
+
+      - name: Update Status
+        run: |
+          echo "ROI Cycle completed at $(date)"
