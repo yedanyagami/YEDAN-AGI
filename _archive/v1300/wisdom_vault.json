@@ -1,0 +1,37 @@
+[
+  {
+    "timestamp": "2025-12-26T19:17:29.297710",
+    "input": "How to pitch Shopify agencies?",
+    "output": "Use ROI framing...",
+    "revenue": 500,
+    "platform": "email"
+  },
+  {
+    "timestamp": "2025-12-26T19:17:29.299867",
+    "input": "Shopify rate limit solution",
+    "output": "Use webhooks...",
+    "revenue": 1200,
+    "platform": "twitter"
+  },
+  {
+    "timestamp": "2025-12-26T19:44:56.282236",
+    "input": "Need a no-code solution for inventory sync",
+    "output": "Based on 'Use webhooks...': Consider using webhooks instead of polling. Our solution handles 100K events/day with zero rate limits.",
+    "revenue": 194,
+    "platform": "r/Shopify"
+  },
+  {
+    "timestamp": "2025-12-26T19:44:56.286889",
+    "input": "Polling is killing my server costs",
+    "output": "Based on 'Use ROI framing...': Consider using webhooks instead of polling. Our solution handles 100K events/day with zero rate limits.",
+    "revenue": 118,
+    "platform": "Twitter #NoCode"
+  },
+  {
+    "timestamp": "2025-12-26T19:44:56.302470",
+    "input": "Why does my webhook keep timing out?",
+    "output": "Based on 'Use webhooks...': Consider using webhooks instead of polling. Our solution handles 100K events/day with zero rate limits.",
+    "revenue": 125,
+    "platform": "IndieHackers"
+  }
+]

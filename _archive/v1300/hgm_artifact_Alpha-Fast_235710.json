@@ -1,0 +1,20 @@
+{
+  "agent": "Alpha-Fast",
+  "role": "Social Momentum",
+  "task": "Scan Twitter for 'AI Agent' trends",
+  "proposal": {
+    "name": "Reflex-Clade",
+    "action_plan": "**YEDAN YAGANI: QUICK REFLEX ACTION PLAN**  \n**MISSION:** Scan Twitter for 'AI Agent' trends  \n**TIME:** Immediate execution  \n\n---\n\n### **1. INITIATE RAPID SCAN**\n- **Keyword Focus:** \"AI Agent,\" \"Autonomous Agent,\" \"Agentic AI,\" \"AI Assistant,\" \"LLM Agent\"  \n- **Filters:**  \n  - Time: Last 24 hours (expandable to 7 days if needed)  \n  - Language: English, Japanese, Chinese, Korean, Spanish  \n  - Engagement Threshold: >50 retweets/likes for signal prioritization  \n\n---\n\n### **2. TREND IDENTIFICATION MATRIX**\n- **Emerging Topics:**  \n  - New AI agent frameworks/tools (e.g., AutoGPT, LangChain updates)  \n  - Corporate announcements (startups/tech giants launching agent products)  \n  - Research breakthroughs (academic papers, conference highlights)  \n  - Viral debates (ethics, job displacement, agent capabilities)  \n\n- **Sentiment Analysis:**  \n  - Positive: Excitement, adoption stories, productivity gains  \n  - Negative: Fear, criticism, failure anecdotes  \n  - Neutral: Technical discussions, comparisons  \n\n---\n\n### **3. PRIORITY SIGNALS**\n- **High Priority:**  \n  - Mentions of \"security vulnerability\" or \"agent takeover\"  \n  - Sudden spikes in volume (>500% increase in mentions)  \n  - Influencers/policymakers engaging (e.g., @ylecun, @sama)  \n\n- **Medium Priority:**  \n  - Product launches or demo videos  \n  - Tutorial threads with high engagement  \n\n- **Low Priority:**  \n  - Generic hype posts without substantive content  \n  - Repeated news from same source  \n\n---\n\n### **4. RAPID RESPONSE ACTIONS**\n- **If Critical Threat Detected:**  \n  - Immediate alert to security teams  \n  - Draft containment protocol (e.g., counter-narrative deployment)  \n\n- **If Opportunity Detected:**  \n  - Flag to development teams for integration/analysis  \n  - Prepare engagement strategy (e.g., quote-tweet with insights)  \n\n---\n\n### **5. OUTPUT FORMAT**\n- **Live Dashboard:** Top 10 trends with metrics (volume, sentiment, key accounts)  \n- **Executive Summary:** 3 bullet points on most impactful developments  \n- **Actionable Intelligence:**  \n  - \"Monitor: [Topic X] \u2013 rising in EU tech circles\"  \n  - \"Engage: [Influencer Y] \u2013 seeking case studies\"  \n  - \"Ignore: [Topic Z] \u2013 noise, declining trajectory\"  \n\n---\n\n**STATUS:** Scanning initiated. Estimated completion: 2 minutes.  \n**NOTE:** Real-time adjustments based on anomaly detection.",
+    "score": 0.5,
+    "type": "Reflex"
+  },
+  "evidence": {
+    "screenshot": "vision_input.png",
+    "logs": {
+      "status": "success",
+      "url": "https://twitter.com/home"
+    },
+    "cmp_score": 0.5
+  },
+  "timestamp": "2025-12-26T23:57:10.080315"
+}

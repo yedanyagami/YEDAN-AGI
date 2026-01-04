@@ -1,0 +1,11 @@
+name = "synapse"
+main = "synapse_worker.js"
+compatibility_date = "2024-01-01"
+
+kv_namespaces = [
+  { binding = "YEDAN_KV", id = "e3808706961e4d1c890ef2e212b52270" }
+]
+
+[vars]
+TELEGRAM_BOT_TOKEN = ""
+TELEGRAM_CHAT_ID = ""

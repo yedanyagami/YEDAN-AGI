@@ -1,0 +1,19 @@
+[2025-12-26 01:22:39] ==================================================
+[2025-12-26 01:22:39] YEDAN 24/7 REVENUE ENGINE STARTED
+[2025-12-26 01:22:39] ==================================================
+[2025-12-26 01:22:39] --- CYCLE 1 ---
+[2025-12-26 01:22:39] ERROR: Gmail credentials not set. Skipping email.
+[2025-12-26 01:22:49] ERROR: Gmail credentials not set. Skipping email.
+[2025-12-26 01:22:59] Sleeping 300 seconds until next cycle...
+[2025-12-26 01:27:59] --- CYCLE 2 ---
+[2025-12-26 01:27:59] ERROR: Gmail credentials not set. Skipping email.
+[2025-12-26 01:28:09] ERROR: Gmail credentials not set. Skipping email.
+[2025-12-26 01:28:19] Sleeping 300 seconds until next cycle...
+[2025-12-26 01:33:19] --- CYCLE 3 ---
+[2025-12-26 01:33:19] ERROR: Gmail credentials not set. Skipping email.
+[2025-12-26 01:33:29] ERROR: Gmail credentials not set. Skipping email.
+[2025-12-26 01:33:39] Sleeping 300 seconds until next cycle...
+[2025-12-26 01:38:39] --- CYCLE 4 ---
+[2025-12-26 01:38:39] ERROR: Gmail credentials not set. Skipping email.
+[2025-12-26 01:38:49] ERROR: Gmail credentials not set. Skipping email.
+[2025-12-26 01:38:59] Sleeping 300 seconds until next cycle...

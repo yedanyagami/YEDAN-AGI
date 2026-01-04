@@ -14,11 +14,19 @@ from modules.pydantic_models import SensorResult
 logger = logging.getLogger('reddit_playwright')
 
 try:
+    from camoufox.async_api import AsyncCamoufox
+    CAMOUFOX_AVAILABLE = True
+except ImportError:
+    CAMOUFOX_AVAILABLE = False
+    
+try:
     from playwright.async_api import async_playwright
     PLAYWRIGHT_AVAILABLE = True
 except ImportError:
     PLAYWRIGHT_AVAILABLE = False
-    logger.warning("[Playwright] Not installed")
+
+if not CAMOUFOX_AVAILABLE and not PLAYWRIGHT_AVAILABLE:
+    logger.warning("[Browser] Neither Camoufox nor Playwright installed. Simulation forced.")
 
 class RedditBrowserMonitor:
     """
@@ -32,7 +40,7 @@ class RedditBrowserMonitor:
         self.guard = guard
         self.config = config.get("reddit", {})
         self.footer = config.get("disclosure_footer", {}).get("reddit", "")
-        self.simulation_mode = not PLAYWRIGHT_AVAILABLE
+        self.simulation_mode = not (PLAYWRIGHT_AVAILABLE or CAMOUFOX_AVAILABLE)
         
         load_dotenv(dotenv_path=".env.reactor")
         
@@ -54,19 +62,44 @@ class RedditBrowserMonitor:
             asyncio.run(self._run_playwright_loop())
     
     async def _run_playwright_loop(self):
-        logger.info("🧬 [V1600] Playwright Reddit Loop Activated")
+        logger.info("🧬 [V1600] Browser Loop Activated")
         
-        async with async_playwright() as p:
-            browser = await p.chromium.launch(
-                headless=True,
-                args=['--disable-blink-features=AutomationControlled']
-            )
-            context = await browser.new_context(
-                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-                viewport={'width': 1920, 'height': 1080}
-            )
-            page = await context.new_page()
-            page.set_default_timeout(60000)  # 60 seconds
+        browser_manager = None
+        if CAMOUFOX_AVAILABLE:
+            logger.info("🦊 Using Camoufox (Anti-Detect)")
+            browser_manager = AsyncCamoufox(headless=True)
+        else:
+            logger.info("🎭 Using Standard Playwright")
+            browser_manager = async_playwright()
+
+        # Handle context manager difference
+        # Camoufox acts as the browser context directly in "browser_manager" 
+        # But standard playwright needs p.chromium.launch()
+        
+        try:
+            if CAMOUFOX_AVAILABLE:
+                async with browser_manager as browser:
+                    page = await browser.new_page()
+                    await self._monitor_logic(page) # Refactored logic into method
+            else:
+                async with browser_manager as p:
+                    browser = await p.chromium.launch(
+                        headless=True,
+                        args=['--disable-blink-features=AutomationControlled']
+                    )
+                    context = await browser.new_context(
+                        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+                        viewport={'width': 1920, 'height': 1080}
+                    )
+                    page = await context.new_page()
+                    await self._monitor_logic(page)
+                    
+        except Exception as e:
+             logger.error(f"Browser Loop Error: {e}")
+             await self._run_simulation_loop()
+
+    async def _monitor_logic(self, page):
+            page.set_default_timeout(60000)
             
             # Login with retry
             login_success = False

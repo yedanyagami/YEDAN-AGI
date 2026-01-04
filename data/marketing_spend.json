@@ -1,0 +1,33 @@
+{
+    "last_updated": "2025-12-24",
+    "daily_ad_spend": [
+        {
+            "date": "2025-12-24",
+            "platform": "facebook",
+            "spend": 10.00
+        }
+    ],
+    "platform_fees": {
+        "gumroad": {
+            "percent": 0.10,
+            "fixed": 0.30,
+            "notes": "10% + $0.30 per transaction"
+        },
+        "shopify": {
+            "percent": 0.029,
+            "fixed": 0.30,
+            "notes": "2.9% + $0.30 per transaction (Shopify Payments)"
+        },
+        "payhip": {
+            "percent": 0.05,
+            "fixed": 0.00,
+            "notes": "5% per transaction (Plus plan)"
+        }
+    },
+    "monthly_fixed_costs": {
+        "shopify_subscription": 29.00,
+        "email_marketing": 0.00,
+        "other": 0.00
+    },
+    "notes": "HUMAN_IN_THE_LOOP: Update daily_ad_spend every morning with previous day's actual spend."
+}

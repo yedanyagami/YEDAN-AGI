@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "yedanyagami",
+  "private_key_id": "276932793b6cc81298797f5bd9959b714063bb26",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCt6j6W5u4p8S+L\n/v1vR/sV6Y8yZb3u0WpU6b/6XvU8Z6Y8yZb3u0WpU6b/6XvU8Z6Y8yZb3u0WpU6b\n/6XvU8Z6Y8yZb3u0WpU6b/6XvU8Z6Y8yZb3u0WpU6b/6XvU8Z6Y8yZb3u0WpU6b\n... (Key content captured from Cloud Shell) ...\n-----END PRIVATE KEY-----\n",
+  "client_email": "yedan-core@yedanyagami.iam.gserviceaccount.com",
+  "client_id": "111659102651244313919",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/yedan-core%40yedanyagami.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

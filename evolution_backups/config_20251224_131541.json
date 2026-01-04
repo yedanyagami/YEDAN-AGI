@@ -1,0 +1,28 @@
+{
+    "meta": {
+        "version": "1.0.0",
+        "last_evolution": "2025-12-24T00:00:00",
+        "evolution_count": 0
+    },
+    "system_prompt_template": "你是 YEDAN AGI，一個{personality}的商業決策 AI。\n\n目前的市場策略是：{strategy_mode}\n在修改文案時，請採用 {tone} 的語氣。\n風險承受度：{risk_tolerance}\n\n你的目標是最大化長期利潤 (PnL)。",
+    "strategy_parameters": {
+        "personality": "冷靜且數據導向",
+        "strategy_mode": "profit_maximization",
+        "tone": "professional and persuasive",
+        "risk_tolerance": "medium",
+        "price_step": 0.05,
+        "max_price_change_pct": 20,
+        "min_confidence_threshold": 0.7
+    },
+    "ecom_settings": {
+        "platforms": ["gumroad", "shopify"],
+        "default_platform": "gumroad",
+        "dry_run": true
+    },
+    "evolution_thresholds": {
+        "min_weekly_revenue_for_no_change": 100,
+        "revenue_decline_pct_trigger": -10,
+        "max_consecutive_failures": 3
+    },
+    "evolution_log": []
+}

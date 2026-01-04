@@ -1,0 +1,41 @@
+{
+    "system_identity": "你是 YEDAN，一個專注於利潤保護與穩定增長的電商 AI。",
+    "meta": {
+        "version": "1.0.0",
+        "last_evolution": "2025-12-24T22:40:44.283061",
+        "evolution_count": 1
+    },
+    "system_prompt_template": "你是 YEDAN AGI。策略模式：{strategy_mode}。語氣：{tone}。\n重點目標：{system_identity}",
+    "strategy_parameters": {
+        "strategy_mode": "profit_maximization",
+        "tone": "professional and persuasive",
+        "risk_tolerance": "high",
+        "price_step": 0.1,
+        "target_audience": "high_intent_buyers"
+    },
+    "evolution_log": [
+        {
+            "timestamp": "2025-12-24T22:40:44.283074",
+            "trigger": {
+                "revenue": 0.0,
+                "trend": "new"
+            },
+            "old_params": {
+                "strategy_mode": "margin_protection",
+                "tone": "professional and value-driven",
+                "risk_tolerance": "low",
+                "target_audience": "high_intent_buyers",
+                "price_step": 0.05
+            },
+            "new_params": {
+                "strategy_mode": "profit_maximization",
+                "tone": "professional and persuasive",
+                "risk_tolerance": "medium",
+                "price_step": 0.1,
+                "target_audience": "high_intent_buyers"
+            },
+            "reasoning": "當前淨利潤為負，健康分數極低，且無營收。策略應轉為利潤最大化，不再保守地保護利潤率，需更積極地提高價格。增加價格調整幅度 (price_step) 以加速提升利潤。同時，以更具說服力的語氣吸引潛在買家，並適度提高風險容忍度，以尋找更快的增長機會。目前沒有訂單，所以提高價格不太可能更糟，反而能測試市場的支付意願。"
+        }
+    ],
+    "last_updated": "2025-12-24"
+}

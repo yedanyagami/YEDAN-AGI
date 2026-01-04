@@ -1,0 +1,812 @@
+{
+    "generation": 236,
+    "total_revenue": 0.0,
+    "best_strategy": "WALLSTREET_PRO",
+    "strategy_scores": {
+        "FOMO_DEGEN": -79,
+        "WALLSTREET_PRO": -78,
+        "INSIDER_LEAK": -78
+    },
+    "history": [
+        {
+            "gen": 136,
+            "strategy": "INSIDER_LEAK",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:34:29.084654"
+        },
+        {
+            "gen": 137,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:36:03.664845"
+        },
+        {
+            "gen": 138,
+            "strategy": "INSIDER_LEAK",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:37:38.452509"
+        },
+        {
+            "gen": 139,
+            "strategy": "FOMO_DEGEN",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:39:13.189968"
+        },
+        {
+            "gen": 140,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:40:47.651905"
+        },
+        {
+            "gen": 141,
+            "strategy": "INSIDER_LEAK",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:42:22.012767"
+        },
+        {
+            "gen": 142,
+            "strategy": "FOMO_DEGEN",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:43:57.120605"
+        },
+        {
+            "gen": 143,
+            "strategy": "INSIDER_LEAK",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:45:31.873054"
+        },
+        {
+            "gen": 144,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:47:06.788561"
+        },
+        {
+            "gen": 145,
+            "strategy": "INSIDER_LEAK",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:48:41.565978"
+        },
+        {
+            "gen": 146,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:50:16.345427"
+        },
+        {
+            "gen": 147,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:51:51.318157"
+        },
+        {
+            "gen": 148,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:53:26.257093"
+        },
+        {
+            "gen": 149,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:55:01.275728"
+        },
+        {
+            "gen": 150,
+            "strategy": "INSIDER_LEAK",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:56:35.554139"
+        },
+        {
+            "gen": 151,
+            "strategy": "FOMO_DEGEN",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:58:09.985227"
+        },
+        {
+            "gen": 152,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T15:59:44.811612"
+        },
+        {
+            "gen": 153,
+            "strategy": "INSIDER_LEAK",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:01:20.467712"
+        },
+        {
+            "gen": 154,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:02:55.949934"
+        },
+        {
+            "gen": 155,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:04:31.327826"
+        },
+        {
+            "gen": 156,
+            "strategy": "INSIDER_LEAK",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:06:06.780037"
+        },
+        {
+            "gen": 157,
+            "strategy": "FOMO_DEGEN",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:07:41.865470"
+        },
+        {
+            "gen": 158,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:09:16.536534"
+        },
+        {
+            "gen": 159,
+            "strategy": "INSIDER_LEAK",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:10:51.845648"
+        },
+        {
+            "gen": 160,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:12:26.602724"
+        },
+        {
+            "gen": 161,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:14:00.944729"
+        },
+        {
+            "gen": 162,
+            "strategy": "INSIDER_LEAK",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:15:35.306632"
+        },
+        {
+            "gen": 163,
+            "strategy": "FOMO_DEGEN",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:17:10.301754"
+        },
+        {
+            "gen": 164,
+            "strategy": "INSIDER_LEAK",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:18:44.545226"
+        },
+        {
+            "gen": 165,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:20:19.092423"
+        },
+        {
+            "gen": 166,
+            "strategy": "FOMO_DEGEN",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:21:53.522616"
+        },
+        {
+            "gen": 167,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:23:28.940579"
+        },
+        {
+            "gen": 168,
+            "strategy": "INSIDER_LEAK",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:25:03.246363"
+        },
+        {
+            "gen": 169,
+            "strategy": "FOMO_DEGEN",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:26:37.674967"
+        },
+        {
+            "gen": 170,
+            "strategy": "INSIDER_LEAK",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:28:11.714419"
+        },
+        {
+            "gen": 171,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:29:46.274762"
+        },
+        {
+            "gen": 172,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:31:20.504291"
+        },
+        {
+            "gen": 173,
+            "strategy": "FOMO_DEGEN",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:32:55.097598"
+        },
+        {
+            "gen": 174,
+            "strategy": "INSIDER_LEAK",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:34:29.389773"
+        },
+        {
+            "gen": 175,
+            "strategy": "FOMO_DEGEN",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:36:03.525476"
+        },
+        {
+            "gen": 176,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:37:38.391550"
+        },
+        {
+            "gen": 177,
+            "strategy": "INSIDER_LEAK",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:39:12.794111"
+        },
+        {
+            "gen": 178,
+            "strategy": "FOMO_DEGEN",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:40:47.251234"
+        },
+        {
+            "gen": 179,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:42:21.600962"
+        },
+        {
+            "gen": 180,
+            "strategy": "INSIDER_LEAK",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:43:55.949300"
+        },
+        {
+            "gen": 181,
+            "strategy": "FOMO_DEGEN",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:45:30.350524"
+        },
+        {
+            "gen": 182,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:47:04.581428"
+        },
+        {
+            "gen": 183,
+            "strategy": "INSIDER_LEAK",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:48:39.155032"
+        },
+        {
+            "gen": 184,
+            "strategy": "FOMO_DEGEN",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:50:13.559292"
+        },
+        {
+            "gen": 185,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:51:47.627673"
+        },
+        {
+            "gen": 186,
+            "strategy": "INSIDER_LEAK",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:53:21.610455"
+        },
+        {
+            "gen": 187,
+            "strategy": "FOMO_DEGEN",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:54:55.836246"
+        },
+        {
+            "gen": 188,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:56:29.974715"
+        },
+        {
+            "gen": 189,
+            "strategy": "INSIDER_LEAK",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:58:04.416416"
+        },
+        {
+            "gen": 190,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T16:59:39.869236"
+        },
+        {
+            "gen": 191,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:01:14.580601"
+        },
+        {
+            "gen": 192,
+            "strategy": "INSIDER_LEAK",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:02:48.715376"
+        },
+        {
+            "gen": 193,
+            "strategy": "FOMO_DEGEN",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:04:22.763499"
+        },
+        {
+            "gen": 194,
+            "strategy": "INSIDER_LEAK",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:05:57.009386"
+        },
+        {
+            "gen": 195,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:07:31.811868"
+        },
+        {
+            "gen": 196,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:09:05.829496"
+        },
+        {
+            "gen": 197,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:10:40.092875"
+        },
+        {
+            "gen": 198,
+            "strategy": "INSIDER_LEAK",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:12:14.722848"
+        },
+        {
+            "gen": 199,
+            "strategy": "FOMO_DEGEN",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:13:48.977557"
+        },
+        {
+            "gen": 200,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:15:23.268223"
+        },
+        {
+            "gen": 201,
+            "strategy": "INSIDER_LEAK",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:16:57.743817"
+        },
+        {
+            "gen": 202,
+            "strategy": "FOMO_DEGEN",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:18:31.870513"
+        },
+        {
+            "gen": 203,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:20:06.122123"
+        },
+        {
+            "gen": 204,
+            "strategy": "FOMO_DEGEN",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:21:40.554209"
+        },
+        {
+            "gen": 205,
+            "strategy": "INSIDER_LEAK",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:23:14.916576"
+        },
+        {
+            "gen": 206,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:24:49.285987"
+        },
+        {
+            "gen": 207,
+            "strategy": "INSIDER_LEAK",
+            "target": "Aster",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:26:23.923588"
+        },
+        {
+            "gen": 208,
+            "strategy": "FOMO_DEGEN",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:27:58.323313"
+        },
+        {
+            "gen": 209,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:29:32.501890"
+        },
+        {
+            "gen": 210,
+            "strategy": "INSIDER_LEAK",
+            "target": "Aster",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:31:07.133571"
+        },
+        {
+            "gen": 211,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aster",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:32:41.490044"
+        },
+        {
+            "gen": 212,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:34:15.489644"
+        },
+        {
+            "gen": 213,
+            "strategy": "INSIDER_LEAK",
+            "target": "Aster",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:35:49.808395"
+        },
+        {
+            "gen": 214,
+            "strategy": "INSIDER_LEAK",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:37:25.146208"
+        },
+        {
+            "gen": 215,
+            "strategy": "INSIDER_LEAK",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:38:59.573829"
+        },
+        {
+            "gen": 216,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:40:33.935300"
+        },
+        {
+            "gen": 217,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:42:08.021517"
+        },
+        {
+            "gen": 218,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:43:42.324299"
+        },
+        {
+            "gen": 219,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Solana",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:45:16.721816"
+        },
+        {
+            "gen": 220,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:46:50.994840"
+        },
+        {
+            "gen": 221,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:48:25.172387"
+        },
+        {
+            "gen": 222,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:49:59.900435"
+        },
+        {
+            "gen": 223,
+            "strategy": "INSIDER_LEAK",
+            "target": "Hyperliquid",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:51:34.058428"
+        },
+        {
+            "gen": 224,
+            "strategy": "FOMO_DEGEN",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:53:08.296243"
+        },
+        {
+            "gen": 225,
+            "strategy": "INSIDER_LEAK",
+            "target": "Hyperliquid",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:54:42.417339"
+        },
+        {
+            "gen": 226,
+            "strategy": "FOMO_DEGEN",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:56:17.071061"
+        },
+        {
+            "gen": 227,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Bitcoin",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:57:51.995855"
+        },
+        {
+            "gen": 228,
+            "strategy": "INSIDER_LEAK",
+            "target": "Hyperliquid",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T17:59:26.861913"
+        },
+        {
+            "gen": 229,
+            "strategy": "FOMO_DEGEN",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T18:01:01.451110"
+        },
+        {
+            "gen": 230,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Hyperliquid",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T18:02:36.164445"
+        },
+        {
+            "gen": 231,
+            "strategy": "INSIDER_LEAK",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T18:04:10.616882"
+        },
+        {
+            "gen": 232,
+            "strategy": "FOMO_DEGEN",
+            "target": "Midnight",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T18:05:46.239559"
+        },
+        {
+            "gen": 233,
+            "strategy": "WALLSTREET_PRO",
+            "target": "Aave",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T18:07:20.698417"
+        },
+        {
+            "gen": 234,
+            "strategy": "INSIDER_LEAK",
+            "target": "Pudgy Penguins",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T18:08:55.906387"
+        },
+        {
+            "gen": 235,
+            "strategy": "FOMO_DEGEN",
+            "target": "Monad",
+            "sold": false,
+            "revenue": 0.0,
+            "timestamp": "2025-12-23T18:10:30.917666"
+        }
+    ]
+}
