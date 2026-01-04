@@ -12,7 +12,7 @@ import json
 from dotenv import load_dotenv
 from typing import Optional, Dict, Any
 
-load_dotenv()
+load_dotenv(dotenv_path=".env.reactor")
 
 # ═══════════════════════════════════════════════════════════════
 # CONFIGURATION
@@ -21,7 +21,7 @@ SHOPIFY_STORE_URL = os.getenv("SHOPIFY_STORE_URL") or os.getenv("SHOPIFY_SHOP_UR
 # Also strip https:// if present
 if SHOPIFY_STORE_URL and SHOPIFY_STORE_URL.startswith("https://"):
     SHOPIFY_STORE_URL = SHOPIFY_STORE_URL.replace("https://", "")
-SHOPIFY_ACCESS_TOKEN = os.getenv("SHOPIFY_ACCESS_TOKEN")
+SHOPIFY_ACCESS_TOKEN = os.getenv("SHOPIFY_ACCESS_TOKEN") or os.getenv("SHOPIFY_ADMIN_TOKEN")
 API_VERSION = "2024-01"
 
 # SAFETY FLAG: Set to False to enable REAL changes
@@ -239,10 +239,10 @@ def update_title(product_id: str, new_title: str) -> bool:
 
 
 def create_product(title: str, body_html: str, vendor: str, product_type: str, price: str) -> Optional[str]:
-    \"\"\"
+    """
     Create a new product on Shopify.
     Returns: Product ID if successful, None otherwise.
-    \"\"\"
+    """
     print(f"[Shopify] Create Product Request: {title}")
     
     if not _check_config():
