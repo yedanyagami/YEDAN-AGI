@@ -188,11 +188,87 @@ export default {
         return json({ success: true, sent: true }, corsHeaders);
       }
 
+      // === OPAL WEBHOOK (receives content from Google Opal) ===
+      if (path === "/opal/webhook" && request.method === "POST") {
+        const body = await request.json();
+        const contentId = `opal_${Date.now()}`;
+        
+        // Store generated content
+        await env.YEDAN_KV.put(`opal:content:${contentId}`, JSON.stringify({
+          id: contentId,
+          type: body.type || "unknown",
+          content: body.content,
+          metadata: body.metadata || {},
+          created_at: new Date().toISOString()
+        }), {
+          expirationTtl: 86400 // 24 hours
+        });
+        
+        // Notify via Telegram
+        const notifyMsg = `🤖 *OPAL Content Received*\n\nType: ${body.type}\nID: ${contentId}`;
+        await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: env.TELEGRAM_CHAT_ID,
+            text: notifyMsg,
+            parse_mode: "Markdown"
+          })
+        });
+        
+        return json({ success: true, content_id: contentId, received: body.type }, corsHeaders);
+      }
+
+      // === OPAL CONTENT LIST ===
+      if (path === "/opal/content" && request.method === "GET") {
+        const list = await env.YEDAN_KV.list({ prefix: "opal:content:" });
+        const contents = [];
+        for (const key of list.keys.slice(0, 10)) {
+          const data = await env.YEDAN_KV.get(key.name);
+          if (data) contents.push(JSON.parse(data));
+        }
+        return json({ success: true, contents }, corsHeaders);
+      }
+
+      // === SHOPIFY ACTION (cloud-triggered product/price updates) ===
+      if (path === "/shopify/action" && request.method === "POST") {
+        const body = await request.json();
+        const actionId = `action_${Date.now()}`;
+        
+        // Queue action for processing
+        await env.YEDAN_KV.put(`shopify:action:${actionId}`, JSON.stringify({
+          id: actionId,
+          action: body.action, // "create_product", "update_price", etc.
+          payload: body.payload,
+          status: "pending",
+          created_at: new Date().toISOString()
+        }), {
+          expirationTtl: 3600
+        });
+        
+        return json({ success: true, action_id: actionId }, corsHeaders);
+      }
+
+      // === ROI METRICS ===
+      if (path === "/roi/metrics" && request.method === "GET") {
+        const metrics = await env.YEDAN_KV.get("roi:metrics");
+        return json({ success: true, metrics: JSON.parse(metrics || "{}") }, corsHeaders);
+      }
+
+      if (path === "/roi/metrics" && request.method === "POST") {
+        const body = await request.json();
+        await env.YEDAN_KV.put("roi:metrics", JSON.stringify({
+          ...body,
+          updated_at: new Date().toISOString()
+        }));
+        return json({ success: true }, corsHeaders);
+      }
+
       // Default response
       return json({
         success: true,
         service: "YEDAN Synapse API",
-        version: "1.0.0",
+        version: "2.0.0",
         endpoints: [
           "POST /heartbeat",
           "GET /get/{key}",
@@ -203,7 +279,11 @@ export default {
           "GET /task/result/{id}",
           "GET /status",
           "GET|POST /strategy",
-          "POST /alert"
+          "POST /alert",
+          "POST /opal/webhook",
+          "GET /opal/content",
+          "POST /shopify/action",
+          "GET|POST /roi/metrics"
         ]
       }, corsHeaders);
 
