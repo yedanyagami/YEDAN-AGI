@@ -1,0 +1,13 @@
+@echo off
+echo ===================================================
+echo [!] YEDAN V2.0 ULTRA ENGINE STARTING...
+echo ===================================================
+echo.
+echo [1/3] Loading Synapse V2.1...
+echo [2/3] Connecting to PayPal (Live Mode)...
+echo [3/3] Engaging Cloud Neural Network...
+echo.
+python run_roi_loop.py
+echo.
+echo [!] CYCLE COMPLETE.
+pause

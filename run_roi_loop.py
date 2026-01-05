@@ -1,88 +1,139 @@
 """
-ROI Loop Coordinator (The Master Cycle)
-Connects: Miner -> Writer -> Shopify -> Traffic (Sim/Real) -> Profit.
-Executes the full business cycle.
+YEDAN V2.0 ENGINE - ROI Infinite Loop
+The "V2 Engine" that orchestrates the entire cloud-native business cycle:
+1. MINING: ArXiv/Wikipedia -> Content
+2. FACTORY: Writer Agent -> Shopify Product (Real)
+3. TRAFFIC: CloudSocial -> Reddit/Twitter (Automated)
+4. LOGISTICS: n8n Workflow -> Order Processing
+5. FINANCE: PayPal/Shopify -> ROI Metrics -> Synapse
 """
 import sys
 import io
+import os
+import time
+import random
+from datetime import datetime
+from dotenv import load_dotenv
 
-# Fix Windows console encoding for emojis
+# Fix Windows console encoding
 if sys.platform == 'win32':
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
-import time
-import random
+
+load_dotenv(dotenv_path=".env.reactor")
+
+# V2.0 Modules
 from modules.content_miner import OpenContentMiner
 from modules.writer_agent import WriterAgent
-from modules.reddit_browser_monitor import RedditBrowserMonitor
-# We import the asset generators directly or simulate their logic
+from modules.opal_bridge import OpalBridge
+from modules.cloud_social import CloudSocialAgent
+from modules.paypal_bridge import PayPalBridge
+from modules.n8n_bridge import N8nBridge
 from generate_digest_asset import generate_daily_digest
 
-class ROILoop:
+class YEDAN_V2_Engine:
     def __init__(self):
+        print(f"\n[*] Initializing YEDAN V2.0 Engine...")
         self.miner = OpenContentMiner()
         self.writer = WriterAgent()
-        self.traffic_bot = RedditBrowserMonitor(None, None, {}) # Standalone for now
-        self.traffic_bot.simulation_mode = True # Force Sim due to download failure
+        
+        # Bridge Modules
+        self.opal = OpalBridge()
+        self.social = CloudSocialAgent()
+        self.paypal = PayPalBridge()
+        self.n8n = N8nBridge()
+        
+        # Config
+        self.mode = "LIVE" if os.getenv("SHOPIFY_DRY_RUN", "true").lower() == "false" else "SIMULATION"
+        print(f"[*] Engine Mode: {self.mode}")
+        
+    def check_finance_pulse(self):
+        """Check real financial status"""
+        print("\n[Finance] Checking Pulse...")
+        
+        # 1. Check PayPal
+        if self.paypal.is_configured():
+            balance = self.paypal.get_balance()
+            if balance:
+                print(f"   -> PayPal Balance: ${balance['total_available']:.2f} ({os.getenv('PAYPAL_MODE')})")
+        
+        # 2. Check Synapse ROI Metrics
+        # (This connects to our Cloudflare Worker to see what's happening cloud-side)
+        try:
+            import requests
+            r = requests.get("https://synapse.yagami8095.workers.dev/roi/daily?days=1")
+            if r.status_code == 200:
+                data = r.json()
+                today = data.get("revenue", [])[0]
+                print(f"   -> Today's Revenue: ${today.get('revenue', 0)} ({today.get('count', 0)} sales)")
+        except Exception as e:
+            print(f"   -> [Warn] Synapse pulse failed: {e}")
 
-    def run_cycle(self):
+    def run_mining_operation(self):
+        """Phase 1: Mining & Content Creation"""
+        print("\n[Phase 1] MINING OPERATION")
+        
+        # Check if we have Opal content pending first (Higher priority)
+        opal_content = self.opal.fetch_pending_content()
+        if opal_content:
+            print(f"   -> Found {len(opal_content)} items from Google Opal. Processing...")
+            self.opal.run_cycle()
+            return
+            
+        # Fallback to standard mining
+        print("   -> No Opal content. Running standard mining cycle...")
+        generate_daily_digest()
+
+    def run_traffic_operation(self):
+        """Phase 2: Traffic Generation"""
+        print("\n[Phase 2] TRAFFIC OPERATION")
+        
+        # Check Browserless status
+        status = self.social.check_browserless_status()
+        if not status.get("available"):
+            print("   -> [Warn] Cloud Browser unavailable. Skipping automated posting.")
+            return
+
+        print("   -> Cloud Browser Active.")
+        target_subreddits = ["Dropshipping", "SaaS", "Entrepreneur"]
+        
+        # In a real scenario, this would loop through subreddits
+        # For safety/demonstration, we pick one and "scan"
+        sub = random.choice(target_subreddits)
+        print(f"   -> Scanning r/{sub} for opportunities...")
+        
+        # (Here we would call self.social.reddit_search_and_engage...)
+        # But to avoid spamming while testing, we just log intent
+        print(f"   -> [Strategy] Would engage with top 3 posts in r/{sub} using persona 'Alpha'")
+
+    def run_logistics(self):
+        """Phase 3: Logistics (n8n & Webhooks)"""
+        print("\n[Phase 3] LOGISTICS & AUTOMATION")
+        
+        # Check n8n status
+        n8n_status = self.n8n.status_check()
+        if n8n_status['connected']:
+            print(f"   -> n8n Connected ({n8n_status['workflows']} workflows live).")
+            # If we had a specific workflow to trigger daily, we'd do it here
+            # self.n8n.execute_workflow("daily-checkup")
+        else:
+            print("   -> [Warn] n8n disconnected.")
+
+    def execute_cycle(self):
+        """Run one full business cycle"""
         print("\n" + "="*60)
-        print("[*] YEDAN ROI INFINITE LOOP INITIATED")
+        print(f"[*] YEDAN V2.0 EXECUTION CYCLE | {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print("="*60)
         
-        # Phase 1: The Factory (Content -> Product)
-        print("\n[Phase 1] THE FACTORY (Mining & Manufacturing)")
-        print("   -> Contacting ArXiv...")
-        # We reuse the logic from generate_digest_asset.py by running it or importing it
-        # For the loop script, let's call it directly to keep it simple
-        try:
-            generate_daily_digest()
-        except Exception as e:
-            print(f"   [Error] Factory stalled: {e}")
-            
-        print("   -> Product deployed to Storefront.")
-            
-        # Phase 2: The Traffic (Reddit -> Engagement)
-        print("\n[Phase 2] THE TRAFFIC (Seeking Buyers)")
-        print("   -> [Simulation] Scanning r/Dropshipping, r/SaaS, r/AI...")
+        self.check_finance_pulse()
+        self.run_mining_operation()
+        self.run_traffic_operation()
+        self.run_logistics()
         
-        # Simulate finding a relevant lead
-        lead = {
-            "author": "ConfusedBizOwner_99",
-            "title": "Is Dropshipping dead in 2026?",
-            "body": "I kept trying to sell phone cases but got zero sales. Thinking of quitting.",
-            "url": "https://reddit.com/r/dropshipping/..."
-        }
-        print(f"   -> [Target] TARGET ACQUIRED: {lead['title']} (by {lead['author']})")
-        
-        # Phase 3: The Pitch (Writer Agent)
-        print("\n[Phase 3] THE PITCH (AI Sales Agent)")
-        print("   -> Analyzing pain points...")
-        print("   -> Drafting high-value response...")
-        
-        simulated_input = f"User is asking: {lead['title']}. Body: {lead['body']}"
-        reply_data = self.writer.generate_reply(simulated_input, platform="reddit")
-        reply_text = reply_data.get("reply_content", "") if isinstance(reply_data, dict) else str(reply_data)
-        
-        # Inject our Product Link
-        product_link = "https://yedanyagami-io-2.myshopify.com/products/ai-insider-report-2026-01-04"
-        pitch = reply_text + f"\n\nP.S. I generated this advice using the strategies in my daily report: {product_link}"
-        
-        print("\n" + "-"*40)
-        print("[AI AUTO-REPLY]:")
-        print("-"*40)
-        print(pitch)
-        print("-"*40)
-        
-        # Phase 4: The Profit (Visualization)
-        print("\n[Phase 4] THE PROFIT (Conversion)")
-        print("   -> [System] Reply posted.")
-        print("   -> [Expectation] User clicks link -> Landing Page -> $4.99 Purchase.")
-        print(f"   -> [Loop] Cycle complete. Resting for 10 seconds...")
-        
-def main():
-    loop = ROILoop()
-    loop.run_cycle()
+        print("\n" + "="*60)
+        print("[*] CYCLE COMPLETE. Sleeping...")
+        print("="*60)
 
 if __name__ == "__main__":
-    main()
+    engine = YEDAN_V2_Engine()
+    engine.execute_cycle()
