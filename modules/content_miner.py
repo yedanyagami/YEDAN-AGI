@@ -7,11 +7,13 @@ import requests
 import xml.etree.ElementTree as ET
 import logging
 from urllib.parse import quote
+from modules.oracle import Oracle
 
 logger = logging.getLogger('content_miner')
 
 class OpenContentMiner:
     def __init__(self):
+        self.oracle = Oracle()
         self.sources = {
             "arxiv": "http://export.arxiv.org/api/query",
             "wikipedia": "https://en.wikipedia.org/w/api.php",
