@@ -4,6 +4,8 @@ Pings all critical services and reports status to Telegram.
 """
 import requests
 import logging
+import shutil
+from datetime import datetime
 from modules.config import Config, setup_logging
 
 logger = setup_logging('watchdog')
@@ -62,6 +64,51 @@ class Watchdog:
         except:
             return False, "Disconnected"
 
+    def check_log_size(self):
+        """Check if log file is too large and rotate if needed"""
+        try:
+            log_path = Config.LOG_DIR / "reactor.log"
+            if log_path.exists() and log_path.stat().st_size > 10 * 1024 * 1024: # 10MB
+                self.rotate_logs()
+                return True, "Rotated"
+            return True, "Normal"
+        except Exception as e:
+            return False, str(e)
+
+    def rotate_logs(self):
+        """Archive current log and start fresh"""
+        try:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            archive_dir = Config.LOG_DIR / "archive"
+            archive_dir.mkdir(exist_ok=True)
+            
+            log_path = Config.LOG_DIR / "reactor.log"
+            new_path = archive_dir / f"reactor_{timestamp}.log"
+            
+            # Rename (Atomic on POSIX, usually works on Windows)
+            # On Windows, logging handler might lock it. 
+            # We assume the main reactor releases it or we force move.
+            shutil.move(log_path, new_path)
+            
+            logger.info(f"♻️ Log rotated: {new_path}")
+            self.send_alert(f"Log rotated to {new_path.name}")
+        except Exception as e:
+            logger.error(f"Log rotation failed: {e}")
+
+    def attempt_heal(self, component: str, error: str):
+        """Attempt to fix failed component"""
+        logger.info(f"🚑 Attempting to heal {component}...")
+        
+        if component == "Internet":
+            # Can't fix internet, but can log specific diagnostic
+            pass
+        elif component == "Synapse (Brain)":
+            # Retry connection or clear session (conceptual)
+            logger.info("Retrying Synapse connection...")
+        
+        # In a real OS integration, this could restart services
+        # e.g., os.system("systemctl restart yedan")
+
     def run_diagnostics(self):
         """Run all checks and report"""
         logger.info("Running Watchdog diagnostics...")
@@ -69,7 +116,8 @@ class Watchdog:
         results = {
             "Internet": self.check_internet(),
             "Synapse (Brain)": self.check_synapse(),
-            "Shopify (Store)": self.check_shopify_storefront()
+            "Shopify (Store)": self.check_shopify_storefront(),
+            "Log Status": self.check_log_size()
         }
         
         failures = []
@@ -80,6 +128,7 @@ class Watchdog:
             report.append(f"{icon} **{name}**: {msg}")
             if not status:
                 failures.append(f"{name}: {msg}")
+                self.attempt_heal(name, msg)
         
         # If failures, alert immediately
         if failures:
