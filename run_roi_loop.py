@@ -29,6 +29,7 @@ from modules.opal_bridge import OpalBridge
 from modules.cloud_social import CloudSocialAgent
 from modules.paypal_bridge import PayPalBridge
 from modules.n8n_bridge import N8nBridge
+from modules.echo_analytics import EchoAnalytics
 from generate_digest_asset import generate_daily_digest
 
 class YEDAN_V2_Engine:
@@ -42,6 +43,7 @@ class YEDAN_V2_Engine:
         self.social = CloudSocialAgent()
         self.paypal = PayPalBridge()
         self.n8n = N8nBridge()
+        self.echo = EchoAnalytics()
         
         # Config
         self.mode = "LIVE" if os.getenv("SHOPIFY_DRY_RUN", "true").lower() == "false" else "SIMULATION"
