@@ -1,0 +1,166 @@
+{
+  "name": "YEDAN_CORE_V2",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 15
+            }
+          ]
+        }
+      },
+      "name": "Cron Trigger",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [100, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://darwin.yagami8095.workers.dev/strategy?task=reddit_reply",
+        "method": "GET"
+      },
+      "name": "Darwin Strategy",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{$json.name}}",
+              "operation": "contains",
+              "value2": "reddit"
+            }
+          ]
+        }
+      },
+      "name": "Switch Strategy",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://oracle.yagami8095.workers.dev/trend?keyword=dropshipping",
+        "method": "GET"
+      },
+      "name": "Oracle Trend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [700, 200]
+    },
+    {
+      "parameters": {
+        "url": "https://synapse.yagami8095.workers.dev/shopify/action",
+        "method": "POST",
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "action",
+              "value": "create_product"
+            }
+          ]
+        }
+      },
+      "name": "Execute Action",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://darwin.yagami8095.workers.dev/feedback",
+        "method": "POST",
+        "bodyParametersUi": {
+          "parameter": [
+            {
+              "name": "task",
+              "value": "reddit_reply"
+            },
+            {
+              "name": "name",
+              "value": "={{$node[\"Darwin Strategy\"].json[\"name\"]}}"
+            },
+            {
+              "name": "success",
+              "value": true
+            }
+          ]
+        }
+      },
+      "name": "Darwin Feedback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [1100, 300]
+    }
+  ],
+  "connections": {
+    "Cron Trigger": {
+      "main": [
+        [
+          {
+            "node": "Darwin Strategy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Darwin Strategy": {
+      "main": [
+        [
+          {
+            "node": "Switch Strategy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch Strategy": {
+      "main": [
+        [
+          {
+            "node": "Oracle Trend",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Execute Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Oracle Trend": {
+      "main": [
+        [
+          {
+            "node": "Execute Action",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Action": {
+      "main": [
+        [
+          {
+            "node": "Darwin Feedback",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
