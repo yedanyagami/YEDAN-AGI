@@ -20444,3 +20444,12 @@ Low ROAS on FB ads is usually a t...
 2026-01-06 15:47:03,622 - opal_bridge - INFO - Product created: 7653179523278
 2026-01-06 15:47:05,042 - opal_bridge - INFO - Processed 1/1 items
 2026-01-06 15:47:05,042 - reactor - INFO - [Phase 2] TRAFFIC OPERATION
+2026-01-06 15:47:06,257 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-06 15:47:06,258 - cloud_social - INFO - Starting CloudSocial cycle
+2026-01-06 15:47:08,640 - cloud_social - INFO - Found 0 pending tasks
+2026-01-06 15:47:08,640 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-06 15:47:08,641 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-06 15:47:10,116 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-06 15:47:10,117 - reactor - INFO - ============================================================
+2026-01-06 15:47:10,117 - reactor - INFO - [*] CYCLE COMPLETE. Sleeping...
+2026-01-06 15:47:10,117 - reactor - INFO - ============================================================
