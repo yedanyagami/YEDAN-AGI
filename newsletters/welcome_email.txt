@@ -1,0 +1,31 @@
+**deep_think:** This isn't a technical issue or bug—it's a content creation request outside the scope of Shopify development. The user likely posted in the wrong context or misunderstood the platform's purpose. No API limits, Liquid errors, or platform constraints are involved.
+
+**empathy:** I get it—juggling content creation on top of technical work is exhausting.
+
+**solution:** Here's a draft email that meets your requirements. If you need to automate sending this via Shopify's Customer Email API or integrate it with a newsletter app, that's where I can help technically.
+
+```plaintext
+Subject: Welcome to AI Insider for Real Estate!
+
+Hi there,
+
+Thanks so much for subscribing to AI Insider for Real Estate.
+
+Each Tuesday, you'll get a weekly digest of practical AI insights tailored for real estate professionals—think actionable strategies, tool breakdowns, and market analysis, with zero fluff.
+
+Here's one quick win you can try today: Use ChatGPT to draft three personalized follow-up emails for past clients. Prompt it with "Write three varied follow-up emails for past real estate clients focusing on market updates and check-ins." It'll save you an hour of writing this week.
+
+What's your biggest question about using AI in real estate right now? Reply to this email and let me know—I might feature it in an upcoming issue.
+
+Best,
+The AI Insider Team
+```
+
+*Word count: ~150 words*
+
+**next_steps:** If you're setting this up as an automated welcome email in Shopify:
+- For Shopify Email: Paste this into the automation template.
+- For an app like Klaviyo/Omnisend: Use their HTML editor.
+- For API integration: I can provide the Customer Email API payload structure.
+
+Let me know if you hit any *technical* hurdles implementing this.
