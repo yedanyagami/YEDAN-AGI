@@ -63,6 +63,7 @@ class OpalBridge:
                 "body_html": description,
                 "vendor": "YEDAN AGI",
                 "product_type": "Digital",
+                "status": "active",
                 "variants": [{"price": str(price), "inventory_policy": "continue"}]
             }
         }
@@ -78,9 +79,13 @@ class OpalBridge:
                 timeout=30
             )
             if r.status_code == 201:
-                product_id = r.json()["product"]["id"]
-                logger.info(f"Product created: {product_id}")
-                self._notify(f"Product Created: {title}")
+                data = r.json()["product"]
+                product_id = data["id"]
+                handle = data.get("handle", "")
+                public_url = f"https://{self.shopify_store}/products/{handle}"
+                
+                logger.info(f"Product created: {product_id} ({public_url})")
+                self._notify(f"Product Live: {title}\nURL: {public_url}")
                 return True
             else:
                 logger.error(f"Shopify error: {r.status_code}")
