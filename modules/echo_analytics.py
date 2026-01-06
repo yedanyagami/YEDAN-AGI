@@ -191,6 +191,11 @@ Sigma (n8n): ⚠️ {self._check_n8n_status()}
 
 def main():
     """Run daily report"""
+    import sys
+    import io
+    if sys.platform == 'win32':
+        sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    
     echo = EchoAnalytics()
     print(echo.generate_daily_report())
     
