@@ -10,6 +10,8 @@ from datetime import datetime
 from typing import Optional, Dict, Any
 from modules.config import Config, setup_logging
 
+from modules.oracle import Oracle
+
 logger = setup_logging('opal_bridge')
 
 class OpalBridge:
@@ -21,6 +23,7 @@ class OpalBridge:
         self.telegram_token = Config.TELEGRAM_BOT_TOKEN
         self.telegram_chat = Config.TELEGRAM_CHAT_ID
         self.synapse_url = Config.SYNAPSE_URL
+        self.oracle = Oracle()
         
     def fetch_pending_content(self) -> list:
         """Fetch pending Opal content from Synapse"""
@@ -52,10 +55,23 @@ class OpalBridge:
             return False
     
     def _handle_product(self, payload: dict) -> bool:
-        """Create Shopify product from Opal content"""
+        """Create Shopify product from Opal content w/ SEO Injection"""
         title = payload.get("title", "AI Generated Product")
         description = payload.get("description", "")
         price = payload.get("price", "9.99")
+        
+        # SEO DOMINATOR: Inject Trending Tags
+        logger.info(f"🔍 Oracle: Optimizing SEO for '{title}'...")
+        tags = ["AI Generated", "YEDAN"]
+        
+        # Analyze Title Keywords
+        keywords = title.split()
+        for kw in keywords:
+            if len(kw) > 4: # Filter short words
+                score_data = self.oracle.get_trend_score(kw)
+                if score_data['score'] > 40:
+                    tags.append(kw)
+                    logger.info(f"   -> Injecting Tag: {kw} (Score: {score_data['score']})")
         
         product_data = {
             "product": {
@@ -64,6 +80,7 @@ class OpalBridge:
                 "vendor": "YEDAN AGI",
                 "product_type": "Digital",
                 "status": "active",
+                "tags": ", ".join(tags),
                 "variants": [{"price": str(price), "inventory_policy": "continue"}]
             }
         }
@@ -85,7 +102,7 @@ class OpalBridge:
                 public_url = f"https://{self.shopify_store}/products/{handle}"
                 
                 logger.info(f"Product created: {product_id} ({public_url})")
-                self._notify(f"Product Live: {title}\nURL: {public_url}")
+                self._notify(f"Product Live: {title}\nURL: {public_url}\nTags: {tags}")
                 return True
             else:
                 logger.error(f"Shopify error: {r.status_code}")
