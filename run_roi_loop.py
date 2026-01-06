@@ -8,11 +8,38 @@ The "V2 Engine" that orchestrates the entire cloud-native business cycle:
 5. FINANCE: PayPal/Shopify -> ROI Metrics -> Synapse
 """
 import sys
+import subprocess
+import logging
+from time import sleep
 import time
 import random
 import traceback
 import requests
 from datetime import datetime
+
+# --- SELF-HEAL: Dependency Medic ---
+def check_and_install_dependencies():
+    """Ensure critical libs are installed"""
+    required = ["requests", "python-dotenv", "pytrends", "tweepy", "PyNaCl"]
+    missing = []
+    
+    for lib in required:
+        try:
+            __import__(lib.replace("-", "_").replace("PyNaCl", "nacl"))
+        except ImportError:
+            missing.append(lib)
+    
+    if missing:
+        print(f"🚑 Dependency Medic: Installing missing libs: {missing}")
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install"] + missing)
+            print("✅ Dependencies restored.")
+        except Exception as e:
+            print(f"❌ Failed to auto-install: {e}")
+
+check_and_install_dependencies()
+# -----------------------------------
+
 from modules.config import Config, setup_logging
 
 # V2.0 Modules
