@@ -1,0 +1,101 @@
+"""
+YEDAN WATCHDOG - System Health Monitor
+Pings all critical services and reports status to Telegram.
+"""
+import requests
+import os
+import logging
+import sys
+from dotenv import load_dotenv
+
+# Setup logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger('watchdog')
+
+load_dotenv(dotenv_path=".env.reactor")
+
+class Watchdog:
+    def __init__(self):
+        self.telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
+        self.chat_id = os.getenv("TELEGRAM_CHAT_ID")
+        self.synapse_url = "https://synapse.yagami8095.workers.dev"
+        self.shopify_url = os.getenv("SHOPIFY_STORE_URL")
+        
+    def send_alert(self, message):
+        """Send critical alert to Telegram"""
+        if not self.telegram_token:
+            logger.error("No Telegram token found")
+            return
+            
+        url = f"https://api.telegram.org/bot{self.telegram_token}/sendMessage"
+        data = {
+            "chat_id": self.chat_id,
+            "text": f"🚨 WATCHDOG ALERT 🚨\n\n{message}",
+            "parse_mode": "Markdown"
+        }
+        try:
+            requests.post(url, json=data)
+        except Exception as e:
+            logger.error(f"Failed to send alert: {e}")
+
+    def check_synapse(self):
+        """Check if Cloudflare Worker is alive"""
+        try:
+            r = requests.post(f"{self.synapse_url}/heartbeat", timeout=10)
+            if r.status_code == 200:
+                return True, "Online"
+            return False, f"Status {r.status_code}"
+        except Exception as e:
+            return False, str(e)
+
+    def check_shopify_storefront(self):
+        """Check if store is accessible"""
+        try:
+            # Simple GET request to the store
+            url = f"https://{self.shopify_url}"
+            r = requests.get(url, timeout=10)
+            if r.status_code == 200:
+                return True, "Online"
+            return False, f"Status {r.status_code}"
+        except Exception as e:
+            return False, str(e)
+
+    def check_internet(self):
+        """Basic connectivity check"""
+        try:
+            requests.get("https://1.1.1.1", timeout=5)
+            return True, "Connected"
+        except:
+            return False, "Disconnected"
+
+    def run_diagnostics(self):
+        """Run all checks and report"""
+        logger.info("Running Watchdog diagnostics...")
+        
+        results = {
+            "Internet": self.check_internet(),
+            "Synapse (Brain)": self.check_synapse(),
+            "Shopify (Store)": self.check_shopify_storefront()
+        }
+        
+        failures = []
+        report = []
+        
+        for name, (status, msg) in results.items():
+            icon = "✅" if status else "❌"
+            report.append(f"{icon} **{name}**: {msg}")
+            if not status:
+                failures.append(f"{name}: {msg}")
+        
+        # If failures, alert immediately
+        if failures:
+            self.send_alert("\n".join(failures))
+            print("❌ ISSUES DETECTED")
+        else:
+            print("✅ SYSTEM HEALTHY")
+            
+        return failures
+
+if __name__ == "__main__":
+    dog = Watchdog()
+    dog.run_diagnostics()
