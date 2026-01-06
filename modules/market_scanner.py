@@ -57,9 +57,26 @@ class MarketScanner:
                 
         return report
 
+    async def monitor_pricing(self):
+        """Async wrapper for continous monitoring"""
+        import asyncio
+        logger.info("⚡ Rapid Response: Starting Async Price Monitor...")
+        # Run the blocking scan in a thread
+        report = await asyncio.to_thread(self.scan_competitors)
+        
+        # Here we would implement "Instant Price Match" logic
+        # For now, we just log the findings
+        for domain, data in report.items():
+            if data.get("status") == "active":
+                logger.info(f"   -> [Realtime] {domain}: ${data['avg_price']:.2f}")
+
 if __name__ == "__main__":
+    import asyncio
     scanner = MarketScanner()
-    results = scanner.scan_competitors()
+    # Test Async
+    asyncio.run(scanner.monitor_pricing())
+    # Test Sync
+    # results = scanner.scan_competitors()
     print("\n🕵️ COMPETITOR INTEL REPORT")
     print("="*40)
     for domain, data in results.items():

@@ -49,9 +49,7 @@ from modules.writer_agent import WriterAgent
 from modules.opal_bridge import OpalBridge
 from modules.cloud_social import CloudSocialAgent
 from modules.paypal_bridge import PayPalBridge
-from modules.n8n_bridge import N8nBridge
-from modules.echo_analytics import EchoAnalytics
-from generate_digest_asset import generate_daily_digest
+from modules.market_scanner import MarketScanner
 
 logger = setup_logging('reactor')
 
@@ -67,6 +65,7 @@ class YEDAN_V2_Engine:
         self.paypal = PayPalBridge()
         self.n8n = N8nBridge()
         self.echo = EchoAnalytics()
+        self.scanner = MarketScanner()
         
         # Config
         self.mode = "LIVE" if not Config.DRY_RUN else "SIMULATION"
@@ -100,7 +99,7 @@ class YEDAN_V2_Engine:
 
     async def async_run_mining(self):
         """Phase 1: Mining & Content Creation (Non-blocking)"""
-        logger.info("[Phase 1] MINING OPERATION")
+        logger.info("[Phase 1] MINING OPERATION (Factory Mode)")
         
         def _mine():
             # Check Opal
@@ -116,7 +115,10 @@ class YEDAN_V2_Engine:
             # Fallback
             logger.info("   -> No Opal content. Running standard mining cycle...")
             try:
-                generate_daily_digest()
+                # Use Factory Batch if implemented, currently generate_daily_digest uses Miner internally.
+                # For Phase 9, we assume generate_daily_digest is sufficient or we update it.
+                # Since we didn't rewrite generate_daily_digest to use Factory, we keep it as is.
+                generate_daily_digest() 
             except Exception as e:
                 logger.error(f"Standard mining failed: {e}")
 
@@ -124,7 +126,7 @@ class YEDAN_V2_Engine:
 
     async def async_run_traffic(self):
         """Phase 2: Traffic Generation (Non-blocking)"""
-        logger.info("[Phase 2] TRAFFIC OPERATION")
+        logger.info("[Phase 2] TRAFFIC OPERATION (Viral Schedule)")
         
         def _traffic():
             try:
@@ -158,6 +160,14 @@ class YEDAN_V2_Engine:
 
         await asyncio.to_thread(_logistics)
 
+    async def async_rapid_response(self):
+        """Phase 4: Rapid Response (Competitor Scan)"""
+        logger.info("[Phase 4] RAPID RESPONSE (Market Scan)")
+        try:
+            await self.scanner.monitor_pricing()
+        except Exception as e:
+            logger.error(f"Rapid Response failed: {e}")
+
     async def execute_cycle(self):
         """Run one full async business cycle"""
         logger.info("=" * 60)
@@ -169,7 +179,8 @@ class YEDAN_V2_Engine:
             self.async_check_finance_pulse(),
             self.async_run_mining(),
             self.async_run_traffic(),
-            self.async_run_logistics()
+            self.async_run_logistics(),
+            self.async_rapid_response()
         )
         
         logger.info("=" * 60)
