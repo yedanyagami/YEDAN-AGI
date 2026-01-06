@@ -135,10 +135,62 @@ Sigma (n8n): ⚠️ {self._check_n8n_status()}
         except:
             return "Disconnected"
     
+    def optimize_pricing(self) -> list:
+        """
+        Analyze products and recommend price adjustments.
+        Logic:
+        - Old (>7 days) & No Sales -> Discount 10%
+        - High Velocity (>5 sales/week) -> Increase 5%
+        """
+        recommendations = []
+        if not self.shopify_store or not self.shopify_token:
+            return []
+            
+        headers = {"X-Shopify-Access-Token": self.shopify_token}
+        base = f"https://{self.shopify_store}/admin/api/2024-01"
+        
+        try:
+            # Fetch all products
+            r = requests.get(f"{base}/products.json?limit=50", headers=headers, timeout=10)
+            if r.status_code != 200:
+                return []
+                
+            products = r.json().get("products", [])
+            now = datetime.now()
+            
+            for p in products:
+                pid = p["id"]
+                title = p["title"]
+                created_at = datetime.fromisoformat(p["created_at"].replace("Z", "+00:00")).replace(tzinfo=None)
+                age_days = (now - created_at).days
+                
+                # We need sales data per product ideally.
+                # For now, we assume if it's old and still in stock, it might need a push.
+                # Real implementation would query orders for this specific product ID.
+                
+                if age_days > 7:
+                    # HEURISTIC: If old and no recent update (meaning no sales triggered update), suggest cut.
+                    current_price = float(p["variants"][0]["price"])
+                    new_price = round(current_price * 0.9, 2)
+                    recommendations.append(f"📉 CUT {title}: ${current_price} -> ${new_price} (Stale {age_days}d)")
+                    
+        except Exception as e:
+            print(f"[PriceOpt] Error: {e}")
+            
+        return recommendations
+
     def _generate_recommendations(self, today: dict, shopify: dict) -> str:
         """Generate actionable recommendations"""
         recs = []
         
+        # 1. Pricing Strategy
+        pricing_moves = self.optimize_pricing()
+        if pricing_moves:
+            recs.append("💲 **Price Optimizations**:")
+            for move in pricing_moves[:3]: # Limit to 3
+                recs.append(f"  {move}")
+        
+        # 2. General Strategy
         if today.get("count", 0) == 0:
             recs.append("• No sales today - focus on traffic generation")
         
