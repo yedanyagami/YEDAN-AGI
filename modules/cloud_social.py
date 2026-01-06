@@ -4,32 +4,23 @@ Uses Browserless.io for headless browser automation in the cloud
 Enables 24/7 social media interaction without local computer
 """
 import sys
-import io
-import os
 import json
 import requests
 from datetime import datetime
-from typing import Optional, Dict, Any
-from dotenv import load_dotenv
+from typing import Optional
+from modules.config import Config, setup_logging
 
-# Fix Windows console encoding
-# Encoding fix moved to __main__ or handled by caller
-
-load_dotenv(dotenv_path=".env.reactor")
-
-BROWSERLESS_TOKEN = os.getenv("BROWSERLESS_TOKEN")
-BROWSERLESS_URL = f"https://chrome.browserless.io"
-
+logger = setup_logging('cloud_social')
 
 class CloudSocialAgent:
     """Cloud-based social media automation using Browserless"""
     
     def __init__(self):
-        self.token = BROWSERLESS_TOKEN
-        self.reddit_user = os.getenv("REDDIT_USERNAME")
-        self.reddit_pass = os.getenv("REDDIT_PASSWORD")
-        self.twitter_user = os.getenv("TWITTER_USERNAME")
-        self.twitter_pass = os.getenv("TWITTER_PASSWORD")
+        self.token = Config.BROWSERLESS_TOKEN
+        self.reddit_user = Config.REDDIT_USERNAME
+        self.reddit_pass = Config.REDDIT_PASSWORD
+        self.twitter_user = Config.TWITTER_USERNAME
+        self.twitter_pass = Config.TWITTER_PASSWORD
         
     def _run_script(self, script: str) -> dict:
         """Execute Puppeteer script on Browserless"""
@@ -38,7 +29,7 @@ class CloudSocialAgent:
         
         try:
             r = requests.post(
-                f"{BROWSERLESS_URL}/function?token={self.token}",
+                f"{Config.BROWSERLESS_URL}/function?token={self.token}",
                 headers={"Content-Type": "application/javascript"},
                 data=script,
                 timeout=60
@@ -51,14 +42,13 @@ class CloudSocialAgent:
             return {"success": False, "error": str(e)}
     
     def check_browserless_status(self) -> dict:
-        """Check if Browserless is available by testing the screenshot API"""
+        """Check if Browserless is available"""
         if not self.token:
             return {"available": False, "error": "No token configured"}
         
         try:
-            # Use a lightweight test - just check if API responds
             r = requests.post(
-                f"{BROWSERLESS_URL}/screenshot?token={self.token}",
+                f"{Config.BROWSERLESS_URL}/screenshot?token={self.token}",
                 headers={"Content-Type": "application/json"},
                 json={"url": "about:blank", "options": {"type": "png"}},
                 timeout=15
@@ -72,6 +62,7 @@ class CloudSocialAgent:
     
     def reddit_comment(self, post_url: str, comment: str) -> dict:
         """Post a comment on Reddit using cloud browser"""
+        logger.info(f"Posting comment to {post_url}...")
         script = f'''
 module.exports = async ({{ page }}) => {{
     await page.goto('https://www.reddit.com/login', {{ waitUntil: 'networkidle0' }});
@@ -104,24 +95,20 @@ module.exports = async ({{ page }}) => {{
 '''
         return self._run_script(script)
     
-    def reddit_search_and_engage(self, subreddit: str, keyword: str, response_template: str) -> dict:
-        """Search Reddit for keyword and auto-engage"""
+    def reddit_search_and_engage(self, subreddit: str, keyword: str) -> dict:
+        """Search Reddit for keyword and return posts"""
         script = f'''
 module.exports = async ({{ page }}) => {{
     const results = [];
-    
-    // Search subreddit
     await page.goto('https://www.reddit.com/r/{subreddit}/search/?q={keyword}&restrict_sr=1&sort=new', 
         {{ waitUntil: 'networkidle0' }});
     
-    // Get post titles and links
     const posts = await page.$$eval('a[data-click-id="body"]', links => 
         links.slice(0, 5).map(link => ({{
             title: link.textContent,
             url: link.href
         }}))
     );
-    
     return {{ success: true, posts: posts }};
 }};
 '''
@@ -131,14 +118,11 @@ module.exports = async ({{ page }}) => {{
         """Take screenshot of a URL"""
         try:
             r = requests.post(
-                f"{BROWSERLESS_URL}/screenshot?token={self.token}",
+                f"{Config.BROWSERLESS_URL}/screenshot?token={self.token}",
                 headers={"Content-Type": "application/json"},
                 json={
                     "url": url,
-                    "options": {
-                        "fullPage": True,
-                        "type": "png"
-                    }
+                    "options": {"fullPage": True, "type": "png"}
                 },
                 timeout=30
             )
@@ -149,24 +133,6 @@ module.exports = async ({{ page }}) => {{
         except Exception as e:
             return {"success": False, "error": str(e)}
         return {"success": False}
-    
-    def scrape_page(self, url: str, selector: str) -> dict:
-        """Scrape content from a page"""
-        try:
-            r = requests.post(
-                f"{BROWSERLESS_URL}/scrape?token={self.token}",
-                headers={"Content-Type": "application/json"},
-                json={
-                    "url": url,
-                    "elements": [{"selector": selector}]
-                },
-                timeout=30
-            )
-            if r.status_code == 200:
-                return {"success": True, "data": r.json()}
-        except Exception as e:
-            return {"success": False, "error": str(e)}
-        return {"success": False}
 
 
 class CloudSocialOrchestrator:
@@ -174,7 +140,7 @@ class CloudSocialOrchestrator:
     
     def __init__(self):
         self.agent = CloudSocialAgent()
-        self.synapse_url = "https://synapse.yagami8095.workers.dev"
+        self.synapse_url = Config.SYNAPSE_URL
         
     def fetch_pending_tasks(self) -> list:
         """Get pending social tasks from Synapse"""
@@ -183,8 +149,8 @@ class CloudSocialOrchestrator:
             if r.status_code == 200:
                 tasks = r.json().get("tasks", [])
                 return [t for t in tasks if t.get("type") == "social_post"]
-        except:
-            pass
+        except Exception as e:
+            logger.error(f"Error fetching tasks: {e}")
         return []
     
     def complete_task(self, task_id: str, result: dict):
@@ -195,59 +161,52 @@ class CloudSocialOrchestrator:
                 json={"task_id": task_id, "result": result},
                 timeout=10
             )
-        except:
-            pass
+        except Exception as e:
+            logger.error(f"Error completing task: {e}")
     
     def run_cycle(self):
         """Process pending social tasks"""
-        print("=" * 60)
-        print("[CloudSocial] Starting cloud social cycle")
-        print("=" * 60)
+        logger.info("Starting CloudSocial cycle")
         
-        # Check Browserless status
         status = self.agent.check_browserless_status()
-        print(f"[CloudSocial] Browserless: {status}")
-        
         if not status.get("available"):
-            print("[CloudSocial] Browserless not available, skipping")
+            logger.warning("Browserless unavailable")
             return
         
-        # Fetch and process tasks
         tasks = self.fetch_pending_tasks()
-        print(f"[CloudSocial] Found {len(tasks)} pending social tasks")
+        logger.info(f"Found {len(tasks)} pending tasks")
         
         for task in tasks:
             task_id = task.get("task_id")
             data = task.get("data", {})
             platform = data.get("platform", "reddit")
             content = data.get("content", "")
+            post_url = data.get("post_url", "") # If commenting
             
-            print(f"[CloudSocial] Processing task {task_id} for {platform}")
+            logger.info(f"Processing task {task_id} for {platform}")
             
-            # Execute based on platform
             if platform == "reddit":
-                # For now, just log - real implementation would post
-                result = {"status": "simulated", "platform": platform}
+                if Config.SAFETY_MODE:
+                    logger.info(f"[SAFETY MODE] Would post: {content[:50]}...")
+                    result = {"status": "safety_mode_blocked", "content": content}
+                else:
+                    if post_url:
+                        result = self.agent.reddit_comment(post_url, content)
+                    else:
+                        # If no post_url, we need logic to find where to post
+                        # For now, we assume it's a comment task
+                        result = {"status": "failed", "error": "No post_url provided"}
             else:
                 result = {"status": "unsupported_platform"}
             
             self.complete_task(task_id, result)
         
-        print("[CloudSocial] Cycle complete")
-
+        logger.info("CloudSocial cycle complete")
 
 if __name__ == "__main__":
-    import sys
-    
     if len(sys.argv) > 1 and sys.argv[1] == "--status":
         agent = CloudSocialAgent()
-        status = agent.check_browserless_status()
-        print(f"Browserless Status: {json.dumps(status, indent=2)}")
-    elif len(sys.argv) > 1 and sys.argv[1] == "--screenshot":
-        agent = CloudSocialAgent()
-        url = sys.argv[2] if len(sys.argv) > 2 else "https://google.com"
-        result = agent.take_screenshot(url, "screenshot.png")
-        print(f"Screenshot: {result}")
+        print(f"Status: {json.dumps(agent.check_browserless_status(), indent=2)}")
     else:
         orchestrator = CloudSocialOrchestrator()
         orchestrator.run_cycle()
