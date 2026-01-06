@@ -51,26 +51,24 @@ class CloudSocialAgent:
             return {"success": False, "error": str(e)}
     
     def check_browserless_status(self) -> dict:
-        """Check if Browserless is available"""
+        """Check if Browserless is available by testing the screenshot API"""
         if not self.token:
             return {"available": False, "error": "No token configured"}
         
         try:
-            r = requests.get(
-                f"{BROWSERLESS_URL}/pressure?token={self.token}",
-                timeout=10
+            # Use a lightweight test - just check if API responds
+            r = requests.post(
+                f"{BROWSERLESS_URL}/screenshot?token={self.token}",
+                headers={"Content-Type": "application/json"},
+                json={"url": "about:blank", "options": {"type": "png"}},
+                timeout=15
             )
             if r.status_code == 200:
-                data = r.json()
-                return {
-                    "available": True,
-                    "cpu": data.get("cpu"),
-                    "memory": data.get("memory"),
-                    "queued": data.get("queued", 0)
-                }
+                return {"available": True, "status": "online"}
+            else:
+                return {"available": False, "error": f"API returned {r.status_code}"}
         except Exception as e:
             return {"available": False, "error": str(e)}
-        return {"available": False}
     
     def reddit_comment(self, post_url: str, comment: str) -> dict:
         """Post a comment on Reddit using cloud browser"""
