@@ -32,8 +32,8 @@ class Config:
     TWITTER_PASSWORD = os.getenv("TWITTER_PASSWORD")
     
     # Settings
-    DRY_RUN = os.getenv("SHOPIFY_DRY_RUN", "true").lower() == "true"
-    SAFETY_MODE = True  # Prevent spamming (monitor only) vs Action
+    DRY_RUN = False     # REAL MONEY/PRODUCT CREATION
+    SAFETY_MODE = False # REAL TRAFFIC/POSTING
     ECO_MODE = True     # Optimize for Low RAM (Aggressive GC, Cloud-Only)
     
     # Paths
