@@ -6,6 +6,10 @@ The "Natural Selection" Event.
 3. Mutates genes.
 Run this daily.
 """
+SAFE EVOLUTION SANDBOX 🔒
+Constraint: This script MUST NOT use exec() or eval().
+It only modifies JSON data in 'prompts.json'.
+"""
 import sys
 import os
 import random

@@ -45,12 +45,36 @@ class Config:
 Config.LOG_DIR.mkdir(exist_ok=True)
 Config.DATA_DIR.mkdir(exist_ok=True)
 
+
+class RedactingFormatter(logging.Formatter):
+    """Formatter that masks sensitive info from environment variables."""
+    def __init__(self, orig_formatter):
+        self.orig_formatter = orig_formatter
+        self._secrets = []
+        # Collect secrets from Config attributes that look sensitive
+        for key in dir(Config):
+            if key.isupper() and ("KEY" in key or "TOKEN" in key or "PASSWORD" in key or "SECRET" in key):
+                val = getattr(Config, key)
+                if val and len(val) > 4: # Don't mask short common words
+                    self._secrets.append(str(val))
+
+    def format(self, record):
+        msg = self.orig_formatter.format(record)
+        for secret in self._secrets:
+            if secret in msg:
+                msg = msg.replace(secret, "***REDACTED***")
+        return msg
+
 def setup_logging(name: str):
-    """Standard logging setup"""
+    """Standard logging setup with REDACTION"""
     logger = logging.getLogger(name)
     logger.setLevel(logging.INFO)
     
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    # Base formatter
+    base_formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    
+    # Wrap in Redactor
+    formatter = RedactingFormatter(base_formatter)
     
     # File Handler
     file_handler = logging.FileHandler(Config.LOG_DIR / "reactor.log", encoding='utf-8')
@@ -62,7 +86,9 @@ def setup_logging(name: str):
         sys.stdout.reconfigure(encoding='utf-8')
     console_handler.setFormatter(formatter)
     
-    logger.addHandler(file_handler)
-    logger.addHandler(console_handler)
+    # Avoid duplicate handlers
+    if not logger.handlers:
+        logger.addHandler(file_handler)
+        logger.addHandler(console_handler)
     
     return logger
