@@ -190,25 +190,46 @@ class YEDAN_V2_Engine:
         logger.info("[*] CYCLE COMPLETE.")
         logger.info("=" * 60)
 
+import gc
     def run_safe_loop(self):
         """Entry point for async execution"""
-        logger.info("🚀 STARTING ASYNC CORE")
-        try:
-            asyncio.run(self.execute_cycle())
-        except KeyboardInterrupt:
-            logger.info("🛑 Stopped by user")
-        except Exception as e:
-            logger.critical(f"🔥 CRITICAL CORE FAILURE: {e}")
-            logger.critical(traceback.format_exc())
-            # Crash reporting
+        logger.info("🚀 STARTING ASYNC CORE (Eco Mode Enabled)") if Config.ECO_MODE else logger.info("🚀 STARTING ASYNC CORE")
+        
+        while True:
             try:
-                if Config.TELEGRAM_BOT_TOKEN:
-                    requests.post(
-                        f"https://api.telegram.org/bot{Config.TELEGRAM_BOT_TOKEN}/sendMessage",
-                        json={"chat_id": Config.TELEGRAM_CHAT_ID, "text": f"🔥 YEDAN CORE CRASH: {e}"}
-                    )
-            except:
-                pass
+                # 1. Execute Cycle
+                asyncio.run(self.execute_cycle())
+                
+                # 2. Eco Mode Optimization
+                if Config.ECO_MODE:
+                    logger.info("🍃 [Eco] Running Garbage Collection...")
+                    gc.collect()
+                    # Sleep longer in Eco Mode
+                    sleep_duration = 60 # 1 minute
+                else:
+                    sleep_duration = 10 # 10 seconds
+                
+                # 3. Sleep
+                logger.info(f"[*] Sleeping {sleep_duration}s...")
+                time.sleep(sleep_duration)
+                
+            except KeyboardInterrupt:
+                logger.info("🛑 Stopped by user")
+                sys.exit(0)
+            except Exception as e:
+                logger.critical(f"🔥 CRITICAL CORE FAILURE: {e}")
+                logger.critical(traceback.format_exc())
+                # Crash reporting
+                try:
+                    if Config.TELEGRAM_BOT_TOKEN:
+                        requests.post(
+                            f"https://api.telegram.org/bot{Config.TELEGRAM_BOT_TOKEN}/sendMessage",
+                            json={"chat_id": Config.TELEGRAM_CHAT_ID, "text": f"🔥 YEDAN CORE CRASH: {e}"}
+                        )
+                except:
+                    pass
+                # If critical error, wait before retry to avoid rapid-fire loops
+                time.sleep(30)
 
 
 if __name__ == "__main__":

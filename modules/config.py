@@ -34,6 +34,7 @@ class Config:
     # Settings
     DRY_RUN = os.getenv("SHOPIFY_DRY_RUN", "true").lower() == "true"
     SAFETY_MODE = True  # Prevent spamming (monitor only) vs Action
+    ECO_MODE = True     # Optimize for Low RAM (Aggressive GC, Cloud-Only)
     
     # Paths
     ROOT_DIR = Path(__file__).parent.parent
