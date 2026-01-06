@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Insider for Real Estate - Weekly AI Insights</title>
+    <meta
+      name="description"
+      content="Weekly AI insights for real estate professionals. Save hours, close more deals, and stay ahead of the market with actionable AI strategies."
+    />
+
+    <style>
+      :root {
+        --primary: #1a1a2e;
+        --accent: #e94560;
+        --secondary: #16213e;
+        --text: #eee;
+        --text-muted: #aaa;
+        --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", -apple-system, sans-serif;
+        background: var(--primary);
+        color: var(--text);
+        line-height: 1.6;
+        min-height: 100vh;
+      }
+
+      .hero {
+        background: var(--gradient);
+        padding: 80px 20px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 1;
+        max-width: 700px;
+        margin: 0 auto;
+      }
+
+      .badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 8px 20px;
+        border-radius: 50px;
+        font-size: 14px;
+        margin-bottom: 20px;
+        backdrop-filter: blur(10px);
+      }
+
+      h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      }
+
+      .subtitle {
+        font-size: 1.3rem;
+        opacity: 0.95;
+        margin-bottom: 40px;
+      }
+
+      .signup-form {
+        display: flex;
+        gap: 10px;
+        max-width: 500px;
+        margin: 0 auto;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .signup-form input {
+        flex: 1;
+        min-width: 250px;
+        padding: 18px 24px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        background: white;
+        color: #333;
+      }
+
+      .signup-form button {
+        padding: 18px 40px;
+        background: var(--accent);
+        color: white;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .signup-form button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(233, 69, 96, 0.4);
+      }
+
+      .trust {
+        margin-top: 20px;
+        font-size: 14px;
+        opacity: 0.8;
+      }
+
+      .features {
+        padding: 80px 20px;
+        background: var(--secondary);
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .feature-card {
+        background: rgba(255, 255, 255, 0.05);
+        padding: 30px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .feature-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+      }
+
+      .feature-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .feature-card p {
+        color: var(--text-muted);
+        font-size: 15px;
+      }
+
+      .section-title {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 50px;
+      }
+
+      .sample {
+        padding: 80px 20px;
+        background: var(--primary);
+      }
+
+      .sample-content {
+        max-width: 700px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 40px;
+      }
+
+      .sample-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding-bottom: 20px;
+      }
+
+      .sample-content h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+        color: var(--accent);
+      }
+
+      .sample-content p {
+        margin-bottom: 15px;
+        color: var(--text-muted);
+      }
+
+      .cta-section {
+        padding: 80px 20px;
+        background: var(--gradient);
+        text-align: center;
+      }
+
+      .cta-section h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+
+      .cta-section p {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        opacity: 0.9;
+      }
+
+      footer {
+        padding: 40px 20px;
+        text-align: center;
+        background: var(--secondary);
+        color: var(--text-muted);
+        font-size: 14px;
+      }
+
+      @media (max-width: 600px) {
+        h1 {
+          font-size: 2rem;
+        }
+        .subtitle {
+          font-size: 1.1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-content">
+        <span class="badge">🏠 For Real Estate Professionals</span>
+        <h1>AI Insights That Actually Close Deals</h1>
+        <p class="subtitle">
+          Weekly AI strategies, tools, and tactics for real estate agents who
+          want to work smarter, not harder. Join 1,000+ agents staying ahead of
+          the market.
+        </p>
+
+        <form
+          class="signup-form"
+          action="https://synapse.yagami8095.workers.dev/newsletter/subscribe"
+          method="POST"
+        >
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+          <button type="submit">Subscribe Free →</button>
+        </form>
+
+        <p class="trust">🔒 No spam. Unsubscribe anytime. Every Tuesday.</p>
+      </div>
+    </section>
+
+    <section class="features">
+      <h2 class="section-title">What You'll Get Every Week</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Actionable AI Tactics</h3>
+          <p>
+            No theory. Just specific tools and prompts you can use the same day
+            to save hours and impress clients.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Market Intelligence</h3>
+          <p>
+            AI-powered analysis of market trends before your competition sees
+            them. Stay three steps ahead.
+          </p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🎯</div>
+          <h3>Quick Wins</h3>
+          <p>
+            Every issue includes 3 things you can implement TODAY. Copy-paste
+            prompts, tool recommendations, workflows.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sample">
+      <h2 class="section-title">📬 Sample Issue Preview</h2>
+      <div class="sample-content">
+        <div class="sample-header">
+          <span>Issue #17</span>
+          <span>January 2026</span>
+        </div>
+        <h2>
+          Stop Wasting Hours on Reports: AI Can Write Your Market Analysis
+        </h2>
+        <p>
+          The biggest bottleneck in real estate isn't finding leads—it's turning
+          data into compelling, client-ready insights. Here's how to cut that
+          3-hour report down to 10 minutes...
+        </p>
+        <p>
+          <strong>Quick Win:</strong> Use ChatGPT's Custom Instructions to paste
+          your past three market updates. Then ask: "Write a Q1 2026 update for
+          [Your Area] in my style..."
+        </p>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <h2>Ready to Stay Ahead?</h2>
+      <p>
+        Join real estate professionals getting smarter about AI every Tuesday.
+      </p>
+      <form
+        class="signup-form"
+        action="https://synapse.yagami8095.workers.dev/newsletter/subscribe"
+        method="POST"
+      >
+        <input
+          type="email"
+          name="email"
+          placeholder="Your email address"
+          required
+        />
+        <button type="submit">Get Free Access →</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>AI Insider for Real Estate © 2026 | Powered by YEDAN</p>
+    </footer>
+  </body>
+</html>
