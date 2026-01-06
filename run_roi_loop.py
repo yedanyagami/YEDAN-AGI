@@ -47,10 +47,12 @@ from modules.config import Config, setup_logging
 from modules.content_miner import OpenContentMiner
 from modules.writer_agent import WriterAgent
 from modules.opal_bridge import OpalBridge
+from modules.cloud_social import CloudSocialAgent
 from modules.paypal_bridge import PayPalBridge
 from modules.n8n_bridge import N8nBridge
 from modules.echo_analytics import EchoAnalytics
 from modules.market_scanner import MarketScanner
+from generate_digest_asset import generate_daily_digest
 
 logger = setup_logging('reactor')
 
