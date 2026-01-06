@@ -342,6 +342,70 @@ export default {
         return json({ success: true }, corsHeaders);
       }
 
+      // === NEWSLETTER SUBSCRIBE ===
+      if (path === "/newsletter/subscribe" && request.method === "POST") {
+        const contentType = request.headers.get("content-type") || "";
+        let email = "";
+        
+        if (contentType.includes("application/x-www-form-urlencoded")) {
+          const formData = await request.formData();
+          email = formData.get("email");
+        } else {
+          const body = await request.json();
+          email = body.email;
+        }
+        
+        if (!email || !email.includes("@")) {
+          return json({ success: false, error: "Invalid email" }, corsHeaders);
+        }
+        
+        const subscriberId = `sub_${Date.now()}`;
+        await env.YEDAN_KV.put(`newsletter:subscriber:${subscriberId}`, JSON.stringify({
+          id: subscriberId,
+          email: email,
+          source: "landing_page",
+          subscribed_at: new Date().toISOString(),
+          status: "active"
+        }));
+        
+        // Update subscriber count
+        const countData = await env.YEDAN_KV.get("newsletter:count");
+        const count = (countData ? parseInt(countData) : 0) + 1;
+        await env.YEDAN_KV.put("newsletter:count", count.toString());
+        
+        // Send Telegram notification
+        await fetch(`https://api.telegram.org/bot${env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            chat_id: env.TELEGRAM_CHAT_ID,
+            text: `📬 *NEW SUBSCRIBER*\n\nEmail: ${email}\nTotal: ${count} subscribers\n\n_AI Insider for Real Estate_`,
+            parse_mode: "Markdown"
+          })
+        });
+        
+        // Redirect to thank you or return success
+        if (contentType.includes("form")) {
+          return new Response(null, {
+            status: 302,
+            headers: { ...corsHeaders, "Location": "https://yedanyagami-io-2.myshopify.com?subscribed=true" }
+          });
+        }
+        
+        return json({ success: true, subscriber_id: subscriberId, total: count }, corsHeaders);
+      }
+
+      // === NEWSLETTER STATS ===
+      if (path === "/newsletter/stats" && request.method === "GET") {
+        const count = await env.YEDAN_KV.get("newsletter:count") || "0";
+        const list = await env.YEDAN_KV.list({ prefix: "newsletter:subscriber:" });
+        return json({ 
+          success: true, 
+          subscribers: parseInt(count),
+          recent: list.keys.length
+        }, corsHeaders);
+      }
+
       // Default response
       return json({
         success: true,
