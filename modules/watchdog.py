@@ -3,27 +3,17 @@ YEDAN WATCHDOG - System Health Monitor
 Pings all critical services and reports status to Telegram.
 """
 import requests
-import os
 import logging
-import sys
-from dotenv import load_dotenv
+from modules.config import Config, setup_logging
 
-# Setup logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger('watchdog')
-
-# Fix Windows console encoding
-if sys.platform == 'win32':
-    sys.stdout.reconfigure(encoding='utf-8')
-
-load_dotenv(dotenv_path=".env.reactor")
+logger = setup_logging('watchdog')
 
 class Watchdog:
     def __init__(self):
-        self.telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
-        self.chat_id = os.getenv("TELEGRAM_CHAT_ID")
-        self.synapse_url = "https://synapse.yagami8095.workers.dev"
-        self.shopify_url = os.getenv("SHOPIFY_STORE_URL")
+        self.telegram_token = Config.TELEGRAM_BOT_TOKEN
+        self.chat_id = Config.TELEGRAM_CHAT_ID
+        self.synapse_url = Config.SYNAPSE_URL
+        self.shopify_url = Config.SHOPIFY_STORE_URL
         
     def send_alert(self, message):
         """Send critical alert to Telegram"""
@@ -94,9 +84,9 @@ class Watchdog:
         # If failures, alert immediately
         if failures:
             self.send_alert("\n".join(failures))
-            print("❌ ISSUES DETECTED")
+            logger.error("❌ ISSUES DETECTED")
         else:
-            print("✅ SYSTEM HEALTHY")
+            logger.info("✅ SYSTEM HEALTHY")
             
         return failures
 

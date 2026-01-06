@@ -4,39 +4,32 @@ Receives AI-generated content from Opal workflows via Synapse webhook
 Routes to appropriate action (Shopify product, social post, etc.)
 """
 import sys
-import io
-import os
 import json
 import requests
 from datetime import datetime
 from typing import Optional, Dict, Any
-from dotenv import load_dotenv
+from modules.config import Config, setup_logging
 
-# Fix Windows console encoding
-# Encoding fix moved to __main__ or handled by caller
-
-load_dotenv(dotenv_path=".env.reactor")
-
-SYNAPSE_URL = "https://synapse.yagami8095.workers.dev"
-
+logger = setup_logging('opal_bridge')
 
 class OpalBridge:
     """Bridge between Google Opal and YEDAN system"""
     
     def __init__(self):
-        self.shopify_store = os.getenv("SHOPIFY_STORE_URL")
-        self.shopify_token = os.getenv("SHOPIFY_ADMIN_TOKEN")
-        self.telegram_token = os.getenv("TELEGRAM_BOT_TOKEN")
-        self.telegram_chat = os.getenv("TELEGRAM_CHAT_ID")
+        self.shopify_store = Config.SHOPIFY_STORE_URL
+        self.shopify_token = Config.SHOPIFY_ADMIN_TOKEN
+        self.telegram_token = Config.TELEGRAM_BOT_TOKEN
+        self.telegram_chat = Config.TELEGRAM_CHAT_ID
+        self.synapse_url = Config.SYNAPSE_URL
         
     def fetch_pending_content(self) -> list:
         """Fetch pending Opal content from Synapse"""
         try:
-            r = requests.get(f"{SYNAPSE_URL}/opal/content", timeout=10)
+            r = requests.get(f"{self.synapse_url}/opal/content", timeout=10)
             if r.status_code == 200:
                 return r.json().get("contents", [])
         except Exception as e:
-            print(f"[OpalBridge] Error fetching content: {e}")
+            logger.error(f"Error fetching content: {e}")
         return []
     
     def process_content(self, content: Dict[str, Any]) -> bool:
@@ -44,7 +37,7 @@ class OpalBridge:
         content_type = content.get("type", "unknown")
         payload = content.get("content", {})
         
-        print(f"[OpalBridge] Processing: {content_type}")
+        logger.info(f"Processing: {content_type}")
         
         if content_type == "product_description":
             return self._handle_product(payload)
@@ -55,7 +48,7 @@ class OpalBridge:
         elif content_type == "price_update":
             return self._handle_price_update(payload)
         else:
-            print(f"[OpalBridge] Unknown content type: {content_type}")
+            logger.warning(f"Unknown content type: {content_type}")
             return False
     
     def _handle_product(self, payload: dict) -> bool:
@@ -86,14 +79,14 @@ class OpalBridge:
             )
             if r.status_code == 201:
                 product_id = r.json()["product"]["id"]
-                print(f"[OpalBridge] Product created: {product_id}")
+                logger.info(f"Product created: {product_id}")
                 self._notify(f"Product Created: {title}")
                 return True
             else:
-                print(f"[OpalBridge] Shopify error: {r.status_code}")
+                logger.error(f"Shopify error: {r.status_code}")
                 return False
         except Exception as e:
-            print(f"[OpalBridge] Error creating product: {e}")
+            logger.error(f"Error creating product: {e}")
             return False
     
     def _handle_social_post(self, payload: dict) -> bool:
@@ -104,7 +97,7 @@ class OpalBridge:
         # Store in Synapse for later processing
         try:
             r = requests.post(
-                f"{SYNAPSE_URL}/task/submit",
+                f"{self.synapse_url}/task/submit",
                 json={
                     "type": "social_post",
                     "data": {
@@ -117,10 +110,10 @@ class OpalBridge:
             )
             if r.status_code == 200:
                 task_id = r.json().get("task_id")
-                print(f"[OpalBridge] Social post queued: {task_id}")
+                logger.info(f"Social post queued: {task_id}")
                 return True
         except Exception as e:
-            print(f"[OpalBridge] Error queuing social post: {e}")
+            logger.error(f"Error queuing social post: {e}")
         return False
     
     def _handle_blog(self, payload: dict) -> bool:
@@ -128,13 +121,17 @@ class OpalBridge:
         title = payload.get("title", "Untitled")
         content = payload.get("content", "")
         
-        # Save locally
-        filename = f"data/blog_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
-        with open(filename, "w", encoding="utf-8") as f:
-            f.write(f"# {title}\n\n{content}")
-        
-        print(f"[OpalBridge] Blog saved: {filename}")
-        return True
+        # Save locally using Config.DATA_DIR
+        filename = Config.DATA_DIR / f"blog_{datetime.now().strftime('%Y%m%d_%H%M%S')}.md"
+        try:
+            with open(filename, "w", encoding="utf-8") as f:
+                f.write(f"# {title}\n\n{content}")
+            
+            logger.info(f"Blog saved: {filename}")
+            return True
+        except Exception as e:
+            logger.error(f"Error saving blog: {e}")
+            return False
     
     def _handle_price_update(self, payload: dict) -> bool:
         """Update Shopify product price"""
@@ -147,7 +144,7 @@ class OpalBridge:
         # Queue for Shopify action
         try:
             r = requests.post(
-                f"{SYNAPSE_URL}/shopify/action",
+                f"{self.synapse_url}/shopify/action",
                 json={
                     "action": "update_price",
                     "payload": {"product_id": product_id, "price": new_price}
@@ -175,27 +172,24 @@ class OpalBridge:
     
     def run_cycle(self):
         """Process all pending Opal content"""
-        print("=" * 60)
-        print("[OpalBridge] Starting content processing cycle")
-        print("=" * 60)
+        logger.info("Starting content processing cycle")
         
         contents = self.fetch_pending_content()
-        print(f"[OpalBridge] Found {len(contents)} pending items")
+        logger.info(f"Found {len(contents)} pending items")
         
         processed = 0
         for content in contents:
             if self.process_content(content):
                 processed += 1
         
-        print(f"[OpalBridge] Processed {processed}/{len(contents)} items")
+        logger.info(f"Processed {processed}/{len(contents)} items")
         return processed
 
 
-# Manual content sender for testing
 def send_test_content(content_type: str, content: dict):
     """Send test content to Synapse webhook"""
     r = requests.post(
-        f"{SYNAPSE_URL}/opal/webhook",
+        f"{Config.SYNAPSE_URL}/opal/webhook",
         json={
             "type": content_type,
             "content": content,
@@ -208,8 +202,6 @@ def send_test_content(content_type: str, content: dict):
 
 
 if __name__ == "__main__":
-    import sys
-    
     if len(sys.argv) > 1 and sys.argv[1] == "--test":
         # Send test content
         print("[OpalBridge] Sending test content...")
