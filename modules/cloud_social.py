@@ -156,6 +156,35 @@ class CloudSocialOrchestrator:
         except Exception as e:
             logger.error(f"Error completing task: {e}")
     
+
+    def cross_post_viral_threads(self):
+        """
+        Viral Multiplier: Scans recent Reddit posts for >10 upvotes.
+        If found, cross-posts to Twitter (Simulation).
+        """
+        logger.info("[ViralMultiplier] Scanning for viral threads...")
+        # In a real scenario, this would check a database or Reddit API for our own posts
+        # For V2.0 MVP, we'll simulate finding a viral post
+        
+        # Mock viral detection
+        import random
+        if random.random() < 0.1: # 10% chance per cycle
+            viral_post = {
+                "title": "Why AI is the future of dropshipping",
+                "upvotes": 42,
+                "url": "https://reddit.com/r/dropshipping/example"
+            }
+            logger.info(f"🔥 VIRAL ALERT: '{viral_post['title']}' has {viral_post['upvotes']} upvotes!")
+            
+            tweet_content = f"Everyone is talking about this on Reddit: {viral_post['title']} \n\nCheck it out: {viral_post['url']} #AI #ecom"
+            
+            if Config.SAFETY_MODE:
+                logger.info(f"[SAFETY MODE] Would Tweet: {tweet_content}")
+            else:
+                logger.info(f"🐦 Cross-posting to Twitter: {tweet_content}")
+                # self.agent.post_tweet(tweet_content) # Placeholder for Twitter logic
+                logger.info("✅ Tweet sent (Simulated for V2 MVP)")
+
     def run_cycle(self):
         """Process pending social tasks"""
         logger.info("Starting CloudSocial cycle (Smart Engagement)")
@@ -164,6 +193,9 @@ class CloudSocialOrchestrator:
         if not status.get("available"):
             logger.warning("Browserless unavailable")
             return
+            
+        # Run Viral Check
+        self.cross_post_viral_threads()
         
         tasks = self.fetch_pending_tasks()
         logger.info(f"Found {len(tasks)} pending tasks")
