@@ -191,21 +191,46 @@ class OpenContentMiner:
             logger.error(f"GitHub Mining Failed: {e}")
             return []
 
+    def harvest_mix(self, limit=10):
+        """
+        Harvests a diverse mix of content from all sources.
+        Target: ~50% Trending (HN), ~30% Deep (ArXiv), ~20% Evergreen (Wiki).
+        """
+        logger.info(f"🏭 Content Factory: Harvesting batch of {limit} items...")
+        
+        mix = []
+        
+        # 1. HackerNews (Trending) - 50%
+        hn_count = int(limit * 0.5)
+        logger.info(f"   -> Fetching {hn_count} Trending stories...")
+        mix.extend(self.harvest_hackernews(max_results=hn_count * 2)) # Fetch extra to account for filtering
+        
+        # 2. ArXiv (Deep Tech) - 30%
+        arxiv_count = int(limit * 0.3)
+        if len(mix) < limit:
+            logger.info(f"   -> Fetching {arxiv_count} Research papers...")
+            # Rotate queries or use a standard set
+            queries = ["Artificial Intelligence", "Machine Learning", "Robotics", "Quantum Computing"]
+            import random
+            q = random.choice(queries)
+            mix.extend(self.harvest_arxiv(query=q, max_results=arxiv_count))
+            
+        # 3. GitHub (Code) - Remaining
+        remaining = limit - len(mix)
+        if remaining > 0:
+            logger.info(f"   -> Fetching {remaining} GitHub repos...")
+            mix.extend(self.harvest_github_trending(language="python"))
+            
+        # Trim to limit
+        final_batch = mix[:limit]
+        logger.info(f"🏭 Factory Batch Complete: {len(final_batch)} items ready.")
+        return final_batch
+
 if __name__ == "__main__":
     # Test Run
     miner = OpenContentMiner()
     
-    print("\n=== ArXiv ===")
-    papers = miner.harvest_arxiv("Language Models", max_results=2)
-    for p in papers:
-        print(f"[Paper] {p['title'][:50]}...")
-    
-    print("\n=== HackerNews ===")
-    stories = miner.harvest_hackernews(max_results=3)
-    for s in stories:
-        print(f"[HN] {s['title'][:50]}... (Score: {s.get('score', 0)})")
-    
-    print("\n=== GitHub Trending ===")
-    repos = miner.harvest_github_trending("python")
-    for r in repos[:3]:
-        print(f"[GH] {r['title']} ({r.get('stars', 0)} stars)")
+    print("\n=== Content Factory Batch Test ===")
+    batch = miner.harvest_mix(limit=5)
+    for i, item in enumerate(batch):
+        print(f"{i+1}. [{item['source'].upper()}] {item['title'][:60]}...")
