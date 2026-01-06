@@ -71,7 +71,7 @@ def generate_dashboard():
     with open(DASHBOARD_PATH, "w", encoding="utf-8") as f:
         f.write(html)
     
-    print(f"💰 Dashboard updated: {os.path.abspath(DASHBOARD_PATH)}")
+    print(f"[Dashboard] Dashboard updated: {os.path.abspath(DASHBOARD_PATH)}")
 
 if __name__ == "__main__":
     generate_dashboard()
