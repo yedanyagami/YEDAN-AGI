@@ -30,12 +30,12 @@ def check_and_install_dependencies():
             missing.append(lib)
     
     if missing:
-        print(f"🚑 Dependency Medic: Installing missing libs: {missing}")
+        print(f"[Medic] Dependency Medic: Installing missing libs: {missing}")
         try:
             subprocess.check_call([sys.executable, "-m", "pip", "install"] + missing)
-            print("✅ Dependencies restored.")
+            print("[Medic] Dependencies restored.")
         except Exception as e:
-            print(f"❌ Failed to auto-install: {e}")
+            print(f"[Error] Failed to auto-install: {e}")
 
 check_and_install_dependencies()
 # -----------------------------------
@@ -47,8 +47,9 @@ from modules.config import Config, setup_logging
 from modules.content_miner import OpenContentMiner
 from modules.writer_agent import WriterAgent
 from modules.opal_bridge import OpalBridge
-from modules.cloud_social import CloudSocialAgent
 from modules.paypal_bridge import PayPalBridge
+from modules.n8n_bridge import N8nBridge
+from modules.echo_analytics import EchoAnalytics
 from modules.market_scanner import MarketScanner
 
 logger = setup_logging('reactor')
