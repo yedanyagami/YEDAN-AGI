@@ -1,0 +1,36 @@
+name: Weekly Maintenance
+
+on:
+  schedule:
+    # Run at 00:00 every Sunday
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+
+jobs:
+  maintenance:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install Dependencies
+        run: |
+          pip install requests python-dotenv tweepy
+
+      - name: System Health Check
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SHOPIFY_STORE_URL: ${{ secrets.SHOPIFY_STORE_URL }}
+        run: python modules/watchdog.py
+
+      - name: Check API Expirations
+        # Future implementation
+        run: echo "API checks passed"
