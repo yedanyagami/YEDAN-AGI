@@ -6,42 +6,48 @@ Uses DeepSeek R1 to analyze pain points and craft empathetic, solution-oriented 
 import logging
 import json
 from .r1_reasoner import DeepSeekReasoner
+from .darwin import Darwin
 
 logger = logging.getLogger('writer_agent')
 
 class WriterAgent:
     def __init__(self):
         self.brain = DeepSeekReasoner()
+        self.darwin = Darwin()
         
     def generate_reply(self, user_input: str, platform: str = "reddit") -> dict:
         """
         Generates a structured reply to a user post.
-        Returns:
-            dict: {
-                "scan_analysis": "Pain point identified...",
-                "reply_content": "Hey, I saw your post...",
-                "confidence_score": 8.5
-            }
         """
-        # 1. Analyze the input (Implicit in R1's reasoning, but we can structure prompts)
-        # For now, we rely on R1's generate_response to do the heavy lifting.
+        # 1. Select Best Strategy via Darwin
+        strategy = self.darwin.select_strategy("reddit_reply")
+        logger.info(f"🧠 [Writer] Using Strategy: {strategy['name']}")
         
-        reply = self.brain.generate_response(user_input, platform)
+        # 2. Inject Strategy into Brain
+        # We append the Darwin-selected persona to the prompt context
+        context_input = f"{user_input}\n\n[Persona Instruction]: {strategy['text']}"
         
-        # 2. Simple confidence scoring (mock logic for now, r1 doesn't return score yet)
-        # If reply is long enough, assume higher confidence
+        reply = self.brain.generate_response(context_input, platform)
+        
+        # 3. Simple confidence scoring
         confidence = min(9.5, len(reply) / 100) if reply else 0.0
         
         return {
             "reply_content": reply,
             "confidence_score": round(confidence, 1),
-            "model_used": self.brain.model if not self.brain.simulation_mode else "simulation"
+            "model_used": self.brain.model if not self.brain.simulation_mode else "simulation",
+            "strategy_used": strategy['name'] # Return this so we can log feedback later
         }
 
-    def generate_post(self, topic: str, angle: str = "value_first") -> str:
+    def generate_post(self, topic: str, angle: str = None) -> str:
         """
         Generates a new top-level post based on a topic.
         """
+        if not angle:
+             # Let Darwin decide the angle if not specified
+             # (Future: add 'reddit_post' gene to prompts.json)
+             angle = "value_first"
+             
         prompt = f"""
         Write a high-value Reddit post about: {topic}
         Angle: {angle}
@@ -58,23 +64,18 @@ class WriterAgent:
         """
         Generates SEO-optimized title and description for a Shopify product.
         Implements logic from 'ShopifySeoChatGPT'.
-        
-        Args:
-            product_info: dict with keys 'title', 'current_description', 'keywords'
-            
-        Returns:
-            dict: {
-                "optimized_title": "...",
-                "optimized_description_html": "...",
-                "seo_score": 9.0
-            }
         """
+        # 1. Select Best Strategy via Darwin
+        strategy = self.darwin.select_strategy("shopify_product_desc")
+        logger.info(f"🧠 [Writer] Using Strategy: {strategy['name']}")
+
         title = product_info.get('title', '')
         desc = product_info.get('current_description', '')
         keywords = product_info.get('keywords', [])
         
         prompt = f"""
         Act as a Shopify SEO Expert. Optimize this product for Google Search.
+        Style Guide: {strategy['text']}
         
         Product: {title}
         Current Desc: {desc}
