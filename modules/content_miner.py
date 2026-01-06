@@ -125,16 +125,27 @@ class OpenContentMiner:
                 story_r = requests.get(f"{self.sources['hackernews']}/item/{sid}.json", timeout=5)
                 if story_r.status_code == 200:
                     story = story_r.json()
-                    if story and story.get('title'):
+                    title = story.get('title', '')
+                    
+                    if title:
+                        # ORACLE SCORING
+                        prediction = self.oracle.get_trend_score(title)
+                        score = prediction.get("score", 0)
+                        
+                        if score < 30:
+                            logger.info(f"Skipping '{title}' (Low Oracle Score: {score}%)")
+                            continue
+                            
                         stories.append({
                             "source": "hackernews",
-                            "title": story.get('title', ''),
+                            "title": title,
                             "url": story.get('url', f"https://news.ycombinator.com/item?id={sid}"),
                             "score": story.get('score', 0),
-                            "raw_text": f"{story.get('title', '')} (Score: {story.get('score', 0)})"
+                            "oracle_score": score,
+                            "raw_text": f"{title} (Score: {story.get('score', 0)}) [Oracle: {score}%]"
                         })
             
-            logger.info(f"Harvested {len(stories)} HN stories.")
+            logger.info(f"Harvested {len(stories)} High-Potential HN stories.")
             return stories
             
         except Exception as e:
