@@ -20492,3 +20492,50 @@ Low ROAS on FB ads is usually a t...
 2026-01-06 16:09:10,699 - reactor - INFO - ============================================================
 2026-01-06 16:09:10,699 - reactor - INFO - [*] CYCLE COMPLETE.
 2026-01-06 16:09:10,699 - reactor - INFO - ============================================================
+2026-01-06 16:14:05,105 - reactor - INFO - [*] Initializing YEDAN V2.0 Engine (Async/Turbo)...
+2026-01-06 16:14:07,699 - reactor - INFO - [*] Engine Mode: LIVE
+2026-01-06 16:14:07,700 - reactor - INFO - 🚀 STARTING ASYNC CORE
+2026-01-06 16:14:07,702 - reactor - INFO - ============================================================
+2026-01-06 16:14:07,702 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-06 16:14:07
+2026-01-06 16:14:07,703 - reactor - INFO - ============================================================
+2026-01-06 16:14:07,703 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-06 16:14:07,709 - reactor - INFO - [Phase 1] MINING OPERATION (Factory Mode)
+2026-01-06 16:14:07,711 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-06 16:14:07,713 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-06 16:14:07,715 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-06 16:14:07,715 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-06 16:14:07,716 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-06 16:14:08,920 - reactor - INFO -    -> Found 1 items from Google Opal. Processing...
+2026-01-06 16:14:08,920 - opal_bridge - INFO - Starting content processing cycle
+2026-01-06 16:14:09,032 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-06 16:14:09,033 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-06 16:14:09,451 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-06 16:14:09,452 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-06 16:14:09,839 - opal_bridge - INFO - Found 1 pending items
+2026-01-06 16:14:09,840 - opal_bridge - INFO - Processing: product_description
+2026-01-06 16:14:09,840 - opal_bridge - INFO - 🔍 Oracle: Optimizing SEO for 'Test Product from Opal'...
+2026-01-06 16:14:10,280 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-06 16:14:10,937 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-06 16:14:10,973 - cloud_social - INFO - Found 0 pending tasks
+2026-01-06 16:14:10,973 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-06 16:14:12,290 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-06 16:14:12,291 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-06 16:14:15,593 - opal_bridge - INFO - Product created: 7653181817038 (https://yedanyagami-io-2.myshopify.com/products/test-product-from-opal-6)
+2026-01-06 16:14:17,042 - opal_bridge - INFO - Processed 1/1 items
+2026-01-06 16:14:17,043 - reactor - INFO - ============================================================
+2026-01-06 16:14:17,043 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-06 16:14:17,043 - reactor - INFO - ============================================================
+2026-01-06 16:14:35,383 - reactor - INFO - [*] Initializing YEDAN V2.0 Engine (Async/Turbo)...
+2026-01-06 16:14:36,944 - reactor - INFO - [*] Engine Mode: LIVE
+2026-01-06 16:14:36,945 - reactor - INFO - 🚀 STARTING ASYNC CORE
+2026-01-06 16:14:36,946 - reactor - INFO - ============================================================
+2026-01-06 16:14:36,946 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-06 16:14:36
+2026-01-06 16:14:36,946 - reactor - INFO - ============================================================
+2026-01-06 16:14:36,947 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-06 16:14:36,949 - reactor - INFO - [Phase 1] MINING OPERATION (Factory Mode)
+2026-01-06 16:14:36,950 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-06 16:14:36,951 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-06 16:14:36,953 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-06 16:14:36,954 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-06 16:14:36,954 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-06 16:14:37,738 - reactor - INFO -    -> Found 1 items from Google Opal. Processing...

@@ -23,8 +23,8 @@ logging.basicConfig(
 logger = logging.getLogger('supervisor')
 
 def run_forever():
-    logger.info("♾️ SUPERVISOR STARTED: The Money Loop")
-    print("♾️ SUPERVISOR STARTED: The Money Loop")
+    logger.info("SUPERVISOR STARTED: The Money Loop")
+    print("[Supervisor] STARTED: The Money Loop")
     
     script = "run_roi_loop.py"
     cmd = [sys.executable, script]
@@ -33,8 +33,8 @@ def run_forever():
     
     while True:
         try:
-            logger.info(f"🚀 Launching {script} (Attempt {restart_count + 1})...")
-            print(f"🚀 Launching {script}...")
+            logger.info(f"Launching {script} (Attempt {restart_count + 1})...")
+            print(f"[Supervisor] Launching {script}...")
             
             # Start process
             process = subprocess.Popen(cmd)
@@ -45,21 +45,21 @@ def run_forever():
             exit_code = process.wait()
             
             if exit_code == 0:
-                logger.info("✅ Engine stopped gracefully (Exit Code 0).")
-                print("✅ Engine stopped gracefully.")
+                logger.info("Engine stopped gracefully (Exit Code 0).")
+                print("[Supervisor] Engine stopped gracefully.")
                 # Maybe user asked to stop? But for "Infinity Loop" we might restart anyway?
                 # Let's assume standard stop means maintenance, so we pause 10s then restart.
                 time.sleep(10)
             else:
-                logger.warning(f"⚠️ Engine CRASHED (Exit Code {exit_code}).")
-                print(f"⚠️ Engine CRASHED (Exit Code {exit_code}). Restarting in 5s...")
+                logger.warning(f"Engine CRASHED (Exit Code {exit_code}).")
+                print(f"[Supervisor] Engine CRASHED (Exit Code {exit_code}). Restarting in 5s...")
                 
             restart_count += 1
             time.sleep(5) # Cool down
             
         except KeyboardInterrupt:
-            logger.info("🛑 Supervisor stopped by user.")
-            print("\n🛑 Supervisor stopped by user.")
+            logger.info("Supervisor stopped by user.")
+            print("\n[Supervisor] Stopped by user.")
             break
         except Exception as e:
             logger.critical(f"🔥 SUPERVISOR ERROR: {e}")
