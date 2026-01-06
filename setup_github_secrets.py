@@ -19,8 +19,11 @@ import os
 load_dotenv(dotenv_path=".env.reactor")
 
 # GitHub API setup
-GITHUB_TOKEN = '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'
+GITHUB_TOKEN = os.getenv('GH_PAT')
 REPO = 'yedanyagami/YEDAN-AGI'
+if not GITHUB_TOKEN:
+    print("❌ Error: GH_PAT not found in environment variables")
+    sys.exit(1)
 headers = {'Authorization': f'token {GITHUB_TOKEN}', 'Accept': 'application/vnd.github.v3+json'}
 
 def encrypt_secret(public_key: str, secret_value: str) -> str:
