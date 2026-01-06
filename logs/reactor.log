@@ -20427,3 +20427,20 @@ Low ROAS on FB ads is usually a t...
 2026-01-03 00:33:38,920 - INFO - \U0001f52e [Sim] Waiting 12.2s for next 'user'...
 2026-01-03 00:33:39,352 - INFO - Skipping duplicate user PanickedMerchant
 2026-01-03 00:33:39,353 - INFO - 🔮 [Sim] Waiting 15.9s...
+2026-01-06 15:46:57,650 - reactor - INFO - [*] Initializing YEDAN V2.0 Engine...
+2026-01-06 15:46:58,191 - reactor - INFO - [*] Engine Mode: LIVE
+2026-01-06 15:46:58,192 - reactor - INFO - 🚀 STARTING SAFE LOOP PROTOCOL
+2026-01-06 15:46:58,192 - reactor - INFO - ============================================================
+2026-01-06 15:46:58,192 - reactor - INFO - [*] YEDAN V2.0 EXECUTION CYCLE | 2026-01-06 15:46:58
+2026-01-06 15:46:58,192 - reactor - INFO - ============================================================
+2026-01-06 15:46:58,193 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-06 15:46:59,571 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-06 15:47:00,354 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-06 15:47:00,356 - reactor - INFO - [Phase 1] MINING OPERATION
+2026-01-06 15:47:01,226 - reactor - INFO -    -> Found 1 items from Google Opal. Processing...
+2026-01-06 15:47:01,227 - opal_bridge - INFO - Starting content processing cycle
+2026-01-06 15:47:01,984 - opal_bridge - INFO - Found 1 pending items
+2026-01-06 15:47:01,984 - opal_bridge - INFO - Processing: product_description
+2026-01-06 15:47:03,622 - opal_bridge - INFO - Product created: 7653179523278
+2026-01-06 15:47:05,042 - opal_bridge - INFO - Processed 1/1 items
+2026-01-06 15:47:05,042 - reactor - INFO - [Phase 2] TRAFFIC OPERATION
