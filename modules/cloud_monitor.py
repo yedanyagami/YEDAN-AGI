@@ -8,10 +8,15 @@ import time
 import json
 import logging
 import requests
+import sys
+import os
+
+# Add root directory to path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from modules.config import Config, setup_logging
 from modules.n8n_bridge import N8nBridge
 from generate_dashboard import generate_dashboard
-import os
 
 # Setup pure file logging to avoid console spam
 logger = setup_logging('cloud_monitor')
