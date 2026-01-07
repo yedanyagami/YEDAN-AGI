@@ -21613,3 +21613,333 @@ Check it out: https://reddit.com/r/dropshipping/example #AI #ecom
 2026-01-08 00:37:41,837 - reactor - INFO - ============================================================
 2026-01-08 00:37:41,846 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
 2026-01-08 00:37:42,101 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:38:15,100 - reactor - INFO - ============================================================
+2026-01-08 00:38:15,102 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:38:15
+2026-01-08 00:38:15,104 - reactor - INFO - ============================================================
+2026-01-08 00:38:15,105 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:38:15,108 - reactor - INFO - [Phase 1] MINING -> FACTORY -> SHOPIFY (Direct Pipeline)
+2026-01-08 00:38:15,112 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:38:15,115 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:38:15,117 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:38:15,118 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:38:15,119 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:38:16,231 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:38:17,072 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:38:17,073 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:38:17,142 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:38:17,530 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:38:18,826 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:38:19,565 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:38:20,113 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:38:20,113 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:38:22,403 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:38:22,403 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:38:22,438 - oracle - INFO - No trend data for 'Sugar industry influenced researchers and blamed fat for CVD'
+2026-01-08 00:38:27,791 - oracle - INFO - No trend data for 'LaTeX Coffee Stains [pdf] (2021)'
+2026-01-08 00:38:33,172 - reactor - INFO -    -> No topics found. Skipping cycle.
+2026-01-08 00:38:33,173 - reactor - INFO - ============================================================
+2026-01-08 00:38:33,173 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:38:33,173 - reactor - INFO - ============================================================
+2026-01-08 00:38:33,175 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:38:33,281 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:38:42,102 - reactor - INFO - ============================================================
+2026-01-08 00:38:42,103 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:38:42
+2026-01-08 00:38:42,104 - reactor - INFO - ============================================================
+2026-01-08 00:38:42,104 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:38:42,105 - reactor - INFO - [Phase 1] MINING OPERATION (Factory Mode)
+2026-01-08 00:38:42,107 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:38:42,109 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:38:42,110 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:38:42,111 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:38:42,112 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:38:43,292 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:38:43,474 - reactor - INFO -    -> No Opal content. Running standard mining cycle...
+2026-01-08 00:38:43,889 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:38:43,890 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:38:44,140 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:38:44,481 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:38:45,900 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:38:46,133 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:38:46,993 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:38:46,993 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:38:48,662 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:38:48,663 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:39:19,926 - reactor - INFO - ============================================================
+2026-01-08 00:39:19,926 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:39:19,927 - reactor - INFO - ============================================================
+2026-01-08 00:39:19,953 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:39:21,192 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:39:33,403 - reactor - INFO - ============================================================
+2026-01-08 00:39:33,421 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:39:33
+2026-01-08 00:39:33,421 - reactor - INFO - ============================================================
+2026-01-08 00:39:33,427 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:39:33,479 - reactor - INFO - [Phase 1] MINING -> FACTORY -> SHOPIFY (Direct Pipeline)
+2026-01-08 00:39:33,551 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:39:33,563 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:39:33,573 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:39:33,574 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:39:33,579 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:39:35,515 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:39:35,520 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:39:35,947 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:39:35,949 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:39:37,845 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:39:38,654 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:39:38,709 - cloud_social - INFO - 🔥 VIRAL ALERT: 'Why AI is the future of dropshipping' has 42 upvotes!
+2026-01-08 00:39:38,782 - cloud_social - INFO - 🐦 Cross-posting to Twitter: Everyone is talking about this on Reddit: Why AI is the future of dropshipping 
+
+Check it out: https://reddit.com/r/dropshipping/example #AI #ecom
+2026-01-08 00:39:38,793 - cloud_social - INFO - ✅ Tweet sent (Simulated for V2 MVP)
+2026-01-08 00:39:40,301 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:39:40,399 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:39:40,399 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:39:41,597 - oracle - ERROR - Oracle error for 'Sugar industry influenced researchers and blamed fat for CVD': The request failed: Google returned a response with code 429
+2026-01-08 00:39:42,998 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:39:42,999 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:39:47,584 - oracle - ERROR - Oracle error for 'LaTeX Coffee Stains [pdf] (2021)': The request failed: Google returned a response with code 429
+2026-01-08 00:39:54,349 - reactor - INFO -    -> Found 2 trending topics. Creating products...
+2026-01-08 00:39:54,350 - darwin - INFO - 🧬 [Darwin] Exploiting Gene: value_first (Win Rate: 0.50)
+2026-01-08 00:40:21,288 - reactor - INFO - ============================================================
+2026-01-08 00:40:21,303 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:40:21
+2026-01-08 00:40:21,303 - reactor - INFO - ============================================================
+2026-01-08 00:40:21,316 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:40:21,387 - reactor - INFO - [Phase 1] MINING OPERATION (Factory Mode)
+2026-01-08 00:40:21,432 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:40:21,450 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:40:21,459 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:40:21,462 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:40:21,465 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:40:22,720 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:40:22,904 - reactor - INFO -    -> No Opal content. Running standard mining cycle...
+2026-01-08 00:40:23,571 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:40:23,766 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:40:23,766 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:40:23,966 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:40:25,907 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:40:26,124 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:40:27,281 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:40:27,282 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:40:28,491 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:40:28,491 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:41:05,787 - opal_bridge - INFO - 🔍 Oracle: Optimizing SEO for 'AI Exposes Sugar Industry's Fat Blame for CVD (2026 Trend)'...
+2026-01-08 00:41:09,458 - opal_bridge - INFO -    -> Injecting Tag: Exposes (Score: 70)
+2026-01-08 00:41:13,623 - opal_bridge - INFO -    -> Injecting Tag: Sugar (Score: 90)
+2026-01-08 00:41:17,513 - opal_bridge - INFO -    -> Injecting Tag: Industry's (Score: 50)
+2026-01-08 00:41:20,303 - reactor - INFO - ============================================================
+2026-01-08 00:41:20,303 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:41:20,304 - reactor - INFO - ============================================================
+2026-01-08 00:41:20,315 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:41:20,749 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:41:21,280 - opal_bridge - INFO -    -> Injecting Tag: Blame (Score: 50)
+2026-01-08 00:41:25,297 - oracle - ERROR - Oracle error for '(2026': The request failed: Google returned a response with code 429
+2026-01-08 00:41:25,299 - opal_bridge - INFO -    -> Injecting Tag: (2026 (Score: 53)
+2026-01-08 00:41:29,385 - oracle - ERROR - Oracle error for 'Trend)': The request failed: Google returned a response with code 429
+2026-01-08 00:41:29,387 - opal_bridge - INFO -    -> Injecting Tag: Trend) (Score: 56)
+2026-01-08 00:41:30,866 - opal_bridge - INFO - Product created: 7653404082382 (https://yedanyagami-io-2.myshopify.com/products/ai-exposes-sugar-industrys-fat-blame-for-cvd-2026-trend)
+2026-01-08 00:41:32,462 - reactor - INFO -    ✅ PRODUCT CREATED: Sugar industry influenced rese...
+2026-01-08 00:41:32,474 - reactor - INFO - ============================================================
+2026-01-08 00:41:32,475 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:41:32,475 - reactor - INFO - ============================================================
+2026-01-08 00:41:32,492 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:41:32,801 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:42:20,754 - reactor - INFO - ============================================================
+2026-01-08 00:42:20,755 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:42:20
+2026-01-08 00:42:20,756 - reactor - INFO - ============================================================
+2026-01-08 00:42:20,756 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:42:20,757 - reactor - INFO - [Phase 1] MINING OPERATION (Factory Mode)
+2026-01-08 00:42:20,759 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:42:20,761 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:42:20,763 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:42:20,764 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:42:20,765 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:42:21,951 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:42:22,237 - reactor - INFO -    -> No Opal content. Running standard mining cycle...
+2026-01-08 00:42:22,519 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:42:22,519 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:42:22,751 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:42:23,175 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:42:24,131 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:42:25,411 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:42:25,412 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:42:25,988 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:42:29,490 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:42:29,491 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:42:32,803 - reactor - INFO - ============================================================
+2026-01-08 00:42:32,804 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:42:32
+2026-01-08 00:42:32,804 - reactor - INFO - ============================================================
+2026-01-08 00:42:32,804 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:42:32,805 - reactor - INFO - [Phase 1] MINING -> FACTORY -> SHOPIFY (Direct Pipeline)
+2026-01-08 00:42:32,808 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:42:32,810 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:42:32,814 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:42:32,815 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:42:32,816 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:42:34,010 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:42:34,037 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:42:35,206 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:42:35,206 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:42:35,237 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:42:36,639 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:42:36,712 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:42:37,878 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:42:37,878 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:42:38,938 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:42:38,938 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:42:39,002 - oracle - INFO - No trend data for 'Sugar industry influenced researchers and blamed fat for CVD'
+2026-01-08 00:42:43,898 - oracle - INFO - No trend data for 'LaTeX Coffee Stains [pdf] (2021)'
+2026-01-08 00:42:50,289 - oracle - ERROR - Oracle error for 'LLM Problems Observed in Humans': The request failed: Google returned a response with code 429
+2026-01-08 00:42:50,293 - reactor - INFO -    -> Found 1 trending topics. Creating products...
+2026-01-08 00:42:50,295 - darwin - INFO - 🧬 [Darwin] Exploiting Gene: value_first (Win Rate: 0.50)
+2026-01-08 00:43:14,037 - reactor - INFO - ============================================================
+2026-01-08 00:43:14,037 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:43:14,037 - reactor - INFO - ============================================================
+2026-01-08 00:43:14,039 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:43:14,145 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:44:11,860 - opal_bridge - INFO - 🔍 Oracle: Optimizing SEO for 'AI 2026: How LLM Problems Reveal Human Behavior Patterns'...
+2026-01-08 00:44:14,147 - reactor - INFO - ============================================================
+2026-01-08 00:44:14,147 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:44:14
+2026-01-08 00:44:14,147 - reactor - INFO - ============================================================
+2026-01-08 00:44:14,147 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:44:14,148 - reactor - INFO - [Phase 1] MINING OPERATION (Factory Mode)
+2026-01-08 00:44:14,150 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:44:14,152 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:44:14,154 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:44:14,155 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:44:14,155 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:44:14,397 - opal_bridge - INFO -    -> Injecting Tag: 2026: (Score: 70)
+2026-01-08 00:44:15,183 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:44:15,420 - reactor - INFO -    -> No Opal content. Running standard mining cycle...
+2026-01-08 00:44:15,448 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:44:15,741 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:44:15,741 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:44:16,460 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:44:17,105 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:44:18,268 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:44:18,338 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:44:18,338 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:44:19,389 - opal_bridge - INFO -    -> Injecting Tag: Problems (Score: 50)
+2026-01-08 00:44:20,248 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:44:20,248 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:44:22,407 - opal_bridge - INFO -    -> Injecting Tag: Reveal (Score: 70)
+2026-01-08 00:44:25,245 - opal_bridge - INFO -    -> Injecting Tag: Human (Score: 50)
+2026-01-08 00:44:28,039 - opal_bridge - INFO -    -> Injecting Tag: Behavior (Score: 70)
+2026-01-08 00:44:31,571 - opal_bridge - INFO -    -> Injecting Tag: Patterns (Score: 70)
+2026-01-08 00:44:33,579 - opal_bridge - INFO - Product created: 7653404377294 (https://yedanyagami-io-2.myshopify.com/products/ai-2026-how-llm-problems-reveal-human-behavior-patterns)
+2026-01-08 00:44:35,130 - reactor - INFO -    ✅ PRODUCT CREATED: LLM Problems Observed in Human...
+2026-01-08 00:44:35,130 - reactor - INFO - ============================================================
+2026-01-08 00:44:35,130 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:44:35,130 - reactor - INFO - ============================================================
+2026-01-08 00:44:35,132 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:44:35,223 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:44:53,521 - reactor - INFO - ============================================================
+2026-01-08 00:44:53,521 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:44:53,521 - reactor - INFO - ============================================================
+2026-01-08 00:44:53,523 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:44:53,632 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:45:35,225 - reactor - INFO - ============================================================
+2026-01-08 00:45:35,225 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:45:35
+2026-01-08 00:45:35,225 - reactor - INFO - ============================================================
+2026-01-08 00:45:35,226 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:45:35,226 - reactor - INFO - [Phase 1] MINING -> FACTORY -> SHOPIFY (Direct Pipeline)
+2026-01-08 00:45:35,227 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:45:35,229 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:45:35,232 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:45:35,232 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:45:35,237 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:45:36,500 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:45:36,552 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:45:36,845 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:45:36,845 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:45:37,780 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:45:39,299 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:45:39,302 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:45:40,494 - oracle - INFO - No trend data for 'Sugar industry influenced researchers and blamed fat for CVD'
+2026-01-08 00:45:40,645 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:45:40,645 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:45:41,365 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:45:41,365 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:45:45,410 - oracle - INFO - No trend data for 'LaTeX Coffee Stains [pdf] (2021)'
+2026-01-08 00:45:51,075 - reactor - INFO -    -> No topics found. Skipping cycle.
+2026-01-08 00:45:51,075 - reactor - INFO - ============================================================
+2026-01-08 00:45:51,076 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:45:51,076 - reactor - INFO - ============================================================
+2026-01-08 00:45:51,078 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:45:51,166 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:45:53,633 - reactor - INFO - ============================================================
+2026-01-08 00:45:53,634 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:45:53
+2026-01-08 00:45:53,634 - reactor - INFO - ============================================================
+2026-01-08 00:45:53,634 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:45:53,635 - reactor - INFO - [Phase 1] MINING OPERATION (Factory Mode)
+2026-01-08 00:45:53,636 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:45:53,637 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:45:53,639 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:45:53,640 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:45:53,641 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:45:54,688 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:45:54,862 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:45:54,888 - reactor - INFO -    -> No Opal content. Running standard mining cycle...
+2026-01-08 00:45:55,281 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:45:55,281 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:45:56,019 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:45:56,738 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:45:57,099 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:45:57,776 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:45:57,776 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:45:59,250 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:45:59,251 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:46:47,902 - reactor - INFO - ============================================================
+2026-01-08 00:46:47,902 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:46:47,903 - reactor - INFO - ============================================================
+2026-01-08 00:46:47,904 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:46:48,006 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:46:51,168 - reactor - INFO - ============================================================
+2026-01-08 00:46:51,168 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:46:51
+2026-01-08 00:46:51,168 - reactor - INFO - ============================================================
+2026-01-08 00:46:51,169 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:46:51,170 - reactor - INFO - [Phase 1] MINING -> FACTORY -> SHOPIFY (Direct Pipeline)
+2026-01-08 00:46:51,172 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:46:51,174 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:46:51,176 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:46:51,177 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:46:51,177 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:46:52,430 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:46:52,479 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:46:52,889 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:46:52,889 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:46:53,605 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:46:54,532 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:46:55,076 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:46:55,513 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:46:55,513 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:46:57,127 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:46:57,128 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:46:57,182 - oracle - INFO - No trend data for 'Sugar industry influenced researchers and blamed fat for CVD'
+2026-01-08 00:47:01,709 - oracle - INFO - No trend data for 'LaTeX Coffee Stains [pdf] (2021)'
+2026-01-08 00:47:07,338 - reactor - INFO -    -> No topics found. Skipping cycle.
+2026-01-08 00:47:07,338 - reactor - INFO - ============================================================
+2026-01-08 00:47:07,338 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:47:07,338 - reactor - INFO - ============================================================
+2026-01-08 00:47:07,340 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:47:07,431 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:47:48,008 - reactor - INFO - ============================================================
+2026-01-08 00:47:48,010 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:47:48
+2026-01-08 00:47:48,010 - reactor - INFO - ============================================================
+2026-01-08 00:47:48,011 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:47:48,012 - reactor - INFO - [Phase 1] MINING OPERATION (Factory Mode)
+2026-01-08 00:47:48,014 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:47:48,017 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:47:48,020 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:47:48,021 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:47:48,022 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:47:49,326 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:47:49,353 - reactor - INFO -    -> No Opal content. Running standard mining cycle...
+2026-01-08 00:47:50,023 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:47:50,023 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:47:50,080 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:47:50,600 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:47:51,677 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:47:52,826 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:47:53,115 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:47:53,116 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:47:55,441 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:47:55,442 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
