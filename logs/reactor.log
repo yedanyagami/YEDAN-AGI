@@ -20676,3 +20676,6 @@ Check it out: https://reddit.com/r/dropshipping/example #AI #ecom
 2026-01-08 00:07:48,676 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
 2026-01-08 00:07:57,702 - reactor - INFO - ============================================================
 2026-01-08 00:07:57,704 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:07:57,705 - reactor - INFO - ============================================================
+2026-01-08 00:07:57,707 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:07:57,772 - reactor - INFO - [*] Sleeping 60s...
