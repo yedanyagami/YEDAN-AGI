@@ -20799,3 +20799,8 @@ Check it out: https://reddit.com/r/dropshipping/example #AI #ecom
 2026-01-08 00:12:33,307 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
 2026-01-08 00:12:33,642 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
 2026-01-08 00:12:34,579 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:12:35,309 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:12:35,433 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:12:35,433 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:12:36,630 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:12:36,630 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
