@@ -20728,3 +20728,37 @@ Check it out: https://reddit.com/r/dropshipping/example #AI #ecom
 2026-01-08 00:10:27,086 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
 2026-01-08 00:10:29,164 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
 2026-01-08 00:10:29,165 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:11:16,412 - reactor - INFO - [*] Initializing YEDAN V2.0 Engine (Async/Turbo)...
+2026-01-08 00:11:18,163 - reactor - INFO - [*] Engine Mode: LIVE
+2026-01-08 00:11:18,163 - reactor - INFO - 🚀 STARTING ASYNC CORE (Eco Mode Enabled)
+2026-01-08 00:11:18,165 - reactor - INFO - ============================================================
+2026-01-08 00:11:18,165 - reactor - INFO - [*] YEDAN V2.0 ASYNC CYCLE | 2026-01-08 00:11:18
+2026-01-08 00:11:18,166 - reactor - INFO - ============================================================
+2026-01-08 00:11:18,166 - reactor - INFO - [Finance] Checking Pulse...
+2026-01-08 00:11:18,170 - reactor - INFO - [Phase 1] MINING -> FACTORY -> SHOPIFY (Direct Pipeline)
+2026-01-08 00:11:18,171 - reactor - INFO - [Phase 2] TRAFFIC OPERATION (Viral Schedule)
+2026-01-08 00:11:18,172 - reactor - INFO - [Phase 3] LOGISTICS & AUTOMATION
+2026-01-08 00:11:18,173 - reactor - INFO - [Phase 4] RAPID RESPONSE (Market Scan)
+2026-01-08 00:11:18,174 - market_scanner - INFO - ⚡ Rapid Response: Starting Async Price Monitor...
+2026-01-08 00:11:18,174 - market_scanner - INFO - Starting Competitor Scan...
+2026-01-08 00:11:19,546 - reactor - INFO -    -> Cloud Browser Active.
+2026-01-08 00:11:19,546 - cloud_social - INFO - Starting CloudSocial cycle (Smart Engagement)
+2026-01-08 00:11:19,570 - reactor - INFO -    -> PayPal Balance: $0.00 (Live)
+2026-01-08 00:11:19,610 - reactor - INFO -    -> n8n Connected (0 workflows live).
+2026-01-08 00:11:20,425 - reactor - INFO -    -> Today's Revenue: $0 (0 sales)
+2026-01-08 00:11:20,725 - cloud_social - INFO - [ViralMultiplier] Scanning for viral threads...
+2026-01-08 00:11:21,518 - market_scanner - INFO - Scanned www.odditymall.com: Avg Price $0.00
+2026-01-08 00:11:21,571 - cloud_social - INFO - Found 0 pending tasks
+2026-01-08 00:11:21,571 - cloud_social - INFO - CloudSocial cycle complete
+2026-01-08 00:11:22,957 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
+2026-01-08 00:11:22,958 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
+2026-01-08 00:11:24,656 - oracle - ERROR - Oracle error for 'Sugar industry influenced researchers and blamed fat for CVD': The request failed: Google returned a response with code 429
+2026-01-08 00:11:27,860 - oracle - ERROR - Oracle error for 'LaTeX Coffee Stains [pdf] (2021)': The request failed: Google returned a response with code 429
+2026-01-08 00:11:31,937 - reactor - INFO - ============================================================
+2026-01-08 00:11:31,937 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:11:31,937 - reactor - INFO - ============================================================
+2026-01-08 00:11:31,940 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:11:32,010 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:11:32,524 - oracle - ERROR - Oracle error for 'A4 Paper Stories': The request failed: Google returned a response with code 429
+2026-01-08 00:11:32,528 - reactor - INFO -    -> Found 3 trending topics. Creating products...
+2026-01-08 00:11:32,529 - darwin - INFO - 🧬 [Darwin] Exploiting Gene: value_first (Win Rate: 0.50)
