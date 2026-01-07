@@ -15,6 +15,7 @@ import time
 import random
 import traceback
 import requests
+import gc
 from datetime import datetime
 
 # --- SELF-HEAL: Dependency Medic ---
@@ -190,7 +191,6 @@ class YEDAN_V2_Engine:
         logger.info("[*] CYCLE COMPLETE.")
         logger.info("=" * 60)
 
-import gc
     def run_safe_loop(self):
         """Entry point for async execution"""
         logger.info("🚀 STARTING ASYNC CORE (Eco Mode Enabled)") if Config.ECO_MODE else logger.info("🚀 STARTING ASYNC CORE")
