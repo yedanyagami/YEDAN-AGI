@@ -102,31 +102,50 @@ class YEDAN_V2_Engine:
         await asyncio.to_thread(_check)
 
     async def async_run_mining(self):
-        """Phase 1: Mining & Content Creation (Non-blocking)"""
-        logger.info("[Phase 1] MINING OPERATION (Factory Mode)")
+        """Phase 1: Mining & Direct Product Creation (NO OPAL DEPENDENCY)"""
+        logger.info("[Phase 1] MINING -> FACTORY -> SHOPIFY (Direct Pipeline)")
         
-        def _mine():
-            # Check Opal
+        def _mine_and_create():
             try:
-                opal_content = self.opal.fetch_pending_content()
-                if opal_content:
-                    logger.info(f"   -> Found {len(opal_content)} items from Google Opal. Processing...")
-                    self.opal.run_cycle()
-                    return
-            except Exception as e:
-                logger.error(f"Opal mining failed: {e}")
+                # 1. Get trending content directly from ContentMiner
+                topics = self.miner.harvest_hackernews(max_results=3)
+                if not topics:
+                    topics = self.miner.harvest_wikipedia("trending technology")
                 
-            # Fallback
-            logger.info("   -> No Opal content. Running standard mining cycle...")
-            try:
-                # Use Factory Batch if implemented, currently generate_daily_digest uses Miner internally.
-                # For Phase 9, we assume generate_daily_digest is sufficient or we update it.
-                # Since we didn't rewrite generate_daily_digest to use Factory, we keep it as is.
-                generate_daily_digest() 
+                if not topics:
+                    logger.info("   -> No topics found. Skipping cycle.")
+                    return
+                
+                logger.info(f"   -> Found {len(topics)} trending topics. Creating products...")
+                
+                # 2. For each topic, generate product and push to Shopify
+                for topic in topics[:1]:  # Limit to 1 product per cycle to avoid spam
+                    title = topic.get("title", "Trending Product")
+                    
+                    # Generate SEO content using WriterAgent
+                    seo_result = self.writer.generate_seo_content({
+                        "title": title,
+                        "current_description": topic.get("summary", ""),
+                        "keywords": ["AI", "trending", "2026"]
+                    })
+                    
+                    # Create product on Shopify
+                    if not Config.DRY_RUN:
+                        result = self.opal._handle_product({
+                            "title": seo_result.get("optimized_title", title),
+                            "body_html": seo_result.get("optimized_description_html", ""),
+                            "price": "9.99"
+                        })
+                        if result:
+                            logger.info(f"   ✅ PRODUCT CREATED: {title[:30]}...")
+                    else:
+                        logger.info(f"   [DRY_RUN] Would create: {title[:30]}...")
+                        
             except Exception as e:
-                logger.error(f"Standard mining failed: {e}")
+                logger.error(f"Direct mining failed: {e}")
 
-        await asyncio.to_thread(_mine)
+        await asyncio.to_thread(_mine_and_create)
+
 
     async def async_run_traffic(self):
         """Phase 2: Traffic Generation (Non-blocking)"""
