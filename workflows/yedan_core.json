@@ -19,7 +19,7 @@
     },
     {
       "parameters": {
-        "url": "https://darwin.yagami8095.workers.dev/strategy?task=reddit_reply",
+        "url": "https://darwin-worker.yagami8095.workers.dev/strategy?task=reddit_reply",
         "method": "GET"
       },
       "name": "Darwin Strategy",
