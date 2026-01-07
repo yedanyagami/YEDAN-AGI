@@ -21096,3 +21096,12 @@ Check it out: https://reddit.com/r/dropshipping/example #AI #ecom
 2026-01-08 00:21:37,254 - market_scanner - ERROR - Failed to scan soaestheticshop.com: HTTPSConnectionPool(host='millnerco.com', port=443): Max retries exceeded with url: / (Caused by SSLError(SSLCertVerificationError(1, "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'millnerco.com'. (_ssl.c:1077)")))
 2026-01-08 00:21:37,254 - market_scanner - INFO -    -> [Realtime] www.odditymall.com: $0.00
 2026-01-08 00:21:38,114 - oracle - ERROR - Oracle error for 'Sugar industry influenced researchers and blamed fat for CVD': The request failed: Google returned a response with code 429
+2026-01-08 00:21:42,243 - oracle - ERROR - Oracle error for 'LaTeX Coffee Stains [pdf] (2021)': The request failed: Google returned a response with code 429
+2026-01-08 00:21:45,212 - reactor - INFO - ============================================================
+2026-01-08 00:21:45,212 - reactor - INFO - [*] CYCLE COMPLETE.
+2026-01-08 00:21:45,212 - reactor - INFO - ============================================================
+2026-01-08 00:21:45,214 - reactor - INFO - 🍃 [Eco] Running Garbage Collection...
+2026-01-08 00:21:45,347 - reactor - INFO - [*] Sleeping 60s...
+2026-01-08 00:21:46,261 - oracle - ERROR - Oracle error for 'Shipmap.org': The request failed: Google returned a response with code 429
+2026-01-08 00:21:46,264 - reactor - INFO -    -> Found 3 trending topics. Creating products...
+2026-01-08 00:21:46,265 - darwin - INFO - 🧬 [Darwin] Exploiting Gene: value_first (Win Rate: 0.50)
